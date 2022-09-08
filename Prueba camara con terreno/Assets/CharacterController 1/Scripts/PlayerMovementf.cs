@@ -1,30 +1,29 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovementf : MonoBehaviour
 {
-    private CharacterController characterController;
 
     Transform cam;
+    Rigidbody RB;
+
     [SerializeField] float speed = 4;
-    float gravity = Physics.gravity.y;
-    public float verticalSpeed;
     [SerializeField] float jumpForce = 10;
 
     void Awake()
     {
-        characterController = GetComponent<CharacterController>();
+        RB = GetComponent<Rigidbody>();
         cam = Camera.main.transform;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         float hor = Input.GetAxis("Horizontal");
         float ver = Input.GetAxis("Vertical");
 
         Vector3 movement = Vector3.zero;
 
-        if (hor != 0 || ver != 0)
-        {
+       // if (hor != 0 || ver != 0)
+        //{
             Vector3 forward = cam.forward;
             forward.y = 0;
             forward.Normalize();
@@ -39,23 +38,13 @@ public class PlayerMovement : MonoBehaviour
             movement = direction * speed * Time.deltaTime;
 
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 0.2f);
-        }
+        //}
 
-        if (characterController.isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && RB.velocity.y == 0)
         {
-            verticalSpeed = 0;
+            RB.AddForce(new Vector3(0.0f, jumpForce, 0.0f), ForceMode.Impulse);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && characterController.isGrounded)
-        {
-            verticalSpeed = jumpForce;
-        }
-
-        verticalSpeed += gravity * Time.deltaTime;
-
-
-        movement.y = verticalSpeed * Time.deltaTime;
-
-        characterController.Move(movement);
+        RB.AddForce(movement);
     }
 }
