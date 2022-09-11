@@ -46,9 +46,8 @@ public class PlayerMovement : MonoBehaviour
             verticalSpeed = jumpForce;
         }
 
-          verticalSpeed += gravity * Time.deltaTime;
+        verticalSpeed += gravity * Time.deltaTime;
 
-        //        Mathf.Clamp(verticalSpeed, gravity, jumpForce);
         if (verticalSpeed < gravity)
         {
             verticalSpeed = gravity;
