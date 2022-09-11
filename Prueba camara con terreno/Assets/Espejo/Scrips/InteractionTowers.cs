@@ -11,10 +11,6 @@ public class InteractionTowers : MonoBehaviour
         //  if (Physics.SphereCast(transform.position, 2.0f, transform.forward, out hit, 8f))
         if (Physics.Raycast(transform.position, transform.forward, out hit, 5f))
         {
-            Debug.DrawRay(transform.position, transform.forward, Color.yellow, 5f);
-
-            Debug.Log("Pego", hit.transform.parent);
-
             if (hit.transform.parent.CompareTag("Tower"))
             {
                 if (Input.GetKeyDown(KeyCode.Q))
