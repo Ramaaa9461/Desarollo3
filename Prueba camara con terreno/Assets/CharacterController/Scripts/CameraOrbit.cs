@@ -84,7 +84,7 @@ public class CameraOrbit : MonoBehaviour
 
         foreach (Vector3 point in points)
         {
-            if (Physics.Raycast(point, direction, out hit, maxDistance))
+            if (Physics.Raycast(point, direction, out hit, maxDistance,LayerMask.GetMask("Map")))
             {
                 distance = Mathf.Min((hit.point - follow.position).magnitude, distance);
             }

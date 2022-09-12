@@ -15,31 +15,34 @@ public class BaseTower : MonoBehaviour
 
     private void Awake()
     {
-        checkWinCondition();
+        SetWinCondition();
     }
 
-    private void Update()
+    public bool checkWinCondition()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            counter = 0;
+        counter = 0;
 
-            for (int i = 0; i < rayList.Count; i++)
+        for (int i = 0; i < rayList.Count; i++)
+        {
+            if (rayList[i].transform.rotation == Winrotations[i])
             {
-                if (rayList[i].transform.rotation == Winrotations[i])
+                counter++;
+                Debug.Log(counter);
+                if (counter >= rayList.Count)
                 {
-                    counter++;
-                    Debug.Log(counter);
-                    if (counter >= rayList.Count)
-                    {
-                        Debug.Log("GANO");
-                    }
+                    return true;
                 }
             }
+            else
+            {
+                return false;
+            }
         }
+
+        return false;
     }
 
-    public void checkWinCondition()
+    public void SetWinCondition()
     {
         rayList[0].transform.LookAt(rayList[3].transform);
         rayList[1].transform.LookAt(rayList[2].transform);
