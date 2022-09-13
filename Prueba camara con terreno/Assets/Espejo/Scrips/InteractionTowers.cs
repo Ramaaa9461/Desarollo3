@@ -4,44 +4,78 @@ using UnityEngine;
 
 public class InteractionTowers : MonoBehaviour
 {
+    GameObject grippablesObjectsParent;
+    [SerializeField] Vector3 offsetGrippeablesObjects;
+
+    private void Start()
+    {
+        grippablesObjectsParent = GameObject.Find("Grippables Objects");
+    }
+
 
     void Update()
     {
+
+        //if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E))
+        //{
+
+        //}
+
+        //if (Input.GetMouseButtonDown(0))
+        //{
+
+        //}
+
         RaycastHit hit;
 
-        //   if (Physics.SphereCast(transform.position, 5.0f, transform.forward, out hit, 5f))
+        // if (Physics.SphereCast(transform.position, 5.0f, transform.forward, out hit, 5f, LayerMask.GetMask("Interactable"))) 
         if (Physics.Raycast(transform.position, transform.forward, out hit, 5f, LayerMask.GetMask("Interactable")))
         {
+
             Debug.DrawRay(transform.position, transform.forward * 5f, Color.blue);
 
 
             if (hit.transform.gameObject.CompareTag("Grippable")) // Si intactua con un objeto agarrable
             {
-                if (Input.GetMouseButtonDown(0))
+                if (hit.transform.parent == grippablesObjectsParent.transform)
                 {
-                    hit.transform.position = transform.position + transform.forward + transform.up;
-                    hit.transform.rotation = transform.rotation;
-                    hit.transform.SetParent(transform);
-                    Debug.Log("Pressed primary button.");
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        Vector3 colliderBounds = hit.collider.bounds.size;
+
+                        //hit.transform.position = transform.position + transform.forward + transform.up;
+                        hit.transform.rotation = transform.rotation;
+                        hit.transform.SetParent(transform);
+                        hit.transform.position = transform.position + transform.forward * (colliderBounds.z + offsetGrippeablesObjects.z) + transform.up * (colliderBounds.y + offsetGrippeablesObjects.y);  //Esta funciooandno raro
+
+                    }
                 }
-                else if (Input.GetMouseButtonUp(0))
+                else if (hit.transform.parent == transform)
                 {
-                    Debug.Log("solot primary button.");
-                    hit.transform.SetParent(GameObject.Find("Grippables Objects").transform);
-                    //Ponerlo de nuevo en el suelo
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        hit.transform.SetParent(grippablesObjectsParent.transform);
+
+                        hit.transform.GetComponentInParent<ColumnBehavior>().CheckColumnInCorrectPivot(hit.transform);
+
+                        //Ponerlo de nuevo en el suelo
+                    }
                 }
+
             }
             else if (hit.transform.parent && hit.transform.parent.CompareTag("Tower")) //Si interactua con una torre
             {
+                TowerBehavior towerBehavior = hit.transform.parent.GetComponent<TowerBehavior>();
+
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    hit.transform.parent.GetComponent<TowerBehavior>().CheckIndexRayDown();
-
+                    towerBehavior.CheckIndexRayDown();
                 }
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    hit.transform.parent.GetComponent<TowerBehavior>().CheckIndexRayUp();
+                   towerBehavior.CheckIndexRayUp();
                 }
             }
             else if (hit.transform.CompareTag("Button"))  //Si es un boton

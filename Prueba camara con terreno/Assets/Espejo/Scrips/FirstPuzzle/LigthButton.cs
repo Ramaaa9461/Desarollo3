@@ -5,6 +5,7 @@ using UnityEngine;
 public class LigthButton : MonoBehaviour
 {
     [SerializeField] Material material;
+    [SerializeField] float duration;
 
     public void ChangeLigthColor(bool correctPattern)
     {
@@ -24,7 +25,7 @@ public class LigthButton : MonoBehaviour
   
     IEnumerator BackToOriginalColor()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(duration);
 
         material.color = new Color(0, 0, 0, 0);
     }
