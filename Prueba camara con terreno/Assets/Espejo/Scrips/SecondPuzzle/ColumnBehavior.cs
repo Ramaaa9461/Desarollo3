@@ -7,10 +7,11 @@ public class ColumnBehavior : MonoBehaviour
     [SerializeField] Transform[] columns = new Transform[4];
     [SerializeField] Transform[] pivotsColumns = new Transform[4];
 
+    [SerializeField] GameObject secondPuzzleDoor;
     int indexColum;
 
     public void CheckColumnInCorrectPivot(Transform currentColum)
-    {  
+    {
         for (int i = 0; i < columns.Length; i++)
         {
             if (columns[i] == currentColum)
@@ -26,7 +27,13 @@ public class ColumnBehavior : MonoBehaviour
             //   currentColum.tag = null; //Tengo que modificar la layer, pero esto hace que no la pueda agarrar mas
         }
 
-
+        if (CheckWincondition())
+        {
+            if (secondPuzzleDoor)
+            {
+                Destroy(secondPuzzleDoor);
+            }
+        }
 
     }
 
@@ -34,22 +41,20 @@ public class ColumnBehavior : MonoBehaviour
     {
         int count = 0;
 
-        for (int i = 0; i < columns.Length; i++)
+        for (int i = 0; i < columns.Length - 1; i++)
         {
-            if (columns[i] == pivotsColumns[i])
+            if (columns[i].position == pivotsColumns[i].position)
             {
                 count++;
-
-                Debug.Log(count);
 
                 if (count >= columns.Length - 1)
                 {
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
+            }
+            else
+            {
+                break;
             }
         }
 

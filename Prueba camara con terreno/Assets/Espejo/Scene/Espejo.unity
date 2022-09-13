@@ -389,6 +389,7 @@ MonoBehaviour:
   - {fileID: 324930836}
   - {fileID: 613902144}
   - {fileID: 2076057393}
+  secondPuzzleDoor: {fileID: 1102256273}
 --- !u!1 &324930835
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,7 +815,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 700416486}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -73.39, y: 69, z: -50.92}
+  m_LocalPosition: {x: -73.39, y: 69.45, z: -50.92}
   m_LocalScale: {x: 0.012309736, y: 0.01653813, z: 0.012309736}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -922,7 +923,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742615759}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -77.362465, y: 71.89, z: -48.005432}
+  m_LocalPosition: {x: -77.362465, y: 72.02, z: -48.005432}
   m_LocalScale: {x: 0.012309736, y: 0.014014934, z: 0.012309736}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1055,7 +1056,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1073036811}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -78.39, y: 70, z: -51.72}
+  m_LocalPosition: {x: -78.39, y: 70.38, z: -51.72}
   m_LocalScale: {x: 0.012309736, y: 0.013191048, z: 0.012309736}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1353,15 +1354,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2530331533693589109, guid: dcb62c7d6dcad0e419bef8bc5fd8d1ba, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -84.61
+      value: -81.65
       objectReference: {fileID: 0}
     - target: {fileID: 2530331533693589109, guid: dcb62c7d6dcad0e419bef8bc5fd8d1ba, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 27.77
+      value: 68.2
       objectReference: {fileID: 0}
     - target: {fileID: 2530331533693589109, guid: dcb62c7d6dcad0e419bef8bc5fd8d1ba, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 30.64
+      value: -35.33
       objectReference: {fileID: 0}
     - target: {fileID: 2530331533693589109, guid: dcb62c7d6dcad0e419bef8bc5fd8d1ba, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1437,7 +1438,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09875bc9c8293fc43a8fe56923ce2f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetGrippeablesObjects: 2
+  offsetGrippeablesObjectsZ: 0.5
+  offsetGrippeablesObjectsY: 0
 --- !u!1 &1173824878 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3779745573541866595, guid: 2dccf7f1f1d1de845918b942ddef14d2, type: 3}
@@ -1949,14 +1951,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1738142242}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -78.69, y: 64.01, z: -42.08}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -78.69, y: 65.75, z: -42.08}
   m_LocalScale: {x: 0.012309736, y: 0.0019063319, z: 0.012309736}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 227425981}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!23 &1738142244
 MeshRenderer:
   m_ObjectHideFlags: 0
