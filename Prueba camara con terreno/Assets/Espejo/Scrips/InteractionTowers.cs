@@ -39,16 +39,19 @@ public class InteractionTowers : MonoBehaviour
             {
                 if (hit.transform.parent == grippablesObjectsParent.transform)
                 {
-
-                    if (Input.GetMouseButtonDown(0))
+                    if (grippablesObjectsParent.transform.childCount == 4) //Mejorar numero harcodeado
                     {
-                        Vector3 colliderBounds = hit.collider.bounds.size;
 
-                        //hit.transform.position = transform.position + transform.forward + transform.up;
-                        hit.transform.rotation = transform.rotation;
-                        hit.transform.SetParent(transform);
-                        hit.transform.position = transform.position + transform.forward * (colliderBounds.z + offsetGrippeablesObjects.z) + transform.up * (colliderBounds.y + offsetGrippeablesObjects.y);  //Esta funciooandno raro
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            Vector3 colliderBounds = hit.collider.bounds.size;
 
+                            //hit.transform.position = transform.position + transform.forward + transform.up;
+                            hit.transform.rotation = transform.rotation;
+                            hit.transform.SetParent(transform);
+                            hit.transform.position = transform.position + transform.forward * (colliderBounds.z + offsetGrippeablesObjects.z) + transform.up * (colliderBounds.y / 2 + offsetGrippeablesObjects.y);  //Esta funciooandno raro
+
+                        }
                     }
                 }
                 else if (hit.transform.parent == transform)
@@ -75,7 +78,7 @@ public class InteractionTowers : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                   towerBehavior.CheckIndexRayUp();
+                    towerBehavior.CheckIndexRayUp();
                 }
             }
             else if (hit.transform.CompareTag("Button"))  //Si es un boton

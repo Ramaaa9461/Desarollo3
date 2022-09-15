@@ -1437,7 +1437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09875bc9c8293fc43a8fe56923ce2f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetGrippeablesObjects: 2
+  offsetGrippeablesObjects: {x: 0, y: 0, z: 0.5}
 --- !u!1 &1173824878 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3779745573541866595, guid: 2dccf7f1f1d1de845918b942ddef14d2, type: 3}
