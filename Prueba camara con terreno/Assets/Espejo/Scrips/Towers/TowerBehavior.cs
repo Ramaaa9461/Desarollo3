@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TowerBehavior : MonoBehaviour
 {
-    protected int indexRay = 0;
-    protected int currentRay = 0;
+    int indexRay = 0;
+    int currentRay = 0;
 
     List<GameObject> rayList;
 
@@ -33,22 +32,20 @@ public class TowerBehavior : MonoBehaviour
 
         if (indexRay != rayList.Count - 1)
         {
-            rayList[indexRay].transform.LookAt(rayList[indexRay + 1].transform);
             currentRay = indexRay + 1;
 
-            lr.SetPosition(0, transform.position);
-            lr.SetPosition(1, rayList[indexRay + 1].transform.position);
+            rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
         }
         else
         {
             rayList[indexRay].transform.LookAt(rayList[0].transform);
             currentRay = 0;
-
-
-            lr.SetPosition(0, transform.position);
-            lr.SetPosition(1, rayList[0].transform.position);
         }
+
+        lr.SetPosition(0, transform.position);
+        lr.SetPosition(1, rayList[currentRay].transform.position);
     }
+
 
     public void CheckIndexRayDown()
     {
@@ -93,5 +90,4 @@ public class TowerBehavior : MonoBehaviour
         lr.SetPosition(0, transform.position);
         lr.SetPosition(1, nextPosition);
     }
-
 }

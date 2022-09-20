@@ -97,7 +97,6 @@ public class CameraOrbit : MonoBehaviour
 
         transform.rotation = Quaternion.LookRotation(follow.position - transform.position);
     }
-
 }
 
 

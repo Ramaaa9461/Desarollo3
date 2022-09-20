@@ -41,20 +41,36 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 0.2f);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && characterController.isGrounded)
+        bool isGrounded = IsGrounded();
+
+        if (!isGrounded)
+        {
+            verticalSpeed += gravity * Time.deltaTime;
+        }
+        else
+        {
+            verticalSpeed = 0;
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             verticalSpeed = jumpForce;
         }
 
-        verticalSpeed += gravity * Time.deltaTime;
-
-        if (verticalSpeed < gravity)
-        {
-            verticalSpeed = gravity;
-        }
+        //if (verticalSpeed < gravity)
+        //{
+        //    verticalSpeed = gravity;
+        //}
 
         movement.y = verticalSpeed * Time.deltaTime;
 
         characterController.Move(movement);
+    }
+
+
+    bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 + .2f);
     }
 }

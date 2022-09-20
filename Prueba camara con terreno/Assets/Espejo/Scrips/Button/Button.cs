@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class CheckWinFirstPuzzle : MonoBehaviour
+public class Button : MonoBehaviour
 {
     [SerializeField] GameObject Door;
-    [SerializeField] BaseTower baseTower;
+    [SerializeField] TowersLogicBase logicParent;
     [SerializeField] LigthButton lightButton;
     bool openDoor = false;
 
 
     public void pressButton()
     {
-        openDoor = baseTower.checkWinCondition();
+        openDoor = logicParent.CheckWinCondition();
 
         if (Door)
         {

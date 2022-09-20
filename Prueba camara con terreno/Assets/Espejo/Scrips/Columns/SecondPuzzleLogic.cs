@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColumnBehavior : MonoBehaviour
+public class SecondPuzzleLogic : ColumnLogicBase
 {
-    [SerializeField] Transform[] columns = new Transform[4];
-    [SerializeField] Transform[] pivotsColumns = new Transform[4];
-
     [SerializeField] GameObject secondPuzzleDoor;
     int indexColum;
-
-    public void CheckColumnInCorrectPivot(Transform currentColum)
+   
+    private void Start()
+    {
+    columnsCount = 4;
+    }
+    public override void CheckColumnInCorrectPivot(Transform currentColum)
     {
         for (int i = 0; i < columns.Length; i++)
         {
@@ -24,7 +25,7 @@ public class ColumnBehavior : MonoBehaviour
         if (Vector3.Distance(currentColum.position, pivotsColumns[indexColum].position) < 4f)
         {
             currentColum.transform.position = pivotsColumns[indexColum].position;
-            //   currentColum.tag = null; //Tengo que modificar la layer, pero esto hace que no la pueda agarrar mas
+            //currentColum.tag = null; //Tengo que modificar la layer, pero esto hace que no la pueda agarrar mas
         }
 
         if (CheckWincondition())
@@ -37,7 +38,7 @@ public class ColumnBehavior : MonoBehaviour
 
     }
 
-    public bool CheckWincondition()
+    public override bool CheckWincondition()
     {
         int count = 0;
 
@@ -60,6 +61,4 @@ public class ColumnBehavior : MonoBehaviour
 
         return false;
     }
-
-
 }
