@@ -1,16 +1,12 @@
 using UnityEngine;
 
-public class Button : MonoBehaviour
+public class ButtonTutorial : ButtonBase
 {
     [SerializeField] GameObject Door;
-    [SerializeField] TowersLogicBase logicParent;
-    [SerializeField] LigthButton lightButton;
-    bool openDoor = false;
-
-
-    public void pressButton()
+  
+    public override void pressButton()
     {
-        openDoor = logicParent.CheckWinCondition();
+        openDoor = towerBase.CheckWinCondition();
 
         if (Door)
         {
