@@ -15,6 +15,7 @@ public class CameraOrbit : MonoBehaviour
     CameraState endState;
     float transitionTime = 0.0f;
 
+
     private Vector2 angle = new Vector2(90 * Mathf.Deg2Rad, 0);
     private new Camera camera;
     private Vector2 nearPlaneSize;
@@ -79,6 +80,8 @@ public class CameraOrbit : MonoBehaviour
             angle.y += ver * Mathf.Deg2Rad * sensitivity.y * Time.deltaTime;
             angle.y = Mathf.Clamp(angle.y, -80 * Mathf.Deg2Rad, 80 * Mathf.Deg2Rad);
         }
+
+        Zoom();
     }
 
     // Update is called once per frame
@@ -125,6 +128,21 @@ public class CameraOrbit : MonoBehaviour
 
         inTransition = true;
 
+    }
+
+    void Zoom()
+    {
+        //Zoom de la camara segun la rueda del mouse
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && maxDistance > 4f) //4
+        {
+           maxDistance -= 1f;
+        }
+
+        if (Input.GetAxis("Mouse ScrollWheel") < 0 && maxDistance < 20f) 
+        {
+            maxDistance += 1f;
+        }
     }
 }
 

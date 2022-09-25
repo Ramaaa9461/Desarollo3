@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ButtonTutorial : ButtonBase
+public class ButtonFirstPuzzle : ButtonBase
 {
     [SerializeField] GameObject Door;
   

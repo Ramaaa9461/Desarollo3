@@ -144,7 +144,7 @@ public class InteractionObjects : MonoBehaviour
             {
                 if (Input.GetMouseButton(0))
                 {
-                    hit.transform.GetComponent<Button>().pressButton();
+                    hit.transform.GetComponent<ButtonBase>().pressButton();
                 }
             }
         }

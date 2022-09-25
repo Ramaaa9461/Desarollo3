@@ -1,14 +1,12 @@
 using UnityEngine;
 
-public class Button : ButtonBase
+public class ButtonTutorial : ButtonBase
 {
     [SerializeField] GameObject Door;
   
     public override void pressButton()
     {
-        openDoor = towerBase.CheckWinCondition();
-        bool columdoor = columBase.CheckWincondition();
-
+        openDoor = towerBase.CheckWinCondition() && columBase.CheckWincondition();
 
         if (Door)
         {
