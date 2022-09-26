@@ -44,7 +44,7 @@ public class CameraOrbit : MonoBehaviour
     private Vector3[] GetCameraCollisionPoints(Vector3 direction)
     {
         Vector3 position = follow.position;
-        Vector3 center = position + direction * (camera.nearClipPlane + 0.5f); //Originalmente en .2
+        Vector3 center = position + direction * (camera.nearClipPlane + 0.3f); //Originalmente en .2
 
         Vector3 right = transform.right * nearPlaneSize.x;
         Vector3 up = transform.up * nearPlaneSize.y;
