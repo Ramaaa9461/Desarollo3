@@ -55,10 +55,13 @@ public class TowerBehavior : MonoBehaviour
         {
             currentRay--;
         }
-
         if (currentRay < 0)
         {
             currentRay = rayList.Count - 1;
+        }
+        if (currentRay == indexRay)
+        {
+            currentRay--;
         }
 
         rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
@@ -81,6 +84,11 @@ public class TowerBehavior : MonoBehaviour
         if (currentRay > rayList.Count - 1)
         {
             currentRay = 0;
+        }
+
+        if (currentRay == indexRay)
+        {
+            currentRay++;
         }
 
         rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
