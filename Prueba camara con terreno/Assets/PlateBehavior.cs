@@ -18,7 +18,6 @@ public class PlateBehavior : MonoBehaviour
             if (plate.transform.position == possiblePositions[i].position)
             {
                 currentPlatform = i;
-                Debug.Log(currentPlatform);
             }
         }
     }

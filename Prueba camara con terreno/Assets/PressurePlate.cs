@@ -16,6 +16,8 @@ public class PressurePlate : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
 
+        Debug.Log("ENTROO");
+
         counter += Time.deltaTime;
 
         if (counter > 1f && canMove)
