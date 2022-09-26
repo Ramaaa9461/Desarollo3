@@ -32,8 +32,8 @@ public class SecondPuzzleLogic : ColumnLogicBase
         {
             if (secondPuzzleDoor)
             {
-                Destroy(secondPuzzleDoor);
-            }
+                secondPuzzleDoor.GetComponent<OpenDoor>().UpTheDoor();
+               }
         }
 
     }

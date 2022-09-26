@@ -34,72 +34,6 @@ public class InteractionObjects : MonoBehaviour
             InteractionMouse();
         }
 
-
-        #region relleno
-
-        //RaycastHit hit;
-
-        //// if (Physics.SphereCast(transform.position, 5.0f, transform.forward, out hit, 5f, LayerMask.GetMask("Interactable"))) 
-        //if (Physics.Raycast(transform.position, transform.forward, out hit, 5f, LayerMask.GetMask("Interactable")))
-        //{
-
-        //    Debug.DrawRay(transform.position, transform.forward * 5f, Color.blue);
-
-
-        //    if (hit.transform.gameObject.CompareTag("Grippable")) // Si intactua con un objeto agarrable
-        //    {
-        //        if (hit.transform.parent == grippablesObjectsParent.transform)
-        //        {
-
-        //            if (Input.GetMouseButtonDown(0))
-        //            {
-        //                Vector3 colliderBounds = hit.collider.bounds.size;
-
-        //                //hit.transform.position = transform.position + transform.forward + transform.up;
-        //                hit.transform.rotation = transform.rotation;
-        //                hit.transform.SetParent(transform);
-        //                hit.transform.position = transform.position + transform.forward * (colliderBounds.z + offsetGrippeablesObjects.z) + transform.up * (colliderBounds.y + offsetGrippeablesObjects.y);  //Esta funciooandno raro
-
-        //            }
-        //        }
-        //        else if (hit.transform.parent == transform)
-        //        {
-        //            if (Input.GetMouseButtonDown(0))
-        //            {
-        //                hit.transform.SetParent(grippablesObjectsParent.transform);
-
-        //                hit.transform.GetComponentInParent<ColumnBehavior>().CheckColumnInCorrectPivot(hit.transform);
-
-        //                //Ponerlo de nuevo en el suelo
-        //            }
-        //        }
-
-        //    }
-        //    else if (hit.transform.parent && hit.transform.parent.CompareTag("Tower")) //Si interactua con una torre
-        //    {
-        //        TowerBehavior towerBehavior = hit.transform.parent.GetComponent<TowerBehavior>();
-
-        //        if (Input.GetKeyDown(KeyCode.Q))
-        //        {
-        //            towerBehavior.CheckIndexRayDown();
-        //        }
-
-        //        if (Input.GetKeyDown(KeyCode.E))
-        //        {
-        //            towerBehavior.CheckIndexRayUp();
-        //        }
-        //    }
-        //    else if (hit.transform.CompareTag("Button"))  //Si es un boton
-        //    {
-        //        if (Input.GetMouseButton(0))
-        //        {
-        //            hit.transform.GetComponent<CheckWinFirstPuzzle>().pressButton();
-        //        }
-        //    }
-        //}
-
-        #endregion
-
     }
 
     void InteractionKeyboard()
@@ -132,13 +66,13 @@ public class InteractionObjects : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, 5f, LayerMask.GetMask("Interactable")))
         {
-            if (hit.transform.tag == columnsTag)
+            if (hit.transform.tag == columnsTag) //serian las columans del segundoNivel
             {
-                GrabAndDropColumns(hit, grippablesObjectsParent.transform, columnsTag);
+                GrabAndDropColumns(hit, grippablesObjectsParent.transform, columnsTag, grippablesObjectsParent.transform.GetComponent<ColumnLogicBase>().columnsCount);
             }
             else if(hit.transform.tag == tutorialTag) //serian las columans del tutorial
             {
-                GrabAndDropColumns(hit, tutorialParent, tutorialTag);
+                GrabAndDropColumns(hit, tutorialParent, tutorialTag, 9); //Los objetos totales del padre, esta medio choto
             }
             else if (hit.transform.CompareTag("Button"))  //Si es un boton
             {
@@ -151,13 +85,13 @@ public class InteractionObjects : MonoBehaviour
     }
 
 
-    void GrabAndDropColumns(RaycastHit hit, Transform parent, string tagName)
+    void GrabAndDropColumns(RaycastHit hit, Transform parent, string tagName, int numberColumsInParent)
     {
         if (hit.transform.gameObject.CompareTag(tagName)) // Si intactua con un objeto agarrable
         {
             if (hit.transform.parent == parent.transform)
             {
-             //   if (parent.transform.childCount == parent.transform.GetComponent<ColumnLogicBase>().columnsCount) //Mejorar numero harcodeado
+                if (parent.transform.childCount == numberColumsInParent) //Mejorar numero harcodeado
                 {
                     if (Input.GetMouseButtonDown(0))
                     {

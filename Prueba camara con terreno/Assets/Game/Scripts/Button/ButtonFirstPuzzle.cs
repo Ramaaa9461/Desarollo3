@@ -12,7 +12,7 @@ public class ButtonFirstPuzzle : ButtonBase
         {
             if (openDoor)
             {
-                Destroy(Door);
+                Door.GetComponent<OpenDoor>().UpTheDoor();
             }
         }
 

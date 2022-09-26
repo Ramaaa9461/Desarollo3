@@ -12,7 +12,7 @@ public class ButtonTutorial : ButtonBase
         {
             if (openDoor)
             {
-                Destroy(Door);
+                Door.GetComponent<OpenDoor>().UpTheDoor();
             }
         }
 
