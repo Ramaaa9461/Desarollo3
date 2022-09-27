@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TreeGrowth : MonoBehaviour
@@ -13,18 +12,16 @@ public class TreeGrowth : MonoBehaviour
     [SerializeField] float duration;
 
     Coroutine growingUp;
-    private void UpTree()
+    
+    
+    public void UpTree()
     {
-
         if (growingUp == null)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
                 newPosition = new Vector3(transform.position.x, transform.position.y + distanceUp, transform.position.z);
                 rotation = Quaternion.AngleAxis(rotateAngle, Vector3.up) * transform.rotation;
 
                 growingUp = StartCoroutine(GrowingUp(newPosition, rotation));
-            }
         }
     }
 

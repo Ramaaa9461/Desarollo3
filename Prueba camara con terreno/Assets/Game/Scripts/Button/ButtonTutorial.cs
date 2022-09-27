@@ -13,6 +13,7 @@ public class ButtonTutorial : ButtonBase
             if (openDoor)
             {
                 Door.GetComponent<OpenDoor>().UpTheDoor();
+                treeGrowth.UpTree();
             }
         }
 

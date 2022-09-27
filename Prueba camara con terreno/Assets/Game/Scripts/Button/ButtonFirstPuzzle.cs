@@ -13,6 +13,7 @@ public class ButtonFirstPuzzle : ButtonBase
             if (openDoor)
             {
                 Door.GetComponent<OpenDoor>().UpTheDoor();
+                treeGrowth.UpTree();
             }
         }
 

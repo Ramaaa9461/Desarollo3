@@ -6,8 +6,11 @@ public class PlateBehavior : MonoBehaviour
 {
     [SerializeField] GameObject plate;
     [SerializeField] Transform[] possiblePositions = new Transform[3];
+    [SerializeField] float duration;
+
 
     int currentPlatform = 0;
+    Coroutine movePlate;
 
     private void Start()
     {
@@ -27,10 +30,11 @@ public class PlateBehavior : MonoBehaviour
         if (currentPlatform != 0)
         {
             currentPlatform--;
-            // plate.transform.position = possiblePositions[currentPlatform].position;
 
-            StartCoroutine(MovePlate(plate.transform, possiblePositions[currentPlatform].position));
-        
+            if (movePlate == null)
+            {
+                StartCoroutine(MovePlate(plate.transform, possiblePositions[currentPlatform].position));
+            }
         }
     }
     public void MoveRight()
@@ -38,24 +42,36 @@ public class PlateBehavior : MonoBehaviour
         if (currentPlatform != possiblePositions.Length - 1)
         {
             currentPlatform++;
-//            plate.transform.position = possiblePositions[currentPlatform].position;
-            StartCoroutine(MovePlate(plate.transform, possiblePositions[currentPlatform].position));
+
+            if (movePlate == null)
+            {
+                StartCoroutine(MovePlate(plate.transform, possiblePositions[currentPlatform].position));
+            }
 
         }
     }
-
-
     IEnumerator MovePlate(Transform plate, Vector3 endPosition)
     {
-        float progress = 0;
+        float timer = 0;
 
-        while (progress <= 1)
+
+
+        while (timer <= duration)
         {
-            plate.transform.position = Vector3.Lerp(plate.transform.position, endPosition, progress);
-            progress += Time.deltaTime / 3; //De aca se limita la velocidad del Lerp
-            yield return null;
+            float interpolationValue = timer / duration;
+
+            plate.position = Vector3.Lerp(plate.position, endPosition, interpolationValue);
+
+            timer += Time.deltaTime;
+
+            yield return new WaitForEndOfFrame();
         }
-        plate.transform.position = endPosition;
+
+        plate.position = endPosition;
+        movePlate = null;
     }
+
+
+
 }
 
