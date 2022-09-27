@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ButtonFirstPuzzle : ButtonBase
@@ -12,12 +13,23 @@ public class ButtonFirstPuzzle : ButtonBase
 
             if (openDoor)
             {
-                Door.GetComponent<OpenDoor>().UpTheDoor();
                 treeGrowth.UpTree();
+
+                StartCoroutine(WaitGrowthTree());
+
                 doorIsOpen = true;
             }
         }
 
         lightButton.ChangeLigthColor(openDoor);
     }
+
+
+    IEnumerator WaitGrowthTree()
+    {
+        yield return new WaitForSeconds(3);
+
+        Door.GetComponent<OpenDoor>().UpTheDoor();
+    }
+
 }
