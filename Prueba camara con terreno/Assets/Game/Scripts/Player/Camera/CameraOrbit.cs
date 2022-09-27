@@ -21,6 +21,8 @@ public class CameraOrbit : MonoBehaviour
     private Vector2 nearPlaneSize;
 
     [SerializeField] Transform follow;
+    [SerializeField] float currentDistance;
+    [SerializeField] float minDistance;
     [SerializeField] float maxDistance;
     [SerializeField] Vector2 sensitivity;
 
@@ -44,7 +46,7 @@ public class CameraOrbit : MonoBehaviour
     private Vector3[] GetCameraCollisionPoints(Vector3 direction)
     {
         Vector3 position = follow.position;
-        Vector3 center = position + direction * (camera.nearClipPlane + 0.3f); //Originalmente en .2
+        Vector3 center = position + direction * (camera.nearClipPlane + 0.2f); //Originalmente en .2
 
         Vector3 right = transform.right * nearPlaneSize.x;
         Vector3 up = transform.up * nearPlaneSize.y;
@@ -94,21 +96,22 @@ public class CameraOrbit : MonoBehaviour
             );
 
         RaycastHit hit;
-        float distance = maxDistance;
+        float distance = currentDistance;
         Vector3[] points = GetCameraCollisionPoints(direction);
 
         foreach (Vector3 point in points)
         {
-            if (Physics.Raycast(point, direction, out hit, maxDistance,LayerMask.GetMask("Map")))
+            if (Physics.Raycast(point, direction, out hit, currentDistance,LayerMask.GetMask("Map")))
             {
-                distance = Mathf.Min((hit.point - follow.position).magnitude, distance);
+                 distance = Mathf.Min((hit.point - follow.position).magnitude, distance);
+                //distance = Mathf.Clamp(distance, minDistance, maxDistance);
             }
                 Debug.DrawLine(point, transform.position, Color.white);
         }
 
 
-     //   transform.position = follow.position + direction * distance;
-        transform.position = Vector3.Lerp(transform.position, follow.position + direction * distance, .9f);
+        transform.position = follow.position + direction * distance;
+      //  transform.position = Vector3.Lerp(transform.position, follow.position + direction * distance, .9f);
 
         transform.rotation = Quaternion.LookRotation(follow.position - transform.position);
     }
@@ -134,14 +137,14 @@ public class CameraOrbit : MonoBehaviour
     {
         //Zoom de la camara segun la rueda del mouse
 
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && maxDistance > 4f) //4
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && currentDistance > minDistance) //4
         {
-           maxDistance -= 1f;
+           currentDistance -= 1f;
         }
 
-        if (Input.GetAxis("Mouse ScrollWheel") < 0 && maxDistance < 20f) 
+        if (Input.GetAxis("Mouse ScrollWheel") < 0 && currentDistance < maxDistance) 
         {
-            maxDistance += 1f;
+            currentDistance += 1f;
         }
     }
 }

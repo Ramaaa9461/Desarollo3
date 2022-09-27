@@ -66,6 +66,6 @@ public class PlayerMovement : MonoBehaviour
 
     bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 + .2f);
+        return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 + .2f) && verticalSpeed <= 0;
     }
 }

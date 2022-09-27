@@ -29,7 +29,7 @@ public class OpenDoor : MonoBehaviour
         while (progress <= 1)
         {
             transform.position = Vector3.Lerp(transform.position, newPosition, progress);
-            progress += Time.deltaTime / 4; //De aca se limita la velocidad del Lerp
+            progress += Time.deltaTime; //De aca se limita la velocidad del Lerp
             yield return null;
         }
         transform.position = newPosition;
