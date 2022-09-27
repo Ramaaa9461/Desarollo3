@@ -6,7 +6,7 @@ public abstract class ButtonBase : MonoBehaviour
     [SerializeField] protected TowersLogicBase towerBase;
     [SerializeField] protected ColumnLogicBase columBase;
     [SerializeField] protected TreeGrowth treeGrowth;
-    protected bool openDoor = false;
+    protected bool doorIsOpen = false;
 
     public abstract void pressButton();
 

@@ -1,15 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SecondPuzzleLogic : ColumnLogicBase
 {
     [SerializeField] GameObject secondPuzzleDoor;
+    [SerializeField] TreeGrowth treeGrowth;
     int indexColum;
-   
+
     private void Start()
     {
-    columnsCount = 4;
+        columnsCount = 4;
     }
     public override void CheckColumnInCorrectPivot(Transform currentColum)
     {
@@ -28,12 +27,14 @@ public class SecondPuzzleLogic : ColumnLogicBase
             //currentColum.tag = null; //Tengo que modificar la layer, pero esto hace que no la pueda agarrar mas
         }
 
-        if (CheckWincondition())
+        if (!doorIsOpen)
         {
-            if (secondPuzzleDoor)
+            if (CheckWincondition())
             {
                 secondPuzzleDoor.GetComponent<OpenDoor>().UpTheDoor();
-               }
+                treeGrowth.UpTree();
+                doorIsOpen = true;
+            }
         }
 
     }

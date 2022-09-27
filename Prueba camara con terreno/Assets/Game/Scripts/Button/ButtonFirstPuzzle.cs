@@ -3,17 +3,18 @@ using UnityEngine;
 public class ButtonFirstPuzzle : ButtonBase
 {
     [SerializeField] GameObject Door;
-  
+    bool openDoor;
     public override void pressButton()
     {
-        openDoor = towerBase.CheckWinCondition();
-
-        if (Door)
+        if (!doorIsOpen)
         {
+            openDoor = towerBase.CheckWinCondition();
+
             if (openDoor)
             {
                 Door.GetComponent<OpenDoor>().UpTheDoor();
                 treeGrowth.UpTree();
+                doorIsOpen = true;
             }
         }
 
