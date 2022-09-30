@@ -6,9 +6,13 @@ public class PlayerMovement : MonoBehaviour
 
     Camera cam;
     [SerializeField] float speed = 4;
-    float gravity = Physics.gravity.y;
-    public float verticalSpeed;
     [SerializeField] float jumpForce = 10;
+    [SerializeField] float gravity = Physics.gravity.y;
+    [SerializeField] float fallGravity = Physics.gravity.y;
+    [SerializeField] float flightGravity = Physics.gravity.y / 2;
+    public float verticalSpeed;
+
+
     [SerializeField] bool thirdPersonCamera = true;
     [SerializeField] float verticalDownAngle = 0.0f;
     [SerializeField] Transform cameraPosition = null;
@@ -35,12 +39,6 @@ public class PlayerMovement : MonoBehaviour
 		{
             UpdateThirdPersonCamera();
         }
-    }
-
-
-    bool IsGrounded()
-    {
-        return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 + .2f) && verticalSpeed <= 0;
     }
 
     void UpdateThirdPersonCamera()
@@ -86,15 +84,20 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            gravity = fallGravity;
             verticalSpeed = 0;
         }
-
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             verticalSpeed = jumpForce;
         }
+        else if(Input.GetKeyDown(KeyCode.Space) && !isGrounded)
+        {
+            gravity = flightGravity;
+        }
     }
+
     public float GetFallSpeed()
 	{
         return verticalSpeed * Time.deltaTime;
@@ -106,4 +109,10 @@ public class PlayerMovement : MonoBehaviour
         cam.GetComponent<CameraOrbit>().enabled = !cam.GetComponent<CameraOrbit>().enabled;
         cameraScriptFP.enabled = !cameraScriptFP.enabled;
     }
+
+    bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 + .2f) && verticalSpeed <= 0;
+    }
+
 }
