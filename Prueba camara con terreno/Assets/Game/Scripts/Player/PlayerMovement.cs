@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded) // Funciona medio mal, cuando esta en un bajada o algo por el estilo empieza a fallar
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             verticalSpeed = jumpForce;
         }
