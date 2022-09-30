@@ -98,7 +98,7 @@ public class InteractionObjects : MonoBehaviour
 
                         hit.transform.rotation = transform.rotation;
                         hit.transform.SetParent(transform);
-                        hit.transform.position = transform.position + transform.forward * (colliderBounds.z + offsetGrippeablesObjects.z) + transform.up * (colliderBounds.y / 2 + offsetGrippeablesObjects.y) + transform.right * (colliderBounds.x / 2+ offsetGrippeablesObjects.x);//* transform.localScale.x / 2.0f;
+                        hit.transform.position = transform.position + transform.forward * (colliderBounds.z + offsetGrippeablesObjects.z) + transform.up * (colliderBounds.y / 2 + offsetGrippeablesObjects.y) + transform.right * offsetGrippeablesObjects.x;//* transform.localScale.x / 2.0f;
                     }
                 }
             }

@@ -10,8 +10,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float gravity = Physics.gravity.y;
     [SerializeField] float fallGravity = Physics.gravity.y;
     [SerializeField] float flightGravity = Physics.gravity.y / 2;
+    Vector3 movement = Vector3.zero;
     public float verticalSpeed;
 
+    [SerializeField] Transform pivotDown;
 
     [SerializeField] bool thirdPersonCamera = true;
     [SerializeField] float verticalDownAngle = 0.0f;
@@ -31,22 +33,22 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         if (Input.GetButtonDown("Fire2"))
-		{
+        {
             SwitchCameraConfiguration();
         }
 
         if (thirdPersonCamera)
-		{
+        {
             UpdateThirdPersonCamera();
         }
     }
 
     void UpdateThirdPersonCamera()
-	{
+    {
         float hor = Input.GetAxis("Horizontal");
         float ver = Input.GetAxis("Vertical");
 
-        Vector3 movement = Vector3.zero;
+        movement = Vector3.zero;
 
         if (hor != 0 || ver != 0)
         {
@@ -75,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     public void CheckJump()
-	{
+    {
         bool isGrounded = IsGrounded();
 
         if (!isGrounded)
@@ -92,19 +94,21 @@ public class PlayerMovement : MonoBehaviour
         {
             verticalSpeed = jumpForce;
         }
-        else if(Input.GetKeyDown(KeyCode.Space) && !isGrounded)
+        else if (Input.GetKeyDown(KeyCode.Space) && !isGrounded)
         {
+          //*  movement += transform.forward * 5;   En esta linea se puede hacer el Dash
+
             gravity = flightGravity;
         }
     }
 
     public float GetFallSpeed()
-	{
+    {
         return verticalSpeed * Time.deltaTime;
-	}
+    }
 
     void SwitchCameraConfiguration()
-	{
+    {
         thirdPersonCamera = !thirdPersonCamera;
         cam.GetComponent<CameraOrbit>().enabled = !cam.GetComponent<CameraOrbit>().enabled;
         cameraScriptFP.enabled = !cameraScriptFP.enabled;
@@ -112,7 +116,8 @@ public class PlayerMovement : MonoBehaviour
 
     bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 + .2f) && verticalSpeed <= 0;
+        Debug.DrawRay(transform.position, (Vector3.up * characterController.height / 2));
+        return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 - .2f) && verticalSpeed <= 0;
     }
 
 }
