@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 9185705557047289282}
   - component: {fileID: 4528218348150571391}
   - component: {fileID: 313940705773281098}
-  m_Layer: 0
+  - component: {fileID: 1317974641731960032}
+  m_Layer: 6
   m_Name: Tower
   m_TagString: Tower
   m_Icon: {fileID: 0}
@@ -147,6 +148,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8b283a4a1676484a88032624f388236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &1317974641731960032
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131389808134522513}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 1, z: 3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1468765310732471773
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +173,7 @@ GameObject:
   - component: {fileID: 3294045616037229447}
   - component: {fileID: 2443292449297346313}
   - component: {fileID: 73860643453203633}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +270,7 @@ GameObject:
   - component: {fileID: 3299212175254101321}
   - component: {fileID: 5393394897006221166}
   - component: {fileID: 4460812584381575113}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -354,7 +368,7 @@ GameObject:
   - component: {fileID: 8222398191107642116}
   - component: {fileID: 6856051100739551098}
   - component: {fileID: 1813337902076474404}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
