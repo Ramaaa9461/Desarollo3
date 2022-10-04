@@ -19,7 +19,7 @@ public class InteractionObjects : MonoBehaviour
 
     Collider collider;
 
-    private void Start()
+    private void Awake()
     {
         grippablesObjectsParent = GameObject.Find("Grippables Objects").transform;
         tutorialParent = GameObject.Find("Tutorial").transform;
@@ -38,27 +38,30 @@ public class InteractionObjects : MonoBehaviour
         }
         else if (useButton)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 ButtonInteraction(collider);
             }
         }
         else if (useColumns)
         {
-            if (Input.GetMouseButton(0))
-            {
+            //if (Input.GetMouseButton(0))
+            //{
                 ColumnsInteraction(collider);
-                Debug.Log(collider);
-            }
+            //}
         }
+
+
     }
 
     private void OnTriggerEnter(Collider other) //Hacer chequo en Enter
     {
         if (other.gameObject.layer == 6) //Layer interactuable
         {
-
-            collider = other;
+            if (collider == null)
+            {
+                collider = other;
+            }
 
             if (other.CompareTag(towerTag))
             {
@@ -77,10 +80,16 @@ public class InteractionObjects : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        collider = null;
-        useTower = false;
-        useColumns = false;
-        useButton = false;
+        if (collider == other)
+        {
+
+            collider = null;
+            useTower = false;
+            useColumns = false;
+            useButton = false;
+
+        }
+
     }
 
     void ButtonInteraction(Collider hit)
@@ -109,35 +118,39 @@ public class InteractionObjects : MonoBehaviour
         }
         else if (hit.transform.tag == tutorialTag) //serian las columans del tutorial
         {
-            GrabAndDropColumns(hit, tutorialParent, tutorialTag, 9); //Los objetos totales del padre, esta medio choto
+            GrabAndDropColumns(hit, tutorialParent, tutorialTag, tutorialParent.transform.GetComponent<ColumnLogicBase>().columnsCount); //Los objetos totales del padre, esta medio choto
         }
     }
     void GrabAndDropColumns(Collider hit, Transform parent, string tagName, int numberColumsInParent)
     {
-        if (hit.transform.gameObject.CompareTag(tagName)) // Si intactua con un objeto agarrable
+        if (Input.GetMouseButtonDown(0))
         {
-            if (hit.transform.parent == parent.transform)
-            {
-                if (parent.transform.childCount == numberColumsInParent) //Mejorar numero harcodeado
-                {
-                    Vector3 colliderBounds = hit.transform.GetComponent<BoxCollider>().bounds.size;
 
-                    hit.transform.rotation = transform.rotation;
-                    hit.transform.SetParent(transform);
-                    hit.transform.position = transform.position +
-                        transform.forward * (colliderBounds.z + offsetGrippeablesObjects.z) +
-                        transform.up * (colliderBounds.y / 2 + offsetGrippeablesObjects.y) +
-                        transform.right * offsetGrippeablesObjects.x;//* transform.localScale.x / 2.0f;
+            if (hit.transform.gameObject.CompareTag(tagName)) // Si intactua con un objeto agarrable
+            {
+                if (hit.transform.parent == parent.transform)
+                {
+                    if (parent.transform.childCount == numberColumsInParent) //Mejorar numero harcodeado
+                    {
+                        Vector3 colliderBounds = hit.transform.GetComponent<BoxCollider>().bounds.size;
+
+                        hit.transform.rotation = transform.rotation;
+                        hit.transform.SetParent(transform);
+                        hit.transform.position = transform.position +
+                            transform.forward * (colliderBounds.z + offsetGrippeablesObjects.z) +
+                            transform.up * (colliderBounds.y / 2 + offsetGrippeablesObjects.y) +
+                            transform.right * offsetGrippeablesObjects.x;//* transform.localScale.x / 2.0f;
+                    }
+                }
+                else if (hit.transform.parent == transform)
+                {
+                    hit.transform.SetParent(parent.transform);
+
+                    hit.transform.GetComponentInParent<ColumnLogicBase>().CheckColumnInCorrectPivot(hit.transform);
                 }
             }
-            else if (hit.transform.parent == transform)
-            {
-                hit.transform.SetParent(parent.transform);
 
-                hit.transform.GetComponentInParent<ColumnLogicBase>().CheckColumnInCorrectPivot(hit.transform);
-            }
         }
-
 
     }
 

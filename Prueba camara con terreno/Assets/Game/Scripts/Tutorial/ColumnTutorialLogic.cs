@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class ColumnTutorialLogic : ColumnLogicBase
 {
-    [SerializeField] GameObject secondPuzzleDoor;
     int indexColum;
 
     private void Start()
     {
-        columnsCount = 2;
+        columnsCount = 10;
     }
 
     public override void CheckColumnInCorrectPivot(Transform currentColum)
@@ -27,14 +26,6 @@ public class ColumnTutorialLogic : ColumnLogicBase
         {
             currentColum.transform.position = pivotsColumns[indexColum].position;
             //currentColum.tag = null; //Tengo que modificar la layer, pero esto hace que no la pueda agarrar mas
-        }
-
-        if (CheckWincondition())
-        {
-            if (secondPuzzleDoor)
-            {
-             //   Destroy(secondPuzzleDoor);
-            }
         }
 
     }
