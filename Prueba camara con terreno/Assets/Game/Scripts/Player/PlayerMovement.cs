@@ -41,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
         {
             UpdateThirdPersonCamera();
         }
+
+        Debug.DrawRay(transform.position, -transform.up, Color.red, characterController.height / 2);
+
     }
 
     void UpdateThirdPersonCamera()
@@ -116,8 +119,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool IsGrounded()
     {
-        Debug.DrawRay(transform.position, (Vector3.up * characterController.height / 2));
-        return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 + .2f) && verticalSpeed <= 0;
+        return Physics.Raycast(transform.position, -transform.up, characterController.height / 2) && verticalSpeed <= 0;
     }
 
 }
