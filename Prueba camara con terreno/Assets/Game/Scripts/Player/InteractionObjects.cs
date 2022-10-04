@@ -49,7 +49,7 @@ public class InteractionObjects : MonoBehaviour
         {
             //if (Input.GetMouseButton(0))
             //{
-                ColumnsInteraction(_collider);
+            ColumnsInteraction(_collider);
             //}
         }
 
@@ -63,10 +63,10 @@ public class InteractionObjects : MonoBehaviour
             if (_collider == null)
             {
                 _collider = other;
+                diegeticUI = other.gameObject.GetComponent<DiegeticUI>();
+                diegeticUI.DigeticUiOn();
             }
 
-            diegeticUI = other.gameObject.GetComponent<DiegeticUI>();
-            diegeticUI.DigeticUiOn();
 
             if (other.CompareTag(towerTag))
             {
@@ -153,6 +153,10 @@ public class InteractionObjects : MonoBehaviour
                     hit.transform.SetParent(parent.transform);
 
                     hit.transform.GetComponentInParent<ColumnLogicBase>().CheckColumnInCorrectPivot(hit.transform);
+
+
+                    _collider = null;
+                    useColumns = false;
                 }
             }
 
