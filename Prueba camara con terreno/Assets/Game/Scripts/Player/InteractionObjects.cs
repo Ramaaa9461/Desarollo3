@@ -7,6 +7,7 @@ public class InteractionObjects : MonoBehaviour
     Transform tutorialParent;
     Transform grippablesObjectsParent;
     [SerializeField] Vector3 offsetGrippeablesObjects;
+    [SerializeField] LayerMask InteractableMask;
 
     string towerTag = "Tower";
     string columnsTag = "Grippable";
@@ -17,7 +18,8 @@ public class InteractionObjects : MonoBehaviour
     bool useButton = false;
     bool useColumns = false;
 
-    Collider collider;
+    Collider _collider;
+    DiegeticUI diegeticUI;
 
     private void Awake()
     {
@@ -33,21 +35,21 @@ public class InteractionObjects : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E))
             {
-                TowerInteraction(collider);
+                TowerInteraction(_collider);
             }
         }
         else if (useButton)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                ButtonInteraction(collider);
+                ButtonInteraction(_collider);
             }
         }
         else if (useColumns)
         {
             //if (Input.GetMouseButton(0))
             //{
-                ColumnsInteraction(collider);
+            ColumnsInteraction(_collider);
             //}
         }
 
@@ -56,12 +58,15 @@ public class InteractionObjects : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) //Hacer chequo en Enter
     {
-        if (other.gameObject.layer == 6) //Layer interactuable
+        if (InteractableMask.Contains(other.gameObject.layer)) //Layer interactuable
         {
-            if (collider == null)
+            if (_collider == null)
             {
-                collider = other;
+                _collider = other;
+                diegeticUI = other.gameObject.GetComponent<DiegeticUI>();
+                diegeticUI.DigeticUiOn();
             }
+
 
             if (other.CompareTag(towerTag))
             {
@@ -80,14 +85,13 @@ public class InteractionObjects : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (collider == other)
+        if (_collider == other)
         {
-
-            collider = null;
+            _collider = null;
             useTower = false;
             useColumns = false;
             useButton = false;
-
+            diegeticUI.DigeticUiOff();
         }
 
     }
@@ -121,6 +125,8 @@ public class InteractionObjects : MonoBehaviour
             GrabAndDropColumns(hit, tutorialParent, tutorialTag, tutorialParent.transform.GetComponent<ColumnLogicBase>().columnsCount); //Los objetos totales del padre, esta medio choto
         }
     }
+
+
     void GrabAndDropColumns(Collider hit, Transform parent, string tagName, int numberColumsInParent)
     {
         if (Input.GetMouseButtonDown(0))
@@ -147,6 +153,10 @@ public class InteractionObjects : MonoBehaviour
                     hit.transform.SetParent(parent.transform);
 
                     hit.transform.GetComponentInParent<ColumnLogicBase>().CheckColumnInCorrectPivot(hit.transform);
+
+
+                    _collider = null;
+                    useColumns = false;
                 }
             }
 

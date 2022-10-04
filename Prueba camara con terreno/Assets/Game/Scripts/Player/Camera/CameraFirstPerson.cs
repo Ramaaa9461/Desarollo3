@@ -10,7 +10,7 @@ public class CameraFirstPerson : MonoBehaviour
     [SerializeField] string mouseYAxisName = ""; // se nos ocurre cambiarle el nombre desde el Input Manager.
 
     [Header("References")]
-    [SerializeField] Camera camera = null; // Literalmente la cámara.
+    [SerializeField] Camera cam = null; // Literalmente la cámara.
     [SerializeField] Transform positionToGo = null; // El punto donde va a ir la cámara (el gameObject de la posición).
     [SerializeField] CharacterController controllerToMove = null; // El controlador del jugador.
     [SerializeField] PlayerMovement playerToCheckJump = null; // El código de movimiento del jugador, para poder
@@ -49,7 +49,7 @@ public class CameraFirstPerson : MonoBehaviour
         transform.Rotate(0.0f, rotateHorizontal * sensitivity, 0.0f); // Lo rota.
 
         // Código para rotar la cámara verticalmente.
-        Vector3 rotation = camera.transform.localEulerAngles;
+        Vector3 rotation = cam.transform.localEulerAngles;
         rotation.x = (rotation.x - rotateVertical * sensitivity + 360) % 360;
 
         // Verifica si se pasó de los límites.
@@ -65,7 +65,7 @@ public class CameraFirstPerson : MonoBehaviour
         // Alinea la rotación de la cámara en Y al jugador.
         rotation.y = transform.rotation.eulerAngles.y;
 
-        camera.transform.localEulerAngles = rotation;
-        camera.transform.position = positionToGo.position;
+        cam.transform.localEulerAngles = rotation;
+        cam.transform.position = positionToGo.position;
     }
 }
