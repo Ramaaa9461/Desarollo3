@@ -6,13 +6,21 @@ public class InteractionObjects : MonoBehaviour
     Transform tutorialParent;
     Transform grippablesObjectsParent;
     [SerializeField] Vector3 offsetGrippeablesObjects;
+    [SerializeField] LayerMask InteractableMask;
 
     string towerTag = "Tower";
     string columnsTag = "Grippable";
-    string butonTag = "Button";
+    string buttonTag = "Button";
     string tutorialTag = "Tutorial";
 
-    void Start()
+    bool useTower = false;
+    bool useButton = false;
+    bool useColumns = false;
+
+    Collider _collider;
+    DiegeticUI diegeticUI;
+
+    private void Awake()
     {
         grippablesObjectsParent = GameObject.Find("Grippables Objects").transform;
         tutorialParent = GameObject.Find("Tutorial").transform;
@@ -22,96 +30,144 @@ public class InteractionObjects : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E))
+
+        if (useTower)
         {
-            InteractionKeyboard();
+            if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E))
+            {
+                if (_collider.CompareTag(towerTag))
+                {
+                    TowerInteraction(_collider);
+                }
+            }
+        }
+        else if (useButton)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (_collider.CompareTag(buttonTag))
+                {
+                    ButtonInteraction(_collider);
+                }
+            }
+        }
+        else if (useColumns)
+        {
+            if (_collider.CompareTag(columnsTag) || _collider.CompareTag(tutorialTag))
+            {
+                ColumnsInteraction(_collider);
+            }
         }
 
+
+    }
+
+    private void OnTriggerEnter(Collider other) //Hacer chequo en Enter
+    {
+        if (InteractableMask.Contains(other.gameObject.layer)) //Layer interactuable
+        {
+
+            if (_collider == null)
+            {
+                _collider = other;
+                diegeticUI = other.gameObject.GetComponent<DiegeticUI>();
+                diegeticUI.DigeticUiOn();
+
+
+                if (other.CompareTag(towerTag))
+                {
+                    useTower = true;
+                }
+                else if (other.CompareTag(buttonTag))
+                {
+                    useButton = true;
+                }
+                else if (other.CompareTag(columnsTag) || other.CompareTag(tutorialTag))
+                {
+                    useColumns = true;
+                }
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (_collider == other)
+        {
+            _collider = null;
+            useTower = false;
+            useColumns = false;
+            useButton = false;
+            diegeticUI.DigeticUiOff();
+        }
+
+    }
+
+    void ButtonInteraction(Collider hit)
+    {
+        hit.transform.GetComponentInChildren<ButtonBase>().pressButton();
+    }
+    void TowerInteraction(Collider hit)
+    {
+        TowerBehavior towerBehavior = hit.gameObject.transform.GetComponent<TowerBehavior>();
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            towerBehavior.CheckIndexRayDown();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            towerBehavior.CheckIndexRayUp();
+        }
+    }
+    void ColumnsInteraction(Collider hit)
+    {
+        if (hit.transform.tag == columnsTag) //serian las columans del segundoNivel
+        {
+            GrabAndDropColumns(hit, grippablesObjectsParent.transform, columnsTag, grippablesObjectsParent.transform.GetComponent<ColumnLogicBase>().columnsCount);
+        }
+        else if (hit.transform.tag == tutorialTag) //serian las columans del tutorial
+        {
+            GrabAndDropColumns(hit, tutorialParent, tutorialTag, tutorialParent.transform.GetComponent<ColumnLogicBase>().columnsCount); //Los objetos totales del padre, esta medio choto
+        }
+    }
+
+
+    void GrabAndDropColumns(Collider hit, Transform parent, string tagName, int numberColumsInParent)
+    {
         if (Input.GetMouseButtonDown(0))
         {
-            InteractionMouse();
-        }
 
-    }
-
-    void InteractionKeyboard()
-    {
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 5f, LayerMask.GetMask("Interactable")))
-        {
-            if (hit.transform.parent && hit.transform.parent.CompareTag(towerTag)) //Si interactua con una torre
+            if (hit.transform.gameObject.CompareTag(tagName)) // Si intactua con un objeto agarrable
             {
-                TowerBehavior towerBehavior = hit.transform.parent.GetComponent<TowerBehavior>();
-
-                if (Input.GetKeyDown(KeyCode.Q))
+                if (hit.transform.parent == parent.transform)
                 {
-                    towerBehavior.CheckIndexRayDown();
-                }
-
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    towerBehavior.CheckIndexRayUp();
-                }
-            }
-
-        }
-    }
-
-    void InteractionMouse()
-    {
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 5f, LayerMask.GetMask("Interactable")))
-        {
-            if (hit.transform.tag == columnsTag) //serian las columans del segundoNivel
-            {
-                GrabAndDropColumns(hit, grippablesObjectsParent.transform, columnsTag, grippablesObjectsParent.transform.GetComponent<ColumnLogicBase>().columnsCount);
-            }
-            else if(hit.transform.tag == tutorialTag) //serian las columans del tutorial
-            {
-                GrabAndDropColumns(hit, tutorialParent, tutorialTag, 9); //Los objetos totales del padre, esta medio choto
-            }
-            else if (hit.transform.CompareTag("Button"))  //Si es un boton
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    hit.transform.GetComponent<ButtonBase>().pressButton();
-                }
-            }
-        }
-    }
-
-
-    void GrabAndDropColumns(RaycastHit hit, Transform parent, string tagName, int numberColumsInParent)
-    {
-        if (hit.transform.gameObject.CompareTag(tagName)) // Si intactua con un objeto agarrable
-        {
-            if (hit.transform.parent == parent.transform)
-            {
-                if (parent.transform.childCount == numberColumsInParent) //Mejorar numero harcodeado
-                {
-                    if (Input.GetMouseButtonDown(0))
+                    if (parent.transform.childCount == numberColumsInParent) //Mejorar numero harcodeado
                     {
-                        Vector3 colliderBounds = hit.collider.bounds.size;
+                        Vector3 colliderBounds = hit.transform.GetComponent<BoxCollider>().bounds.size;
 
                         hit.transform.rotation = transform.rotation;
                         hit.transform.SetParent(transform);
-                        hit.transform.position = transform.position + transform.forward * (colliderBounds.z + offsetGrippeablesObjects.z) + transform.up * (colliderBounds.y / 2 + offsetGrippeablesObjects.y) + transform.right * offsetGrippeablesObjects.x;//* transform.localScale.x / 2.0f;
+                        hit.transform.position = transform.position +
+                            transform.forward * (colliderBounds.z + offsetGrippeablesObjects.z) +
+                            transform.up * (colliderBounds.y / 2 + offsetGrippeablesObjects.y) +
+                            transform.right * offsetGrippeablesObjects.x;//* transform.localScale.x / 2.0f;
                     }
                 }
-            }
-            else if (hit.transform.parent == transform)
-            {
-                if (Input.GetMouseButtonDown(0))
+                else if (hit.transform.parent == transform)
                 {
                     hit.transform.SetParent(parent.transform);
 
                     hit.transform.GetComponentInParent<ColumnLogicBase>().CheckColumnInCorrectPivot(hit.transform);
+
+
+                    _collider = null;
+                    useColumns = false;
                 }
             }
-        }
 
+        }
 
     }
 

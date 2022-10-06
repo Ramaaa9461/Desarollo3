@@ -5,21 +5,21 @@ public class CameraFirstPerson : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] InputManagerReferences inputManagerReferences = null;
-    [SerializeField] Transform positionToGo = null; // El punto donde va a ir la cámara (el gameObject de la posición).
-    [SerializeField] GameObject player = null; // Referencia al jugador para girarlo al rotar la cámara.
+    [SerializeField] Transform positionToGo = null; // El punto donde va a ir la cï¿½mara (el gameObject de la posiciï¿½n).
+    [SerializeField] GameObject player = null; // Referencia al jugador para girarlo al rotar la cï¿½mara.
 
 
     [Header("Speed Configuration")]
-    [SerializeField] Vector2 sensitivity = Vector2.zero; // Sensibilidad de la cámara.
+    [SerializeField] Vector2 sensitivity = Vector2.zero; // Sensibilidad de la cï¿½mara.
 
     [Header("Angle Configuration")]
-    [SerializeField] float verticalDownAngle = 0.0f; // Qué tanto puede mirar hacia abajo (en grados). 80 es ideal.
+    [SerializeField] float verticalDownAngle = 0.0f; // Quï¿½ tanto puede mirar hacia abajo (en grados). 80 es ideal.
 
 
 
     void Update()
     {
-        RotatoryMotion(); // Para rotar la cámara y el jugador (este último lo rota sobre el eje Y, hacia los costados).
+        RotatoryMotion(); // Para rotar la cï¿½mara y el jugador (este ï¿½ltimo lo rota sobre el eje Y, hacia los costados).
     }
 
 
@@ -33,11 +33,11 @@ public class CameraFirstPerson : MonoBehaviour
         // Rota al jugador horizontalmente (sobre el eje Y).
         player.transform.Rotate(0.0f, rotateHorizontal * sensitivity.y * Time.deltaTime, 0.0f);
 
-        // Rota la cámara verticalmente.
+        // Rota la cï¿½mara verticalmente.
         Vector3 rotation = transform.localEulerAngles;
         rotation.x = (rotation.x - rotateVertical * sensitivity.x * Time.deltaTime + 360) % 360;
 
-        // Verifica si se pasó de los límites.
+        // Verifica si se pasï¿½ de los lï¿½mites.
         if (rotation.x > verticalDownAngle && rotation.x < 180.0f)
         {
             rotation.x = verticalDownAngle;
@@ -47,10 +47,10 @@ public class CameraFirstPerson : MonoBehaviour
             rotation.x = 280.0f;
         }
 
-        // Alínea la rotación de la cámara en Y al jugador.
+        // Alï¿½nea la rotaciï¿½n de la cï¿½mara en Y al jugador.
         rotation.y = player.transform.rotation.eulerAngles.y;
 
-        transform.localEulerAngles = rotation; // Ajusta la rotación de la cámara con los valores establecidos.
-        transform.position = positionToGo.position; // Lleva la cámara a la posición que debe seguir.
+        transform.localEulerAngles = rotation; // Ajusta la rotaciï¿½n de la cï¿½mara con los valores establecidos.
+        transform.position = positionToGo.position; // Lleva la cï¿½mara a la posiciï¿½n que debe seguir.
     }
 }

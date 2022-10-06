@@ -114,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
             verticalSpeed = 0;
         }
 
-        // Hice lo mismo que lo comentado más abajo, pero más resumido.
+        // Hice lo mismo que lo comentado mï¿½s abajo, pero mï¿½s resumido.
         if (Input.GetKeyDown(KeyCode.Space))
 		{
             if (isGrounded)
@@ -169,7 +169,6 @@ public class PlayerMovement : MonoBehaviour
 
     bool IsGrounded()
     {
-        Debug.DrawRay(transform.position, (Vector3.up * characterController.height / 2));
-        return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 - .2f) && verticalSpeed <= 0;
+        return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 - 0.15f) && verticalSpeed <= 0;
     }
 }
