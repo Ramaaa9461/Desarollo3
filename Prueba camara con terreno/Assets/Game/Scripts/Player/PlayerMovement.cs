@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space) && !isGrounded)
         {
-          //*  movement += transform.forward * 5;   En esta linea se puede hacer el Dash
+            movement += transform.forward * 5;  // En esta linea se puede hacer el Dash
 
             gravity = flightGravity;
         }

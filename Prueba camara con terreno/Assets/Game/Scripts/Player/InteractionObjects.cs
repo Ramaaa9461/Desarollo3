@@ -31,26 +31,33 @@ public class InteractionObjects : MonoBehaviour
     void Update()
     {
 
+
         if (useTower)
         {
             if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E))
             {
-                TowerInteraction(_collider);
+                if (_collider.CompareTag(towerTag))
+                {
+                    TowerInteraction(_collider);
+                }
             }
         }
         else if (useButton)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                ButtonInteraction(_collider);
+                if (_collider.CompareTag(buttonTag))
+                {
+                    ButtonInteraction(_collider);
+                }
             }
         }
         else if (useColumns)
         {
-            //if (Input.GetMouseButton(0))
-            //{
-            ColumnsInteraction(_collider);
-            //}
+            if (_collider.CompareTag(columnsTag) || _collider.CompareTag(tutorialTag))
+            {
+                ColumnsInteraction(_collider);
+            }
         }
 
 
@@ -60,25 +67,26 @@ public class InteractionObjects : MonoBehaviour
     {
         if (InteractableMask.Contains(other.gameObject.layer)) //Layer interactuable
         {
+
             if (_collider == null)
             {
                 _collider = other;
                 diegeticUI = other.gameObject.GetComponent<DiegeticUI>();
                 diegeticUI.DigeticUiOn();
-            }
 
 
-            if (other.CompareTag(towerTag))
-            {
-                useTower = true;
-            }
-            else if (other.CompareTag(buttonTag))
-            {
-                useButton = true;
-            }
-            else if (other.CompareTag(columnsTag) || other.CompareTag(tutorialTag))
-            {
-                useColumns = true;
+                if (other.CompareTag(towerTag))
+                {
+                    useTower = true;
+                }
+                else if (other.CompareTag(buttonTag))
+                {
+                    useButton = true;
+                }
+                else if (other.CompareTag(columnsTag) || other.CompareTag(tutorialTag))
+                {
+                    useColumns = true;
+                }
             }
         }
     }
