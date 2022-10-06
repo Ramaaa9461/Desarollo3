@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 
 public class InteractionObjects : MonoBehaviour
 {
@@ -13,7 +12,7 @@ public class InteractionObjects : MonoBehaviour
     string butonTag = "Button";
     string tutorialTag = "Tutorial";
 
-    private void Start()
+    void Start()
     {
         grippablesObjectsParent = GameObject.Find("Grippables Objects").transform;
         tutorialParent = GameObject.Find("Tutorial").transform;

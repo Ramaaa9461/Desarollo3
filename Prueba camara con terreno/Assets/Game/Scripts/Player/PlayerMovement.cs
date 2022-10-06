@@ -1,25 +1,29 @@
 using UnityEngine;
+using System.Collections.Generic;
+
 
 public class PlayerMovement : MonoBehaviour
 {
-    private CharacterController characterController;
+    [Header("Gravity Values")]
+    [SerializeField] float jumpForce = 15.0f;
+    [SerializeField] float gravity = -9.81f;
+    [SerializeField] float fallGravity = -18.0f; 
+    [SerializeField] float flightGravity = -9.0f;
+    [SerializeField] float verticalSpeed = 0.0f; 
 
+    [Header("Speed Values")]
+    [SerializeField] float movementSpeed = 20.0f;
+
+    [Header("References")]
+    [SerializeField] InputManagerReferences inputManagerReferences = null;
+    [SerializeField] Transform[] children = null;
+    [SerializeField] CameraViewManager cameraViewManager = null;
+
+
+    CharacterController characterController;
     Camera cam;
-    [SerializeField] float speed = 4;
-    [SerializeField] float jumpForce = 10;
-    [SerializeField] float gravity = Physics.gravity.y;
-    [SerializeField] float fallGravity = Physics.gravity.y;
-    [SerializeField] float flightGravity = Physics.gravity.y / 2;
+    bool thirdPersonCamera = true;
     Vector3 movement = Vector3.zero;
-    public float verticalSpeed;
-
-    [SerializeField] Transform pivotDown;
-
-    [SerializeField] bool thirdPersonCamera = true;
-    [SerializeField] float verticalDownAngle = 0.0f;
-    [SerializeField] Transform cameraPosition = null;
-    [SerializeField] float sensitivity = 0.0f;
-    [SerializeField] CameraFirstPerson cameraScriptFP = null;
 
 
 
@@ -27,26 +31,37 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         cam = Camera.main;
-        cameraScriptFP = GetComponent<CameraFirstPerson>();
     }
 
-    void Update()
+	void Start()
+	{
+        children = gameObject.GetComponentsInChildren<Transform>(true);
+    }
+
+	void Update()
     {
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown(inputManagerReferences.GetChangeCameraName()))
         {
             SwitchCameraConfiguration();
         }
 
         if (thirdPersonCamera)
         {
-            UpdateThirdPersonCamera();
+            MovePlayerInThirdPerson();
+        }
+        else
+		{
+            MovePlayerInFirstPerson();
         }
     }
 
-    void UpdateThirdPersonCamera()
+
+
+    void MovePlayerInThirdPerson()
     {
-        float hor = Input.GetAxis("Horizontal");
-        float ver = Input.GetAxis("Vertical");
+        float hor = Input.GetAxis(inputManagerReferences.GetHorizontalMovementName());
+        float ver = Input.GetAxis(inputManagerReferences.GetVerticalMovementName());
+
 
         movement = Vector3.zero;
 
@@ -63,20 +78,29 @@ public class PlayerMovement : MonoBehaviour
             Vector3 direction = forward * ver + right * hor;
             direction.Normalize();
 
-            movement = direction * speed * Time.deltaTime;
-
+            movement = direction * movementSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 0.2f);
         }
 
         CheckJump();
 
         movement.y = verticalSpeed * Time.deltaTime;
-
         characterController.Move(movement);
     }
+    void MovePlayerInFirstPerson()
+	{
+        float hor = Input.GetAxis(inputManagerReferences.GetHorizontalMovementName());
+        float ver = Input.GetAxis(inputManagerReferences.GetVerticalMovementName());
+        Vector3 direction = Vector3.zero;
 
 
-    public void CheckJump()
+        CheckJump();
+
+        direction = transform.right * hor + transform.forward * ver + transform.up * verticalSpeed * Time.deltaTime;
+        characterController.Move(direction);
+    }
+
+    void CheckJump()
     {
         bool isGrounded = IsGrounded();
 
@@ -90,28 +114,57 @@ public class PlayerMovement : MonoBehaviour
             verticalSpeed = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            verticalSpeed = jumpForce;
-        }
-        else if (Input.GetKeyDown(KeyCode.Space) && !isGrounded)
-        {
-          //*  movement += transform.forward * 5;   En esta linea se puede hacer el Dash
+        // Hice lo mismo que lo comentado más abajo, pero más resumido.
+        if (Input.GetKeyDown(KeyCode.Space))
+		{
+            if (isGrounded)
+			{
+                verticalSpeed = jumpForce;
+            }
+            else
+			{
+                //*  movement += transform.forward * 5;   En esta linea se puede hacer el Dash
 
-            gravity = flightGravity;
-        }
+                gravity = flightGravity;
+            }
+		}
+
+        //if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        //{
+        //    verticalSpeed = jumpForce;
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Space) && !isGrounded)
+        //{
+        //  //*  movement += transform.forward * 5;   En esta linea se puede hacer el Dash
+
+        //    gravity = flightGravity;
+        //}
     }
 
-    public float GetFallSpeed()
-    {
-        return verticalSpeed * Time.deltaTime;
-    }
 
     void SwitchCameraConfiguration()
     {
         thirdPersonCamera = !thirdPersonCamera;
-        cam.GetComponent<CameraOrbit>().enabled = !cam.GetComponent<CameraOrbit>().enabled;
-        cameraScriptFP.enabled = !cameraScriptFP.enabled;
+        cameraViewManager.SwitchCameraType();
+
+        if (thirdPersonCamera)
+		{
+            gameObject.layer = 0;
+
+			for (int i = 0; i < children.Length; i++)
+			{
+                children[i].gameObject.layer = 0;
+			}
+        }
+        else
+		{
+            gameObject.layer = 7;
+
+            for (int i = 0; i < children.Length; i++)
+            {
+                children[i].gameObject.layer = 7;
+            }
+        }
     }
 
     bool IsGrounded()
@@ -119,5 +172,4 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawRay(transform.position, (Vector3.up * characterController.height / 2));
         return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 - .2f) && verticalSpeed <= 0;
     }
-
 }
