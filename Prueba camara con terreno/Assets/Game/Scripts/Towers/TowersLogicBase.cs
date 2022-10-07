@@ -1,14 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-public abstract class TowersLogicBase : MonoBehaviour
+
+namespace Owlligence
 {
-    protected List<GameObject> rayList;
-    protected List<Quaternion> Winrotations;
+    public abstract class TowersLogicBase : MonoBehaviour
+    {
+        protected List<GameObject> rayList;
+        protected List<Quaternion> winRotations;
 
-     public abstract bool CheckWinCondition();
-     public abstract void SetWinCondition();
 
 
+        public abstract bool CheckWinCondition();
+        public abstract void SetWinCondition();
+    }
 }

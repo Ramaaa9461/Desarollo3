@@ -1,10 +1,13 @@
 using UnityEngine;
 
 
-struct CameraState
+namespace Owlligence
 {
-    public Vector3 position;
-    public Vector3 rotation;
-    public Transform lookAt;
-    public float time;
+    struct CameraState
+    {
+        public Vector3 position;
+        public Vector3 rotation;
+        public Transform lookAt;
+        public float time;
+    }
 }

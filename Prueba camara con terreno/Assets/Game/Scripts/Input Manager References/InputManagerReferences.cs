@@ -1,47 +1,68 @@
 using UnityEngine;
 
 
-
-public class InputManagerReferences : MonoBehaviour
+namespace Owlligence
 {
-	[Header("Button names")]
-	[SerializeField] string changeCamera = "";
-
-	[Header("Axis names")]
-	[SerializeField] string horizontalMouse = "";
-	[SerializeField] string verticalMouse = "";
-	[Space(10)]
-	[SerializeField] string horizontalMovement = "";
-	[SerializeField] string verticalMovement = "";
-	[Space(10)]
-	[SerializeField] string cameraZoom = "";
-
-
-	public string GetChangeCameraName()
+	public class InputManagerReferences : MonoBehaviour
 	{
-		return changeCamera;
-	}
+		[Header("Button names")]
+		[SerializeField] string directAction = "";
+		[SerializeField] string changeCamera = "";
+		[Space(10)]
+		[SerializeField] string secondaryActionLeft = "";
+		[SerializeField] string secondaryActionRight = "";
 
-	public string GetHorizontalMouseName()
-	{
-		return horizontalMouse;
-	}
-	public string GetVerticalMouseName()
-	{
-		return verticalMouse;
-	}
+		[Header("Axis names")]
+		[SerializeField] string horizontalMouse = "";
+		[SerializeField] string verticalMouse = "";
+		[Space(10)]
+		[SerializeField] string horizontalMovement = "";
+		[SerializeField] string verticalMovement = "";
+		[Space(10)]
+		[SerializeField] string cameraZoom = "";
 
-	public string GetHorizontalMovementName()
-	{
-		return horizontalMovement;
-	}
-	public string GetVerticalMovementName()
-	{
-		return verticalMovement;
-	}
 
-	public string GetCameraZoom()
-	{
-		return cameraZoom;
+
+		public string DirectAction
+		{
+			get { return directAction; }
+		}
+		public string ChangeCamera
+		{
+			get { return changeCamera; }
+		}
+
+		public string SecondaryActionLeft
+		{
+			get { return secondaryActionLeft; }
+		}
+		public string SecondaryActionRight
+		{
+			get { return secondaryActionRight; }
+		}
+
+
+		public string HorizontalMouse
+		{
+			get { return horizontalMouse; }
+		}
+		public string VerticalMouse
+		{
+			get { return verticalMouse; }
+		}
+
+		public string HorizontalMovement
+		{
+			get { return horizontalMovement; }
+		}
+		public string VerticalMovement
+		{
+			get { return verticalMovement; }
+		}
+
+		public string CameraZoom
+		{
+			get { return cameraZoom; }
+		}
 	}
 }

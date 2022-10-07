@@ -1,52 +1,55 @@
 using System.Collections;
+
 using UnityEngine;
 
-public class TreeGrowth : MonoBehaviour
+
+namespace Owlligence
 {
-    Vector3 newPosition;
-    Quaternion rotation;
-
-    [SerializeField] float distanceUp;
-    [SerializeField] float rotateAngle;
-
-    [SerializeField] float duration;
-
-    Coroutine growingUp;
-    
-    
-    public void UpTree()
+    public class TreeGrowth : MonoBehaviour
     {
-        if (growingUp == null)
+        [SerializeField] float distanceUp;
+        [SerializeField] float rotateAngle;
+        [SerializeField] float duration;
+
+
+        Coroutine growingUp;
+        Vector3 newPosition;
+        Quaternion rotation;
+    
+    
+
+        public void UpTree()
         {
+            if (growingUp == null)
+            {
                 newPosition = new Vector3(transform.position.x, transform.position.y + distanceUp, transform.position.z);
                 rotation = Quaternion.AngleAxis(rotateAngle, Vector3.up) * transform.rotation;
 
                 growingUp = StartCoroutine(GrowingUp(newPosition, rotation));
+            }
         }
-    }
 
-
-    IEnumerator GrowingUp(Vector3 newPosition, Quaternion newRotation)
-    {
-        float timer = 0;
-
-
-
-        while (timer <= duration)
+        IEnumerator GrowingUp(Vector3 newPosition, Quaternion newRotation)
         {
-            float interpolationValue = timer / duration;
+            float timer = 0;
 
-            transform.position = Vector3.Lerp(transform.position, newPosition, interpolationValue);
-            transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, interpolationValue);
 
-            timer += Time.deltaTime;
+            while (timer <= duration)
+            {
+                float interpolationValue = timer / duration;
 
-            yield return new WaitForEndOfFrame();
+
+                transform.position = Vector3.Lerp(transform.position, newPosition, interpolationValue);
+                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, interpolationValue);
+
+                timer += Time.deltaTime;
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            transform.position = newPosition;
+            transform.rotation = newRotation;
+            growingUp = null;
         }
-
-        transform.position = newPosition;
-        transform.rotation = newRotation;
-        growingUp = null;
     }
-
 }

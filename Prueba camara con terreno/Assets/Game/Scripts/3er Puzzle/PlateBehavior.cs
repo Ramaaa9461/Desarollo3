@@ -1,77 +1,80 @@
 using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-public class PlateBehavior : MonoBehaviour
+
+namespace Owlligence
 {
-    [SerializeField] GameObject plate;
-    [SerializeField] Transform[] possiblePositions = new Transform[3];
-    [SerializeField] float duration;
-
-
-    int currentPlatform = 0;
-    Coroutine movePlate;
-
-    private void Start()
+    public class PlateBehavior : MonoBehaviour
     {
-        plate.transform.position = possiblePositions[Random.Range(0, 3)].position;
+        [SerializeField] Transform[] possiblePositions = new Transform[3];
+        [SerializeField] GameObject plate;
+        [SerializeField] float duration;
 
-        for (int i = 0; i < possiblePositions.Length; i++)
+
+        int currentPlatform = 0;
+        Coroutine movePlate;
+
+
+
+        private void Start()
         {
-            if (plate.transform.position == possiblePositions[i].position)
+            plate.transform.position = possiblePositions[Random.Range(0, 3)].position;
+
+            for (int i = 0; i < possiblePositions.Length; i++)
             {
-                currentPlatform = i;
+                if (plate.transform.position == possiblePositions[i].position)
+                {
+                    currentPlatform = i;
+                }
             }
         }
-    }
 
-    public void MoveLeft()
-    {
-        if (currentPlatform != 0)
+
+
+        public void MoveLeft()
         {
-            currentPlatform--;
-
-            if (movePlate == null)
+            if (currentPlatform != 0)
             {
-                StartCoroutine(MovePlate(plate.transform, possiblePositions[currentPlatform].position));
+                currentPlatform--;
+
+                if (movePlate == null)
+                {
+                    StartCoroutine(MovePlate(plate.transform, possiblePositions[currentPlatform].position));
+                }
             }
         }
-    }
-    public void MoveRight()
-    {
-        if (currentPlatform != possiblePositions.Length - 1)
+        public void MoveRight()
         {
-            currentPlatform++;
-
-            if (movePlate == null)
+            if (currentPlatform != possiblePositions.Length - 1)
             {
-                StartCoroutine(MovePlate(plate.transform, possiblePositions[currentPlatform].position));
+                currentPlatform++;
+
+                if (movePlate == null)
+                {
+                    StartCoroutine(MovePlate(plate.transform, possiblePositions[currentPlatform].position));
+                }
+            }
+        }
+
+        IEnumerator MovePlate(Transform plate, Vector3 endPosition)
+        {
+            float timer = 0;
+
+
+            while (timer <= duration)
+            {
+                float interpolationValue = timer / duration;
+
+                plate.position = Vector3.Lerp(plate.position, endPosition, interpolationValue);
+
+                timer += Time.deltaTime;
+
+                yield return new WaitForEndOfFrame();
             }
 
+            plate.position = endPosition;
+            movePlate = null;
         }
     }
-    IEnumerator MovePlate(Transform plate, Vector3 endPosition)
-    {
-        float timer = 0;
-
-
-
-        while (timer <= duration)
-        {
-            float interpolationValue = timer / duration;
-
-            plate.position = Vector3.Lerp(plate.position, endPosition, interpolationValue);
-
-            timer += Time.deltaTime;
-
-            yield return new WaitForEndOfFrame();
-        }
-
-        plate.position = endPosition;
-        movePlate = null;
-    }
-
-
-
 }
-

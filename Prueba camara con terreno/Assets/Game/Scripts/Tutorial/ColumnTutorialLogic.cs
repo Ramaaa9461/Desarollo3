@@ -1,56 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ColumnTutorialLogic : ColumnLogicBase
+
+namespace Owlligence
 {
-    int indexColum;
-
-    private void Start()
+    public class ColumnTutorialLogic : ColumnLogicBase
     {
-        columnsCount = 10;
-    }
+        int indexColum;
 
-    public override void CheckColumnInCorrectPivot(Transform currentColum)
-    {
-        for (int i = 0; i < columns.Length; i++)
+
+
+        void Awake()
+		{
+            indexColum = 0;
+		}
+
+        void Start()
         {
-            if (columns[i] == currentColum)
-            {
-                indexColum = i;
-                break;
-            }
+            columnsCount = 10;
         }
 
-        if (Vector3.Distance(currentColum.position, pivotsColumns[indexColum].position) < 4f)
+
+
+        public override void CheckColumnInCorrectPivot(Transform currentColum)
         {
-            currentColum.transform.position = pivotsColumns[indexColum].position;
-            //currentColum.tag = null; //Tengo que modificar la layer, pero esto hace que no la pueda agarrar mas
-        }
-
-    }
-
-    public override bool CheckWincondition()
-    {
-        int count = 0;
-
-        for (int i = 0; i < columns.Length - 1; i++)
-        {
-            if (columns[i].position == pivotsColumns[i].position)
+            for (int i = 0; i < columns.Length; i++)
             {
-                count++;
-
-                if (count >= columns.Length - 1)
+                if (columns[i] == currentColum)
                 {
-                    return true;
+                    indexColum = i;
+                    break;
                 }
             }
-            else
+
+            if (Vector3.Distance(currentColum.position, pivotsColumns[indexColum].position) < 4f)
             {
-                break;
+                currentColum.transform.position = pivotsColumns[indexColum].position;
+                //currentColum.tag = null; //Tengo que modificar la layer, pero esto hace que no la pueda agarrar mas
             }
         }
 
-        return false;
+        public override bool CheckWincondition()
+        {
+            int count = 0;
+
+
+            for (int i = 0; i < columns.Length - 1; i++)
+            {
+                if (columns[i].position == pivotsColumns[i].position)
+                {
+                    count++;
+
+                    if (count >= columns.Length - 1)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return false;
+        }
     }
 }

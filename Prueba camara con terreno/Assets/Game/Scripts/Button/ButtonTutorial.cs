@@ -1,34 +1,43 @@
 using System.Collections;
+
 using UnityEngine;
 
-public class ButtonTutorial : ButtonBase
+
+namespace Owlligence
 {
-    [SerializeField] GameObject Door;
-
-    bool openDoor;
-    public override void pressButton()
+    public class ButtonTutorial : ButtonBase
     {
-        if (!doorIsOpen)
+        [SerializeField] GameObject Door;
+
+
+        bool openDoor;
+        
+        
+        
+        public override void pressButton()
         {
-            openDoor = towerBase.CheckWinCondition() && columBase.CheckWincondition();
-
-            if (openDoor)
+            if (!doorIsOpen)
             {
-                treeGrowth.UpTree();
+                openDoor = towerBase.CheckWinCondition() && columBase.CheckWincondition();
 
-                StartCoroutine(WaitGrowthTree());
+                if (openDoor)
+                {
+                    treeGrowth.UpTree();
 
-                doorIsOpen =true;
+                    StartCoroutine(WaitGrowthTree());
+
+                    doorIsOpen =true;
+                }
             }
+
+            lightButton.ChangeLigthColor(openDoor);
         }
 
-        lightButton.ChangeLigthColor(openDoor);
-    }
+        IEnumerator WaitGrowthTree()
+        {
+            yield return new WaitForSeconds(3);
 
-    IEnumerator WaitGrowthTree()
-    {
-        yield return new WaitForSeconds(3);
-
-        Door.GetComponent<OpenDoor>().UpTheDoor();
+            Door.GetComponent<OpenDoor>().UpTheDoor();
+        }
     }
 }

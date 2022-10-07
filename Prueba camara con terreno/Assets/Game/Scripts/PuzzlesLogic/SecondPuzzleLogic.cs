@@ -1,65 +1,77 @@
 using UnityEngine;
 
-public class SecondPuzzleLogic : ColumnLogicBase
+
+
+namespace Owlligence
 {
-    [SerializeField] GameObject secondPuzzleDoor;
-    [SerializeField] TreeGrowth treeGrowth;
-    int indexColum;
+    public class SecondPuzzleLogic : ColumnLogicBase
+    {
+        [SerializeField] GameObject secondPuzzleDoor;
+        [SerializeField] TreeGrowth treeGrowth;
 
-    private void Start()
-    {
-        columnsCount = 4;
-    }
-    public override void CheckColumnInCorrectPivot(Transform currentColum)
-    {
-        for (int i = 0; i < columns.Length; i++)
+
+        int indexColum;
+
+
+
+        void Start()
         {
-            if (columns[i] == currentColum)
-            {
-                indexColum = i;
-                break;
-            }
+            columnsCount = 4;
         }
 
-        if (Vector3.Distance(currentColum.position, pivotsColumns[indexColum].position) < 4f)
-        {
-            currentColum.transform.position = pivotsColumns[indexColum].position;
-            //currentColum.tag = null; //Tengo que modificar la layer, pero esto hace que no la pueda agarrar mas
-        }
 
-        if (!doorIsOpen)
+
+        public override void CheckColumnInCorrectPivot(Transform currentColum)
         {
-            if (CheckWincondition())
+            for (int i = 0; i < columns.Length; i++)
             {
-                secondPuzzleDoor.GetComponent<OpenDoor>().UpTheDoor();
-                treeGrowth.UpTree();
-                doorIsOpen = true;
-            }
-        }
-
-    }
-
-    public override bool CheckWincondition()
-    {
-        int count = 0;
-
-        for (int i = 0; i < columns.Length - 1; i++)
-        {
-            if (columns[i].position == pivotsColumns[i].position)
-            {
-                count++;
-
-                if (count >= columns.Length - 1)
+                if (columns[i] == currentColum)
                 {
-                    return true;
+                    indexColum = i;
+                    break;
                 }
             }
-            else
+
+            if (Vector3.Distance(currentColum.position, pivotsColumns[indexColum].position) < 4f)
             {
-                break;
+                currentColum.transform.position = pivotsColumns[indexColum].position;
+                //currentColum.tag = null; //Tengo que modificar la layer, pero esto hace que no la pueda agarrar mas
+            }
+
+            if (!doorIsOpen)
+            {
+                if (CheckWincondition())
+                {
+                    secondPuzzleDoor.GetComponent<OpenDoor>().UpTheDoor();
+                    treeGrowth.UpTree();
+                    doorIsOpen = true;
+                }
             }
         }
 
-        return false;
+        public override bool CheckWincondition()
+        {
+            int count = 0;
+
+
+            for (int i = 0; i < columns.Length - 1; i++)
+            {
+                if (columns[i].position == pivotsColumns[i].position)
+                {
+                    count++;
+
+                    if (count >= columns.Length - 1)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return false;
+        }
     }
 }

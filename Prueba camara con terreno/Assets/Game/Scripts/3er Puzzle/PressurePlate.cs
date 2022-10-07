@@ -1,45 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class PressurePlate : MonoBehaviour
+
+namespace Owlligence
 {
-    [SerializeField] DirectionMove direction;
-    enum DirectionMove { Left, Right }
-
-    float counter = 0;
-    PlateBehavior plateBehavior;
-    bool canMove = true;
-
-
-    private void OnTriggerStay(Collider other)
+    public class PressurePlate : MonoBehaviour
     {
-        counter += Time.deltaTime;
+        [SerializeField] DirectionMove direction;
 
-        if (counter > 1f && canMove)
+
+        PlateBehavior plateBehavior;
+        float counter = 0;
+        bool canMove = true;
+
+
+
+        void OnTriggerStay(Collider other)
         {
-            plateBehavior = GetComponentInParent<PlateBehavior>();
+            counter += Time.deltaTime;
 
-            if (direction == DirectionMove.Left)
+            if (counter > 1.0f && canMove)
             {
-                plateBehavior.MoveLeft();
+                plateBehavior = GetComponentInParent<PlateBehavior>();
 
-            }
-            else if (direction == DirectionMove.Right)
-            {
-                plateBehavior.MoveRight();
-            }
+                if (direction == DirectionMove.Left)
+                {
+                    plateBehavior.MoveLeft();
 
-            canMove = false;
-            counter = 0;
+                }
+                else if (direction == DirectionMove.Right)
+                {
+                    plateBehavior.MoveRight();
+                }
+
+                canMove = false;
+                counter = 0;
+            }
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            canMove = true;
         }
     }
-
-
-    private void OnTriggerExit(Collider other)
-    {
-        canMove = true;
-    }
-
 }

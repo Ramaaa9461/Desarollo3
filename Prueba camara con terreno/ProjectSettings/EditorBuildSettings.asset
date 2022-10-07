@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Game/Scene/Espejo.unity
+    path: Assets/Game/Scene/Gameplay.unity
     guid: 488554173a3bf8046b8a8547ae9472f1
   m_configObjects: {}

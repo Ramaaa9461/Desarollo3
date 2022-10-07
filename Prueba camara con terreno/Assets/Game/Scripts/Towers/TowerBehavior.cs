@@ -1,101 +1,110 @@
 using System.Collections.Generic;
+
 using UnityEngine;
 
-public class TowerBehavior : MonoBehaviour
+
+namespace Owlligence
 {
-    int indexRay = 0;
-    int currentRay = 0;
-
-    List<GameObject> rayList;
-
-    private LineRenderer lr;
-    BaseTower baseTower;
-    Vector3 nextPosition;
-
-    void Awake()
+    public class TowerBehavior : MonoBehaviour
     {
-        lr = GetComponent<LineRenderer>();
-        baseTower = transform.parent.GetComponent<BaseTower>();
+        BaseTower baseTower;
+        List<GameObject> rayList;
+        LineRenderer lr;
+        
+        int indexRay = 0;
+        int currentRay = 0;
 
-        rayList = baseTower.GetRayList();
-    }
+        Vector3 nextPosition;
 
-    private void Start()
-    {
-        for (int i = 0; i < rayList.Count; i++)
+
+
+        void Awake()
         {
-            if (rayList[i] == gameObject)
-            {
-                indexRay = i;
-            }
+            baseTower = transform.parent.parent.GetComponent<BaseTower>();
+            rayList = baseTower.GetRayList();
+            lr = GetComponent<LineRenderer>();
         }
 
-        if (indexRay != rayList.Count - 1)
+        void Start()
         {
-            currentRay = indexRay + 1;
+            for (int i = 0; i < rayList.Count; i++)
+            {
+                if (rayList[i] == gameObject)
+                {
+                    indexRay = i;
+                }
+            }
+
+            if (indexRay != rayList.Count - 1)
+            {
+                currentRay = indexRay + 1;
+
+                rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
+            }
+            else
+            {
+                rayList[indexRay].transform.LookAt(rayList[0].transform);
+                currentRay = 0;
+            }
+
+            lr.SetPosition(0, transform.position);
+            lr.SetPosition(1, rayList[currentRay].transform.position);
+        }
+
+
+
+        public void CheckIndexRayDown()
+        {
+            currentRay--;
+
+            if (currentRay == indexRay)
+            {
+                currentRay--;
+            }
+
+            if (currentRay < 0)
+            {
+                currentRay = rayList.Count - 1;
+            }
+
+            if (currentRay == indexRay)
+            {
+                currentRay--;
+            }
 
             rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
-        }
-        else
-        {
-            rayList[indexRay].transform.LookAt(rayList[0].transform);
-            currentRay = 0;
-        }
 
-        lr.SetPosition(0, transform.position);
-        lr.SetPosition(1, rayList[currentRay].transform.position);
-    }
+            nextPosition = rayList[currentRay].transform.position;
 
-
-    public void CheckIndexRayDown()
-    {
-        currentRay--;
-
-        if (currentRay == indexRay)
-        {
-            currentRay--;
-        }
-        if (currentRay < 0)
-        {
-            currentRay = rayList.Count - 1;
-        }
-        if (currentRay == indexRay)
-        {
-            currentRay--;
+            lr.SetPosition(0, transform.position);
+            lr.SetPosition(1, nextPosition);
         }
 
-        rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
-
-        nextPosition = rayList[currentRay].transform.position;
-
-        lr.SetPosition(0, transform.position);
-        lr.SetPosition(1, nextPosition);
-    }
-
-    public void CheckIndexRayUp()
-    {
-        currentRay++;
-
-        if (currentRay == indexRay)
+        public void CheckIndexRayUp()
         {
             currentRay++;
+
+            if (currentRay == indexRay)
+            {
+                currentRay++;
+            }
+
+            if (currentRay > rayList.Count - 1)
+            {
+                currentRay = 0;
+            }
+
+            if (currentRay == indexRay)
+            {
+                currentRay++;
+            }
+
+            rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
+
+            nextPosition = rayList[currentRay].transform.position;
+
+            lr.SetPosition(0, transform.position);
+            lr.SetPosition(1, nextPosition);
         }
-
-        if (currentRay > rayList.Count - 1)
-        {
-            currentRay = 0;
-        }
-
-        if (currentRay == indexRay)
-        {
-            currentRay++;
-        }
-
-        rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
-
-        nextPosition = rayList[currentRay].transform.position;
-
-        lr.SetPosition(0, transform.position);
-        lr.SetPosition(1, nextPosition);
     }
 }
