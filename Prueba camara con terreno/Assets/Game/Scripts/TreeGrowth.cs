@@ -1,55 +1,52 @@
 using System.Collections;
-
 using UnityEngine;
 
-
-namespace Owlligence
+public class TreeGrowth : MonoBehaviour
 {
-    public class TreeGrowth : MonoBehaviour
+    Vector3 newPosition;
+    Quaternion rotation;
+
+    [SerializeField] float distanceUp;
+    [SerializeField] float rotateAngle;
+
+    [SerializeField] float duration;
+
+    Coroutine growingUp;
+    
+    
+    public void UpTree()
     {
-        [SerializeField] float distanceUp;
-        [SerializeField] float rotateAngle;
-        [SerializeField] float duration;
-
-
-        Coroutine growingUp;
-        Vector3 newPosition;
-        Quaternion rotation;
-    
-    
-
-        public void UpTree()
+        if (growingUp == null)
         {
-            if (growingUp == null)
-            {
                 newPosition = new Vector3(transform.position.x, transform.position.y + distanceUp, transform.position.z);
                 rotation = Quaternion.AngleAxis(rotateAngle, Vector3.up) * transform.rotation;
 
                 growingUp = StartCoroutine(GrowingUp(newPosition, rotation));
-            }
-        }
-
-        IEnumerator GrowingUp(Vector3 newPosition, Quaternion newRotation)
-        {
-            float timer = 0;
-
-
-            while (timer <= duration)
-            {
-                float interpolationValue = timer / duration;
-
-
-                transform.position = Vector3.Lerp(transform.position, newPosition, interpolationValue);
-                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, interpolationValue);
-
-                timer += Time.deltaTime;
-
-                yield return new WaitForEndOfFrame();
-            }
-
-            transform.position = newPosition;
-            transform.rotation = newRotation;
-            growingUp = null;
         }
     }
+
+
+    IEnumerator GrowingUp(Vector3 newPosition, Quaternion newRotation)
+    {
+        float timer = 0;
+
+
+
+        while (timer <= duration)
+        {
+            float interpolationValue = timer / duration;
+
+            transform.position = Vector3.Lerp(transform.position, newPosition, interpolationValue);
+            transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, interpolationValue);
+
+            timer += Time.deltaTime;
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        transform.position = newPosition;
+        transform.rotation = newRotation;
+        growingUp = null;
+    }
+
 }
