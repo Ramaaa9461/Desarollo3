@@ -79,11 +79,8 @@ public class PlayerMovement : MonoBehaviour
             direction.Normalize();
 
             movement = direction * movementSpeed * Time.deltaTime;
-<<<<<<< HEAD
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 0.2f);
-=======
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 0.05f);
->>>>>>> main
+
         }
 
         CheckJump();
