@@ -1,67 +1,56 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-
-namespace Owlligence
+public class ColumnTutorialLogic : ColumnLogicBase
 {
-    public class ColumnTutorialLogic : ColumnLogicBase
+    int indexColum;
+
+    private void Start()
     {
-        int indexColum;
+        columnsCount = 10;
+    }
 
-
-
-        void Awake()
-		{
-            indexColum = 0;
-		}
-
-        void Start()
+    public override void CheckColumnInCorrectPivot(Transform currentColum)
+    {
+        for (int i = 0; i < columns.Length; i++)
         {
-            columnsCount = 10;
-        }
-
-
-
-        public override void CheckColumnInCorrectPivot(Transform currentColum)
-        {
-            for (int i = 0; i < columns.Length; i++)
+            if (columns[i] == currentColum)
             {
-                if (columns[i] == currentColum)
-                {
-                    indexColum = i;
-                    break;
-                }
-            }
-
-            if (Vector3.Distance(currentColum.position, pivotsColumns[indexColum].position) < 4f)
-            {
-                currentColum.transform.position = pivotsColumns[indexColum].position;
-                //currentColum.tag = null; //Tengo que modificar la layer, pero esto hace que no la pueda agarrar mas
+                indexColum = i;
+                break;
             }
         }
 
-        public override bool CheckWincondition()
+        if (Vector3.Distance(currentColum.position, pivotsColumns[indexColum].position) < 4f)
         {
-            int count = 0;
+            currentColum.transform.position = pivotsColumns[indexColum].position;
+            //currentColum.tag = null; //Tengo que modificar la layer, pero esto hace que no la pueda agarrar mas
+        }
 
+    }
 
-            for (int i = 0; i < columns.Length - 1; i++)
+    public override bool CheckWincondition()
+    {
+        int count = 0;
+
+        for (int i = 0; i < columns.Length - 1; i++)
+        {
+            if (columns[i].position == pivotsColumns[i].position)
             {
-                if (columns[i].position == pivotsColumns[i].position)
-                {
-                    count++;
+                count++;
 
-                    if (count >= columns.Length - 1)
-                    {
-                        return true;
-                    }
-                }
-                else
+                if (count >= columns.Length - 1)
                 {
-                    break;
+                    return true;
                 }
             }
-
-            return false;
+            else
+            {
+                break;
+            }
         }
+
+        return false;
     }
 }
