@@ -1,15 +1,16 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Gravity Values")]
     [SerializeField] float jumpForce = 15.0f;
     [SerializeField] float gravity = -9.81f;
-    [SerializeField] float fallGravity = -18.0f; 
+    [SerializeField] float fallGravity = -18.0f;
     [SerializeField] float flightGravity = -9.0f;
-    [SerializeField] float verticalSpeed = 0.0f; 
+    [SerializeField] float verticalSpeed = 0.0f;
+    [SerializeField] float duration = 0;
 
     [Header("Speed Values")]
     [SerializeField] float movementSpeed = 20.0f;
@@ -23,9 +24,9 @@ public class PlayerMovement : MonoBehaviour
     CharacterController characterController;
     Camera cam;
     bool thirdPersonCamera = true;
+    bool useDash = true;
+    Coroutine startDash;
     Vector3 movement = Vector3.zero;
-
-
 
     void Awake()
     {
@@ -33,12 +34,12 @@ public class PlayerMovement : MonoBehaviour
         cam = Camera.main;
     }
 
-	void Start()
-	{
+    void Start()
+    {
         children = gameObject.GetComponentsInChildren<Transform>(true);
     }
 
-	void Update()
+    void Update()
     {
         if (Input.GetButtonDown(inputManagerReferences.GetChangeCameraName()))
         {
@@ -50,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
             MovePlayerInThirdPerson();
         }
         else
-		{
+        {
             MovePlayerInFirstPerson();
         }
     }
@@ -89,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
         characterController.Move(movement);
     }
     void MovePlayerInFirstPerson()
-	{
+    {
         float hor = Input.GetAxis(inputManagerReferences.GetHorizontalMovementName());
         float ver = Input.GetAxis(inputManagerReferences.GetVerticalMovementName());
         Vector3 direction = Vector3.zero;
@@ -113,35 +114,49 @@ public class PlayerMovement : MonoBehaviour
         {
             gravity = fallGravity;
             verticalSpeed = 0;
+            useDash = true;
         }
 
-        // Hice lo mismo que lo comentado m�s abajo, pero m�s resumido.
         if (Input.GetKeyDown(KeyCode.Space))
-		{
+        {
             if (isGrounded)
-			{
+            {
                 verticalSpeed = jumpForce;
             }
             else
-			{
-                //*  movement += transform.forward * 5;   En esta linea se puede hacer el Dash
+            {
+                if (useDash)
+                {
+                    if (startDash == null)
+                    {
+                        StartCoroutine(StartDash(transform.position + transform.forward * 10));
+                    }
 
-                gravity = flightGravity;
+                    gravity = flightGravity;
+                    useDash = false;
+                }
             }
-		}
-
-        //if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        //{
-        //    verticalSpeed = jumpForce;
-        //}
-        //else if (Input.GetKeyDown(KeyCode.Space) && !isGrounded)
-        //{
-        //  //*  movement += transform.forward * 5;   En esta linea se puede hacer el Dash
-
-        //    gravity = flightGravity;
-        //}
+        }
     }
 
+    IEnumerator StartDash(Vector3 endPosition)
+    {
+        float timer = 0;
+
+        while (timer <= duration)
+        {
+            float interpolationValue = timer / duration;
+
+            transform.position = Vector3.Lerp(transform.position, endPosition, interpolationValue);
+
+            timer += Time.deltaTime;
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        transform.position = endPosition;
+        startDash = null;
+    }
 
     void SwitchCameraConfiguration()
     {
@@ -149,16 +164,16 @@ public class PlayerMovement : MonoBehaviour
         cameraViewManager.SwitchCameraType();
 
         if (thirdPersonCamera)
-		{
+        {
             gameObject.layer = 0;
 
-			for (int i = 0; i < children.Length; i++)
-			{
+            for (int i = 0; i < children.Length; i++)
+            {
                 children[i].gameObject.layer = 0;
-			}
+            }
         }
         else
-		{
+        {
             gameObject.layer = 7;
 
             for (int i = 0; i < children.Length; i++)
@@ -173,3 +188,6 @@ public class PlayerMovement : MonoBehaviour
         return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 - 0.15f) && verticalSpeed <= 0;
     }
 }
+
+
+

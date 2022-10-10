@@ -8,7 +8,7 @@ public class SecondPuzzleLogic : ColumnLogicBase
 
     private void Start()
     {
-        columnsCount = 4;
+        columnsCount = gameObject.transform.childCount;
     }
     public override void CheckColumnInCorrectPivot(Transform currentColum)
     {

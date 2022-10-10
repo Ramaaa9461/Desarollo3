@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -688,7 +688,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &97156075
 GameObject:
@@ -903,6 +903,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4162253513501663206, guid: fd09d153617bca74bbbe4debcffc1195, type: 3}
+--- !u!4 &118627789 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3709430889345702600, guid: ebab38362fc6a34428c48f01de087969, type: 3}
+  m_PrefabInstance: {fileID: 630157239}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &134239682
 GameObject:
   m_ObjectHideFlags: 0
@@ -1566,7 +1571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManagerReferences: {fileID: 79836489}
-  positionToGo: {fileID: 912747851}
+  positionToGo: {fileID: 118627789}
   player: {fileID: 374399881}
   sensitivity: {x: 200, y: 200}
   verticalDownAngle: 80

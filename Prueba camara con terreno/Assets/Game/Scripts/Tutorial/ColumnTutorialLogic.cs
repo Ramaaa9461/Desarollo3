@@ -8,7 +8,7 @@ public class ColumnTutorialLogic : ColumnLogicBase
 
     private void Start()
     {
-        columnsCount = 10;
+        columnsCount = gameObject.transform.childCount;
     }
 
     public override void CheckColumnInCorrectPivot(Transform currentColum)
