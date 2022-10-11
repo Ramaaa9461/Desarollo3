@@ -193,20 +193,9 @@ public class PlayerMovement : MonoBehaviour
 
     bool IsGrounded()
     {
+        Vector3 origin = transform.position - new Vector3(0, 0.45f, 0);
+        return (Physics.SphereCast(origin, 0.5f, -transform.up, out var hit, 0.1f) ); 
         // return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 - 0.15f) && verticalSpeed <= 0;
-        Debug.DrawRay(transform.position, -transform.up, Color.blue, characterController.height / 2);
-
-        Vector3 origin = transform.position - transform.up;
-        Vector3 direction;
-        bool pego = false;
-
-        if (Physics.SphereCast(transform.position, characterController.radius / 2, -transform.up, out var hit, characterController.height / 2))
-        {
-            Debug.Log(hit.transform.name, hit.transform.gameObject); 
-            pego = true;
-        }
-
-        return pego;
     }
 }
 
