@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float flightGravity = -9.0f;
     [SerializeField] float verticalSpeed = 0.0f;
     [SerializeField] float duration = 0;
+    [SerializeField] float _dashVelocity = 0;
+    [SerializeField] float rotationSpeed = 0;
 
     [Header("Speed Values")]
     [SerializeField] float movementSpeed = 20.0f;
@@ -27,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     bool useDash = true;
     Coroutine startDash;
     Vector3 movement = Vector3.zero;
+    Vector3 dashVelocity = Vector3.zero;
 
     void Awake()
     {
@@ -64,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         float ver = Input.GetAxis(inputManagerReferences.GetVerticalMovementName());
 
 
-        movement = Vector3.zero;
+        movement = dashVelocity * Time.deltaTime;
 
         if (hor != 0 || ver != 0)
         {
@@ -79,8 +82,8 @@ public class PlayerMovement : MonoBehaviour
             Vector3 direction = forward * ver + right * hor;
             direction.Normalize();
 
-            movement = direction * movementSpeed * Time.deltaTime;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 0.2f);
+            movement += direction * movementSpeed * Time.deltaTime;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
 
         }
 
@@ -129,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (startDash == null)
                     {
-                        StartCoroutine(StartDash(transform.position + transform.forward * 10));
+                        StartCoroutine(StartDash(transform));
                     }
 
                     gravity = flightGravity;
@@ -139,22 +142,27 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    IEnumerator StartDash(Vector3 endPosition)
+    IEnumerator StartDash(Transform direction)
     {
         float timer = 0;
+        float dashVel = _dashVelocity;
 
         while (timer <= duration)
         {
-            float interpolationValue = timer / duration;
+            float interpolationValue = 1 - timer / duration;
 
-            transform.position = Vector3.Lerp(transform.position, endPosition, interpolationValue);
+            //dashVelocity = Vector3.Lerp(transform.position, endPosition, interpolationValue);
+            dashVelocity = direction.forward * _dashVelocity * interpolationValue;
+
 
             timer += Time.deltaTime;
 
             yield return new WaitForEndOfFrame();
         }
 
-        transform.position = endPosition;
+
+
+        dashVelocity = Vector3.zero;// = endPosition;
         startDash = null;
     }
 
@@ -185,7 +193,20 @@ public class PlayerMovement : MonoBehaviour
 
     bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 - 0.15f) && verticalSpeed <= 0;
+        // return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 - 0.15f) && verticalSpeed <= 0;
+        Debug.DrawRay(transform.position, -transform.up, Color.blue, characterController.height / 2);
+
+        Vector3 origin = transform.position - transform.up;
+        Vector3 direction;
+        bool pego = false;
+
+        if (Physics.SphereCast(transform.position, characterController.radius / 2, -transform.up, out var hit, characterController.height / 2))
+        {
+            Debug.Log(hit.transform.name, hit.transform.gameObject); 
+            pego = true;
+        }
+
+        return pego;
     }
 }
 
