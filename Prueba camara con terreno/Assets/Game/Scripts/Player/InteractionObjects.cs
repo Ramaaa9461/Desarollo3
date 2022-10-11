@@ -20,16 +20,26 @@ public class InteractionObjects : MonoBehaviour
     Collider _collider;
     DiegeticUI diegeticUI;
 
+    CharacterController characterController;
+    Vector3 offSetDefault;
+    Vector3 offSetOnPick;//= new Vector3(0, .3f, 1f);
+    float radiusDefault = 0.5f;
+    float radiusOnPick = 1;
     private void Awake()
     {
         grippablesObjectsParent = GameObject.Find("Grippables Objects").transform;
         tutorialParent = GameObject.Find("Tutorial").transform;
+        characterController = GetComponent<CharacterController>();
     }
 
+    private void Start()
+    {
+        offSetDefault = characterController.center;
+        offSetOnPick = new Vector3(characterController.center.x, characterController.center.y, 1f);
+    }
 
     void Update()
     {
-
 
         if (useTower)
         {
@@ -145,6 +155,9 @@ public class InteractionObjects : MonoBehaviour
                 {
                     if (parent.transform.childCount == numberColumsInParent) //Mejorar numero harcodeado
                     {
+                        characterController.radius = radiusOnPick;
+                        characterController.center = offSetOnPick;
+
                         Vector3 colliderBounds = hit.transform.GetComponent<BoxCollider>().bounds.size;
 
                         hit.transform.rotation = transform.rotation;
@@ -158,6 +171,10 @@ public class InteractionObjects : MonoBehaviour
                 else if (hit.transform.parent == transform)
                 {
                     hit.transform.SetParent(parent.transform);
+
+                    characterController.radius = radiusDefault;
+                    characterController.center = offSetDefault;
+
 
                     hit.transform.GetComponentInParent<ColumnLogicBase>().CheckColumnInCorrectPivot(hit.transform);
 
