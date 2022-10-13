@@ -1168,13 +1168,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2189379567583042458, guid: 3e4d6c598c0e888489b08baf07eaede2, type: 3}
---- !u!1001 &246808650
+--- !u!1001 &240862115
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 761584326799392474, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 7713082738368025123, guid: a4328de531d19f2429bc9f98f0e9f9c6, type: 3}
     - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
       propertyPath: deepColor.g
       value: 0.42745084
@@ -1211,66 +1215,6 @@ PrefabInstance:
       propertyPath: refractionStrength
       value: 0.017
       objectReference: {fileID: 0}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: surfaceFoamTexture
-      value: 
-      objectReference: {fileID: 2800000, guid: d3b0d77dfe711a04c8ff18ecc260aa66, type: 3}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: surfaceFoamColor1.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: surfaceFoamColor1.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: surfaceFoamColor1.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: intersectionFoamBlend
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: intersectionFoamDepth
-      value: 0.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: intersectionFoamScale
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: intersectionFoamSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: intersectionFoamCutoff
-      value: 0.379
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: intersectionWaterBlend
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: intersectionFoamColor.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: intersectionFoamColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: intersectionFoamColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: intersectionFoamDirection
-      value: 0.941
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116252390263242837, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
-      propertyPath: intersectionFoamDistortion
-      value: 0.38
-      objectReference: {fileID: 0}
     - target: {fileID: 4724820881417189119, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
       propertyPath: m_Name
       value: Hexagonal Water
@@ -1297,11 +1241,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8631912116689749228, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8631912116689749228, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.51
       objectReference: {fileID: 0}
     - target: {fileID: 8631912116689749228, guid: d1a87658e7cd315438ddef4749540b48, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2581,6 +2525,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3e4d6c598c0e888489b08baf07eaede2, type: 3}
   m_PrefabInstance: {fileID: 866453715}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &686406876 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2136083403785323267, guid: a4de6dbf4890ebf4a9545acc5a9e902f, type: 3}
+  m_PrefabInstance: {fileID: 2088183059}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &686406880
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686406876}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4686603923848296126, guid: a4de6dbf4890ebf4a9545acc5a9e902f, type: 3}
 --- !u!1001 &689891243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7284,6 +7247,18 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a4de6dbf4890ebf4a9545acc5a9e902f, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715829902845666151, guid: a4de6dbf4890ebf4a9545acc5a9e902f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715829902845666151, guid: a4de6dbf4890ebf4a9545acc5a9e902f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715829902845666151, guid: a4de6dbf4890ebf4a9545acc5a9e902f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4de6dbf4890ebf4a9545acc5a9e902f, type: 3}
