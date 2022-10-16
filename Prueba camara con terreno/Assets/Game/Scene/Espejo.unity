@@ -1472,7 +1472,7 @@ MonoBehaviour:
   maxDistance: 25
   sensitivity: {x: 200, y: 200}
   inputManagerReferences: {fileID: 79836489}
-  follow: {fileID: 958673681}
+  follow: {fileID: 2097733162}
 --- !u!114 &384699593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1958,6 +1958,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 503827426}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &506778287 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4429306023052907281, guid: cd08d06b38ec9564c991c2d2e9eabf7c, type: 3}
+  m_PrefabInstance: {fileID: 3197027694896548721}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &508577327
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4448,6 +4453,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Circular Water
       objectReference: {fileID: 0}
+    - target: {fileID: 2195311901308947304, guid: dc9bedbb650f5f9409c2161ad5f872f1, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2533760440387989058, guid: dc9bedbb650f5f9409c2161ad5f872f1, type: 3}
       propertyPath: waterUVs
       value: 1
@@ -4721,6 +4730,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305766376}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1369457307 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 10850132238816296, guid: cd08d06b38ec9564c991c2d2e9eabf7c, type: 3}
+  m_PrefabInstance: {fileID: 3197027694896548721}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1414866682 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6501269461947754957, guid: 081f04d931b46e7488cfdf9267345cbe, type: 3}
@@ -7261,6 +7275,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b149b95760a1464994c3d4d7bf48649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transparent: {fileID: 2100000, guid: d2ca89d0d978ede48bc874ffa6324d40, type: 2}
+  objectsToHide:
+  - {fileID: 506778287}
+  - {fileID: 1369457307}
+--- !u!4 &2097733162 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8056050881233380729, guid: cd08d06b38ec9564c991c2d2e9eabf7c, type: 3}
+  m_PrefabInstance: {fileID: 3197027694896548721}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2104470033
 GameObject:
   m_ObjectHideFlags: 0
@@ -7616,6 +7639,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 10850132238816296, guid: cd08d06b38ec9564c991c2d2e9eabf7c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2350727746317408663, guid: cd08d06b38ec9564c991c2d2e9eabf7c, type: 3}
       propertyPath: m_Name
       value: Buho
@@ -7672,6 +7699,10 @@ PrefabInstance:
       propertyPath: inputManagerReferences
       value: 
       objectReference: {fileID: 79836489}
+    - target: {fileID: 4429306023052907281, guid: cd08d06b38ec9564c991c2d2e9eabf7c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd08d06b38ec9564c991c2d2e9eabf7c, type: 3}
 --- !u!1001 &4917833231536238112
