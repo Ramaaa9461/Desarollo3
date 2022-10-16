@@ -153,7 +153,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.DefaultCompany.Owlligence
+    Standalone: com.Desarrollo-3-Company.Owlligence
   buildNumber:
     Standalone: 0
     iPhone: 0

@@ -13,7 +13,7 @@ public class CameraOrbit : MonoBehaviour
     [Header("References")]
     [SerializeField] InputManagerReferences inputManagerReferences = null;
     [SerializeField] Transform follow;
-
+    TransparentPlayer transparentPlayer;
 
     CameraState startState;
     CameraState endState;
@@ -35,6 +35,8 @@ public class CameraOrbit : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         CalculateNearPlaneSize();
+
+        transparentPlayer = follow.GetComponent<TransparentPlayer>(); 
     }
 
     void Update()
@@ -146,6 +148,17 @@ public class CameraOrbit : MonoBehaviour
         {
             currentDistance += 1f;
         }
+
+
+        if (Vector3.Distance(camera.transform.position, follow.position) < minDistance - 0.5f) //Le falta optimizacion
+        {
+            transparentPlayer.TransparentColorPlayer();
+        }
+        else
+        {
+            transparentPlayer.ReturnToOriginalColor();
+        }
+
     }
 }
 
