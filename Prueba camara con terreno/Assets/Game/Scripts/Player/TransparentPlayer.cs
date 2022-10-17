@@ -5,14 +5,14 @@ using UnityEngine;
 public class TransparentPlayer : MonoBehaviour
 {
     Material[] materials;
-    [SerializeField] Material transparent;
     [SerializeField] GameObject[] objectsToHide;
+    [SerializeField] Material transparent;
 
     void Start()
     {
         materials = new Material[transform.childCount];
 
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount - 1; i++) // El -1 es porque el pivot de la camara no tiene Render, TODO: Hacer algo mas prolijo Xd
         {
             materials[i] = transform.GetChild(i).GetComponent<Renderer>().material;
         }
@@ -21,7 +21,7 @@ public class TransparentPlayer : MonoBehaviour
 
     public void TransparentColorPlayer()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount - 1; i++)
         {
           transform.GetChild(i).GetComponent<Renderer>().material = transparent;
         }
@@ -35,7 +35,7 @@ public class TransparentPlayer : MonoBehaviour
 
     public void ReturnToOriginalColor()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount - 1; i++)
         {
             transform.GetChild(i).GetComponent<Renderer>().material = materials[i];
         }

@@ -15,9 +15,6 @@ public class CameraOrbit : MonoBehaviour
     [SerializeField] Transform follow;
     TransparentPlayer transparentPlayer;
 
-    CameraState startState;
-    CameraState endState;
-
     new Camera camera;
     Vector2 angle;
     Vector2 nearPlaneSize;
@@ -36,7 +33,7 @@ public class CameraOrbit : MonoBehaviour
 
         CalculateNearPlaneSize();
 
-        transparentPlayer = follow.GetComponent<TransparentPlayer>(); 
+        transparentPlayer = follow.GetComponentInParent<TransparentPlayer>();
     }
 
     void Update()
@@ -87,23 +84,6 @@ public class CameraOrbit : MonoBehaviour
 
         transform.rotation = Quaternion.LookRotation(follow.position - transform.position);
     }
-
-
-
-    public void TransitionTo(Vector3 finalPosition, Vector3 finalRotation, Transform finalLookAt, float duration)
-    {
-        startState.position = transform.position;
-        startState.rotation = transform.rotation.eulerAngles;
-        startState.lookAt = follow;
-        startState.time = Time.time;
-
-
-        endState.position = finalPosition;
-        endState.rotation = finalRotation;
-        endState.lookAt = finalLookAt;
-        endState.time = duration;
-    }
-
 
     Vector3[] GetCameraCollisionPoints(Vector3 direction)
     {
