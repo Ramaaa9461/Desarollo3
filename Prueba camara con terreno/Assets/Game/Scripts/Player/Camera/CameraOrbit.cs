@@ -13,18 +13,21 @@ public class CameraOrbit : MonoBehaviour
     [Header("References")]
     [SerializeField] InputManagerReferences inputManagerReferences = null;
     [SerializeField] Transform follow;
-    TransparentPlayer transparentPlayer;
 
     new Camera camera;
     Vector2 angle;
     Vector2 nearPlaneSize;
 
-
+    TransparentPlayer transparentPlayer;
+    bool characterTransparent = true;
+    bool characterOpaque = false;
 
 	void Awake()
 	{
         angle = new Vector2(90 * Mathf.Deg2Rad, 0);
         camera = GetComponent<Camera>();
+
+        transparentPlayer = follow.GetComponentInParent<TransparentPlayer>();
     }
 
 	void Start()
@@ -32,8 +35,6 @@ public class CameraOrbit : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         CalculateNearPlaneSize();
-
-        transparentPlayer = follow.GetComponentInParent<TransparentPlayer>();
     }
 
     void Update()
@@ -54,6 +55,30 @@ public class CameraOrbit : MonoBehaviour
         }
 
         HandleCameraZoom();
+
+
+        if (Vector3.Distance(transform.position, follow.position) < minDistance - 0.5)
+        {
+            if (characterTransparent)
+            {
+                transparentPlayer.TransparentColorPlayer();
+                characterOpaque = true;
+                characterTransparent = false;
+        Debug.Log("Transparent");
+            }
+        }
+        else
+        {
+            if (characterOpaque)
+            {
+                transparentPlayer.ReturnToOriginalColor();
+                characterTransparent = true;
+                characterOpaque = false;
+        Debug.Log("OPAQUE");
+            }
+        }
+
+
     }
 
     void LateUpdate()
@@ -128,17 +153,6 @@ public class CameraOrbit : MonoBehaviour
         {
             currentDistance += 1f;
         }
-
-
-        if (Vector3.Distance(camera.transform.position, follow.position) < minDistance - 0.5f) //Le falta optimizacion
-        {
-            transparentPlayer.TransparentColorPlayer();
-        }
-        else
-        {
-            transparentPlayer.ReturnToOriginalColor();
-        }
-
     }
 }
 

@@ -12,18 +12,26 @@ public class TransparentPlayer : MonoBehaviour
     {
         materials = new Material[transform.childCount];
 
-        for (int i = 0; i < transform.childCount - 1; i++) // El -1 es porque el pivot de la camara no tiene Render, TODO: Hacer algo mas prolijo Xd
+        for (int i = 0; i < transform.childCount; i++) // El -1 es porque el pivot de la camara no tiene Render, TODO: Hacer algo mas prolijo Xd
         {
-            materials[i] = transform.GetChild(i).GetComponent<Renderer>().material;
+            Renderer renderer;
+            if (transform.GetChild(i).TryGetComponent<Renderer>(out renderer))
+            {
+                materials[i] = renderer.material;
+            }
         }
 
     }
 
     public void TransparentColorPlayer()
     {
-        for (int i = 0; i < transform.childCount - 1; i++)
+        for (int i = 0; i < transform.childCount ; i++)
         {
-          transform.GetChild(i).GetComponent<Renderer>().material = transparent;
+                Renderer renderer;
+            if (transform.GetChild(i).TryGetComponent<Renderer>(out renderer))
+            {
+                 renderer.material = transparent;
+            }
         }
 
         for (int i = 0; i < objectsToHide.Length; i++)
@@ -35,9 +43,13 @@ public class TransparentPlayer : MonoBehaviour
 
     public void ReturnToOriginalColor()
     {
-        for (int i = 0; i < transform.childCount - 1; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            transform.GetChild(i).GetComponent<Renderer>().material = materials[i];
+            Renderer renderer;
+            if (transform.GetChild(i).TryGetComponent<Renderer>(out renderer))
+            {
+                renderer.material = materials[i];
+            }
         }
 
         for (int i = 0; i < objectsToHide.Length; i++)
@@ -45,4 +57,22 @@ public class TransparentPlayer : MonoBehaviour
             objectsToHide[i].SetActive(true);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Entro");
+        if (other.CompareTag("MainCamera"))
+        {
+            TransparentColorPlayer();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("MainCamera"))
+        {
+            ReturnToOriginalColor();
+        }
+    }
+
 }
