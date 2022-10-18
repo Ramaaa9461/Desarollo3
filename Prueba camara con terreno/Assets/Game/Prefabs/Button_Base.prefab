@@ -88,7 +88,6 @@ GameObject:
   - component: {fileID: 7536282651477381353}
   - component: {fileID: 7536282651477381349}
   - component: {fileID: 7536282651477381348}
-  - component: {fileID: 7536282651477381351}
   m_Layer: 6
   m_Name: Buttom
   m_TagString: Button
@@ -161,19 +160,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7536282651477381351
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7536282651477381352}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7536282652069502168
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +171,6 @@ GameObject:
   - component: {fileID: 7536282652069502169}
   - component: {fileID: 7536282652069502165}
   - component: {fileID: 7536282652069502164}
-  - component: {fileID: 7536282652069502167}
   - component: {fileID: 7536282652069502166}
   m_Layer: 6
   m_Name: Light
@@ -259,19 +244,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7536282652069502167
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7536282652069502168}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7536282652069502166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,6 +271,7 @@ GameObject:
   - component: {fileID: 7536282652326604378}
   - component: {fileID: 1584283304845870475}
   - component: {fileID: 7682315268537375707}
+  - component: {fileID: 7225594167967337566}
   m_Layer: 6
   m_Name: Button_Base
   m_TagString: Button
@@ -400,6 +373,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UiCanvas: {fileID: 7991036404469107847}
+--- !u!114 &7225594167967337566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7536282652326604381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dbf839cefa00f54b89b03ce3e5b66ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightButton: {fileID: 0}
+  towerBase: {fileID: 0}
+  columBase: {fileID: 0}
+  treeGrowth: {fileID: 0}
+  Door: {fileID: 0}
 --- !u!1 &7991036404469107847
 GameObject:
   m_ObjectHideFlags: 0
