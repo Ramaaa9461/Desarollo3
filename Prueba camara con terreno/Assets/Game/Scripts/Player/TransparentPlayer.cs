@@ -58,21 +58,21 @@ public class TransparentPlayer : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Entro");
-        if (other.CompareTag("MainCamera"))
-        {
-            TransparentColorPlayer();
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    Debug.Log("Entro");
+    //    if (other.CompareTag("MainCamera"))
+    //    {
+    //        TransparentColorPlayer();
+    //    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("MainCamera"))
-        {
-            ReturnToOriginalColor();
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("MainCamera"))
+    //    {
+    //        ReturnToOriginalColor();
+    //    }
+    //}
 
 }

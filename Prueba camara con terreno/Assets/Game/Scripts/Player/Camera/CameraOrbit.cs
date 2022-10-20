@@ -64,7 +64,6 @@ public class CameraOrbit : MonoBehaviour
                 transparentPlayer.TransparentColorPlayer();
                 characterOpaque = true;
                 characterTransparent = false;
-        Debug.Log("Transparent");
             }
         }
         else
@@ -74,7 +73,6 @@ public class CameraOrbit : MonoBehaviour
                 transparentPlayer.ReturnToOriginalColor();
                 characterTransparent = true;
                 characterOpaque = false;
-        Debug.Log("OPAQUE");
             }
         }
 
@@ -113,7 +111,7 @@ public class CameraOrbit : MonoBehaviour
     Vector3[] GetCameraCollisionPoints(Vector3 direction)
     {
         Vector3 position = follow.position;
-        Vector3 center = position + direction * (camera.nearClipPlane + 0.2f); //Originalmente en .2
+        Vector3 center = position + direction * (camera.nearClipPlane + 0.1f); //Originalmente en .2
 
         Vector3 right = transform.right * nearPlaneSize.x;
         Vector3 up = transform.up * nearPlaneSize.y;
