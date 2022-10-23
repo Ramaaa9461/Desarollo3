@@ -25,7 +25,7 @@ public class InteractionObjects : MonoBehaviour
 
     CharacterController characterController;
     Vector3 offSetDefault;
-    Vector3 offSetOnPick;//= new Vector3(0, .3f, 1f);
+    Vector3 offSetOnPick;
     float radiusDefault = 0.5f;
     float radiusOnPick = 1;
     private void Awake()
@@ -189,6 +189,10 @@ public class InteractionObjects : MonoBehaviour
                     hit.transform.GetComponentInParent<ColumnLogicBase>().CheckColumnInCorrectPivot(hit.transform);
 
 
+                    if (hit.gameObject.layer == 0)
+                    {
+                        diegeticUI.DigeticUiOff();
+                    }
                     _collider = null;
                     useColumns = false;
                 }

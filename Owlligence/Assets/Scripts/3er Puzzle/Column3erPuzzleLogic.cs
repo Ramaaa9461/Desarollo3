@@ -25,7 +25,7 @@ public class Column3erPuzzleLogic : ColumnLogicBase
         if (Vector3.Distance(currentColum.position, pivotsColumns[indexColum].position) < 4f)
         {
             currentColum.transform.position = pivotsColumns[indexColum].position;
-            //currentColum.tag = null; //Tengo que modificar la layer, pero esto hace que no la pueda agarrar mas
+            currentColum.gameObject.layer = 0;
         }
 
     }
