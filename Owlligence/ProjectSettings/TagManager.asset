@@ -8,6 +8,7 @@ TagManager:
   - Tutorial
   - Button
   - Tower
+  - FinalPuzzle
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - Map
   - Water
   - UI
-  - 
+  - Interactable
   - 
   - 
   - 
