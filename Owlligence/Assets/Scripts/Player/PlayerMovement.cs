@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -29,12 +30,18 @@ public class PlayerMovement : MonoBehaviour
     bool useDash = true;
     Coroutine startDash;
     Vector3 movement = Vector3.zero;
-    Vector3 dashVelocity = Vector3.zero;
+    Vector3 dashMovement = Vector3.zero;
+
+    //Variables para modo Debug
+    [SerializeField] Toggle debugModeUI;
+    bool debugMode = false;
 
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
         cam = Camera.main;
+
+        debugModeUI.isOn = false;
     }
 
     void Start()
@@ -57,6 +64,14 @@ public class PlayerMovement : MonoBehaviour
         {
             MovePlayerInFirstPerson();
         }
+
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            debugMode = !debugMode;
+            debugModeUI.isOn = debugMode;
+        }
+
     }
 
 
@@ -67,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         float ver = Input.GetAxis(inputManagerReferences.GetVerticalMovementName());
 
 
-        movement = dashVelocity * Time.deltaTime;
+        movement = dashMovement * Time.deltaTime;
 
         if (hor != 0 || ver != 0)
         {
@@ -140,6 +155,15 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+
+        if (debugMode)
+        {
+            if (Input.GetKey(KeyCode.M))
+            {
+                verticalSpeed += 80 * Time.deltaTime;
+            }
+        }
+
     }
 
     IEnumerator StartDash(Transform direction)
@@ -152,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
             float interpolationValue = 1 - timer / duration;
 
             //dashVelocity = Vector3.Lerp(transform.position, endPosition, interpolationValue);
-            dashVelocity = direction.forward * _dashVelocity * interpolationValue;
+            dashMovement = direction.forward * _dashVelocity * interpolationValue;
 
 
             timer += Time.deltaTime;
@@ -162,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        dashVelocity = Vector3.zero;// = endPosition;
+        dashMovement = Vector3.zero;// = endPosition;
         startDash = null;
     }
 
