@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Variables para modo Debug
     [SerializeField] Toggle debugModeUI;
-    bool debugMode = false;
+   public bool debugMode = false;
 
     void Awake()
     {
