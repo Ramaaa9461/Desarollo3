@@ -32,16 +32,20 @@ public class PlayerMovement : MonoBehaviour
     Vector3 movement = Vector3.zero;
     Vector3 dashMovement = Vector3.zero;
 
+    //Animation Variables
+    Animator animatorController;
+
     //Variables para modo Debug
     [SerializeField] Toggle debugModeUI;
-   public bool debugMode = false;
+   public bool debugMode = true;
 
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
         cam = Camera.main;
+        animatorController = GetComponent<Animator>();
 
-        debugModeUI.isOn = false;
+        debugModeUI.isOn = true;
     }
 
     void Start()
@@ -81,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
         float hor = Input.GetAxis(inputManagerReferences.GetHorizontalMovementName());
         float ver = Input.GetAxis(inputManagerReferences.GetVerticalMovementName());
 
+        animatorController.SetFloat("PlayerVelocity", new Vector3(hor, 0.0f, ver).magnitude * movementSpeed);
 
         movement = dashMovement * Time.deltaTime;
 
@@ -127,6 +132,7 @@ public class PlayerMovement : MonoBehaviour
         if (!isGrounded)
         {
             verticalSpeed += gravity * Time.deltaTime;
+            animatorController.SetFloat("PlayerVerticalSpeed", verticalSpeed);
         }
         else
         {
@@ -140,6 +146,7 @@ public class PlayerMovement : MonoBehaviour
             if (isGrounded)
             {
                 verticalSpeed = jumpForce;
+                animatorController.SetTrigger("PlayerJump");
             }
             else
             {
@@ -155,6 +162,8 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+
+        animatorController.SetBool("IsGrounded", isGrounded);
 
         if (debugMode)
         {
