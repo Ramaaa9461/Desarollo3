@@ -24,6 +24,10 @@ public class ColumnTutorialLogic : ColumnLogicBase
 
         if (Vector3.Distance(currentColum.position, pivotsColumns[indexColum].position) < 4f)
         {
+            Destroy(currentColum.GetComponent<Rigidbody>()); // Para que la columna no detecte colisión con la
+                                                             // base y por ende, no se salga de su lugar al
+                                                             // traspasarla.
+
             currentColum.transform.position = pivotsColumns[indexColum].position;
              currentColum.gameObject.layer = 0;
             //currentColum.tag = "Untagged";

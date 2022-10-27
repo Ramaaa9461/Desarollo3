@@ -4051,17 +4051,17 @@ PrefabInstance:
     - target: {fileID: 1186714736914618370, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.91
+      value: 10.731127
       objectReference: {fileID: 0}
     - target: {fileID: 1186714736914618370, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.97
+      value: 5.877069
       objectReference: {fileID: 0}
     - target: {fileID: 1186714736914618370, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 82.22
+      value: 81.75616
       objectReference: {fileID: 0}
     - target: {fileID: 1186714736914618370, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
         type: 3}
@@ -4117,6 +4117,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858935265845784486, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
+        type: 3}
+      propertyPath: m_Drag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858935265845784486, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
+        type: 3}
+      propertyPath: m_Mass
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858935265845784486, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 5378478978007916261, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
         type: 3}
@@ -10332,17 +10347,17 @@ PrefabInstance:
     - target: {fileID: 1186714736914618370, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.90000004
+      value: -0.2491923
       objectReference: {fileID: 0}
     - target: {fileID: 1186714736914618370, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.7700005
+      value: 5.8770676
       objectReference: {fileID: 0}
     - target: {fileID: 1186714736914618370, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 82.34059
+      value: 83.84463
       objectReference: {fileID: 0}
     - target: {fileID: 1186714736914618370, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
         type: 3}
@@ -10393,6 +10408,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858935265845784486, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
+        type: 3}
+      propertyPath: m_Drag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858935265845784486, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
+        type: 3}
+      propertyPath: m_Mass
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858935265845784486, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 5378478978007916261, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
         type: 3}
