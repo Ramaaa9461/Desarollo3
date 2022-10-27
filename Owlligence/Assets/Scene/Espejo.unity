@@ -641,6 +641,11 @@ PrefabInstance:
       objectReference: {fileID: 951687018}
     - target: {fileID: 3197027694658578685, guid: cd08d06b38ec9564c991c2d2e9eabf7c,
         type: 3}
+      propertyPath: characterBase
+      value: 
+      objectReference: {fileID: 90211156}
+    - target: {fileID: 3197027694658578685, guid: cd08d06b38ec9564c991c2d2e9eabf7c,
+        type: 3}
       propertyPath: movementSpeed
       value: 15
       objectReference: {fileID: 0}
@@ -817,8 +822,14 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &90211156 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9189295071253294008, guid: cd08d06b38ec9564c991c2d2e9eabf7c,
+    type: 3}
+  m_PrefabInstance: {fileID: 22075370}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &97156075
 GameObject:
   m_ObjectHideFlags: 0
@@ -1255,7 +1266,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 227425981}
-  - component: {fileID: 227425982}
+  - component: {fileID: 227425983}
   m_Layer: 0
   m_Name: Grippables Objects
   m_TagString: Untagged
@@ -1282,7 +1293,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &227425982
+--- !u!114 &227425983
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1291,7 +1302,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 227425980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d72868b001a90544b9f3977b44061f11, type: 3}
+  m_Script: {fileID: 11500000, guid: 3dbd00bf67abead488dadefa2e44fbef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   columns:
@@ -1304,9 +1315,22 @@ MonoBehaviour:
   - {fileID: 762347239}
   - {fileID: 914889589}
   - {fileID: 1207701621}
-  columnsCount: 4
-  secondPuzzleDoor: {fileID: 1102256273}
-  treeGrowth: {fileID: 1573001436}
+  columnsCount: 0
+  theDoorIsOpen:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1102256278}
+        m_TargetAssemblyTypeName: OpenDoor, Assembly-CSharp
+        m_MethodName: UpTheDoor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &229536742
 GameObject:
   m_ObjectHideFlags: 0
@@ -3932,7 +3956,7 @@ Transform:
   m_Children:
   - {fileID: 58742068}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &782173534
 GameObject:
@@ -5275,6 +5299,9 @@ MonoBehaviour:
   - {fileID: 524340210}
   - {fileID: 460895755}
   columnsCount: 0
+  theDoorIsOpen:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1038295714
 GameObject:
   m_ObjectHideFlags: 0
@@ -5290,7 +5317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1038295715
 Transform:
   m_ObjectHideFlags: 0
@@ -7268,7 +7295,7 @@ Transform:
   - {fileID: 698936115}
   - {fileID: 52059928}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1559052418
 MonoBehaviour:
@@ -7515,6 +7542,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3031559240652054391, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5378478978007916261, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
         type: 3}
