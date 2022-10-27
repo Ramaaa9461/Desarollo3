@@ -1,15 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class SecondPuzzleLogic : ColumnLogicBase
+public class ColumnPuzzlesLogic : ColumnLogicBase
 {
-    [SerializeField] GameObject secondPuzzleDoor;
-    [SerializeField] TreeGrowth treeGrowth;
+    public UnityEvent<bool> theDoorIsOpen;
     int indexColum;
 
     private void Start()
     {
         columnsCount = gameObject.transform.childCount;
     }
+
     public override void CheckColumnInCorrectPivot(Transform currentColum)
     {
         for (int i = 0; i < columns.Length; i++)
@@ -24,19 +27,10 @@ public class SecondPuzzleLogic : ColumnLogicBase
         if (Vector3.Distance(currentColum.position, pivotsColumns[indexColum].position) < 4f)
         {
             currentColum.transform.position = pivotsColumns[indexColum].position;
-            currentColum.gameObject.layer = 0;
+             currentColum.gameObject.layer = 0;
         }
 
-        if (!doorIsOpen)
-        {
-            if (CheckWincondition())
-            {
-                secondPuzzleDoor.GetComponent<OpenDoor>().UpTheDoor();
-                treeGrowth.UpTree();
-                doorIsOpen = true;
-            }
-        }
-
+        theDoorIsOpen.Invoke(CheckWincondition());
     }
 
     public override bool CheckWincondition()
