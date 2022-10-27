@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scene/Espejo.unity
+    guid: c4f91f46888cd3e469dcd31039502049
+  - enabled: 1
+    path: Assets/Scene/Menu principal.unity
+    guid: c0f09c8609a94e9499419e7cdf92cead
   m_configObjects: {}

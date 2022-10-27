@@ -1,6 +1,6 @@
 using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
+
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -101,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
 
         CheckJump();
 
-        direction = transform.right * hor + transform.forward * ver + transform.up * verticalSpeed * Time.deltaTime;
+        direction = transform.right * hor * movementSpeed * Time.deltaTime + transform.forward * ver * movementSpeed * Time.deltaTime + transform.up * verticalSpeed * Time.deltaTime;
         characterController.Move(direction);
     }
 

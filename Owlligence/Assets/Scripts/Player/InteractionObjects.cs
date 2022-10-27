@@ -165,6 +165,9 @@ public class InteractionObjects : MonoBehaviour
                 {
                     if (parent.transform.childCount == numberColumsInParent) //Mejorar numero harcodeado
                     {
+                        Rigidbody rb = hit.GetComponent<Rigidbody>();
+
+
                         characterController.radius = radiusOnPick;
                         characterController.center = offSetOnPick;
 
@@ -176,10 +179,24 @@ public class InteractionObjects : MonoBehaviour
                             transform.forward * (colliderBounds.z + offsetGrippeablesObjects.z) +
                             transform.up * (colliderBounds.y / 2 + offsetGrippeablesObjects.y) +
                             transform.right * offsetGrippeablesObjects.x;//* transform.localScale.x / 2.0f;
+
+                        if (rb != null)
+						{
+                            rb.useGravity = false;
+                            rb.isKinematic = true;
+                        }
                     }
                 }
                 else if (hit.transform.parent == transform)
                 {
+                    Rigidbody rb = hit.GetComponent<Rigidbody>();
+
+
+                    if (rb != null)
+					{
+                        rb.isKinematic = false;
+                    }
+
                     hit.transform.SetParent(parent.transform);
 
                     characterController.radius = radiusDefault;
@@ -188,13 +205,18 @@ public class InteractionObjects : MonoBehaviour
 
                     hit.transform.GetComponentInParent<ColumnLogicBase>().CheckColumnInCorrectPivot(hit.transform);
 
-
                     if (hit.gameObject.layer == 0)
                     {
                         diegeticUI.DigeticUiOff();
                     }
+
                     _collider = null;
                     useColumns = false;
+
+                    if (rb != null)
+					{
+                        rb.useGravity = true;
+                    }
                 }
             }
 

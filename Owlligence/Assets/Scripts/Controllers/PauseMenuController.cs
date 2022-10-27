@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class PauseMenuController : MonoBehaviour
@@ -49,12 +50,8 @@ public class PauseMenuController : MonoBehaviour
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
     }
 
-    public void QuitGame()
+    public void ReturnToMainMenu(string mainMenuSceneName)
 	{
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        SceneManager.LoadScene(mainMenuSceneName);
 	}
 }
