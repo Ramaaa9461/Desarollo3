@@ -22,8 +22,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] InputManagerReferences inputManagerReferences = null;
     [SerializeField] Transform[] children = null;
     [SerializeField] CameraViewManager cameraViewManager = null;
-
-
+    [SerializeField] Transform characterBase;
+   
     CharacterController characterController;
     Camera cam;
     bool thirdPersonCamera = true;
@@ -32,16 +32,21 @@ public class PlayerMovement : MonoBehaviour
     Vector3 movement = Vector3.zero;
     Vector3 dashMovement = Vector3.zero;
 
+    //Animation Variables
+    Animator animatorController;
+    
+
     //Variables para modo Debug
     [SerializeField] Toggle debugModeUI;
-   public bool debugMode = false;
+    public bool debugMode = true;
 
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
         cam = Camera.main;
+      //  animatorController = GetComponent<Animator>();
 
-        debugModeUI.isOn = false;
+        debugModeUI.isOn = true;
     }
 
     void Start()
@@ -86,6 +91,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (hor != 0 || ver != 0)
         {
+           // animatorController.SetFloat("PlayerHorizontalVelocity", movementSpeed);
+
             Vector3 forward = cam.transform.forward;
             forward.y = 0;
             forward.Normalize();
@@ -101,8 +108,13 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
 
         }
+        else
+        {
+          //  animatorController.SetFloat("PlayerHorizontalVelocity", 0);
+        }
 
         CheckJump();
+        calculateDistanceToFloor();
 
         movement.y = verticalSpeed * Time.deltaTime;
         characterController.Move(movement);
@@ -140,6 +152,7 @@ public class PlayerMovement : MonoBehaviour
             if (isGrounded)
             {
                 verticalSpeed = jumpForce;
+             //   animatorController.SetTrigger("Jumped");
             }
             else
             {
@@ -147,14 +160,19 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (startDash == null)
                     {
-                        StartCoroutine(StartDash(transform));
+                        StartCoroutine(StartDash());
+                     //   animatorController.SetTrigger("Dashed");
+                        verticalSpeed = 0;
                     }
 
                     gravity = flightGravity;
                     useDash = false;
                 }
             }
+
         }
+
+    //    animatorController.SetBool("IsGrounded", isGrounded);
 
         if (debugMode)
         {
@@ -166,25 +184,22 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    IEnumerator StartDash(Transform direction)
+    IEnumerator StartDash()
     {
         float timer = 0;
-        float dashVel = _dashVelocity;
 
         while (timer <= duration)
         {
             float interpolationValue = 1 - timer / duration;
 
             //dashVelocity = Vector3.Lerp(transform.position, endPosition, interpolationValue);
-            dashMovement = direction.forward * _dashVelocity * interpolationValue;
+            dashMovement = transform.forward * _dashVelocity * interpolationValue;
 
 
             timer += Time.deltaTime;
 
             yield return new WaitForEndOfFrame();
         }
-
-
 
         dashMovement = Vector3.zero;// = endPosition;
         startDash = null;
@@ -215,11 +230,27 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void calculateDistanceToFloor()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(characterBase.position, -Vector3.up, out hit, 150.0f))
+        {
+            Debug.DrawRay(characterBase.transform.position, -Vector3.up, Color.blue, 1500.0f);
+
+            float distanceToFloor = 0;
+            distanceToFloor = Vector3.Distance(characterBase.position, hit.transform.position);
+
+         //   animatorController.SetFloat("PlayerDistanceToFloor", distanceToFloor);
+
+        }//Nose qe onda, no anda esta mierda
+
+    }
+
     bool IsGrounded()
     {
         Vector3 origin = transform.position - new Vector3(0, 0.45f, 0);
-        return (Physics.SphereCast(origin, 0.5f, -transform.up, out var hit, 0.1f) ); 
-        // return Physics.Raycast(transform.position, -transform.up, characterController.height / 2 - 0.15f) && verticalSpeed <= 0;
+        return (Physics.SphereCast(origin, 0.5f, -transform.up, out var hit, 0.1f));
     }
 }
 

@@ -10,6 +10,7 @@ public class ButtonBase : MonoBehaviour
     [SerializeField] GameObject Door;
     protected bool doorIsOpen = false;
     bool openDoor;
+
     public void pressButton()
     {
         if (!doorIsOpen)
@@ -17,6 +18,10 @@ public class ButtonBase : MonoBehaviour
             if (columBase == null)
             {
                 openDoor = towerBase.CheckWinCondition();
+            }
+            else if (towerBase == null)
+            {
+                openDoor = columBase.CheckWincondition();
             }
             else
             {
@@ -33,17 +38,21 @@ public class ButtonBase : MonoBehaviour
 
                 StartCoroutine(WaitGrowthTree());
 
-                doorIsOpen = true;
+                doorIsOpen = true;  
+            }
+
+            if (lightButton != null)
+            {
+                lightButton.ChangeLigthColor(openDoor);
             }
         }
 
-        lightButton.ChangeLigthColor(openDoor);
     }
 
 
     IEnumerator WaitGrowthTree()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
 
         Door.GetComponent<OpenDoor>().UpTheDoor();
     }
