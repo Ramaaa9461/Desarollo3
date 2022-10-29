@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform[] children = null;
     [SerializeField] CameraViewManager cameraViewManager = null;
     [SerializeField] Transform characterBase;
-   
+
     CharacterController characterController;
     Camera cam;
     bool thirdPersonCamera = true;
@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Animation Variables
     Animator animatorController;
-    
+
 
     //Variables para modo Debug
     [SerializeField] Toggle debugModeUI;
@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         cam = Camera.main;
-      //  animatorController = GetComponent<Animator>();
+         animatorController = GetComponent<Animator>();
 
         debugModeUI.isOn = true;
     }
@@ -86,12 +86,11 @@ public class PlayerMovement : MonoBehaviour
         float hor = Input.GetAxis(inputManagerReferences.GetHorizontalMovementName());
         float ver = Input.GetAxis(inputManagerReferences.GetVerticalMovementName());
 
-
         movement = dashMovement * Time.deltaTime;
 
         if (hor != 0 || ver != 0)
         {
-           // animatorController.SetFloat("PlayerHorizontalVelocity", movementSpeed);
+            animatorController.SetFloat("PlayerHorizontalVelocity", movementSpeed);
 
             Vector3 forward = cam.transform.forward;
             forward.y = 0;
@@ -104,13 +103,23 @@ public class PlayerMovement : MonoBehaviour
             Vector3 direction = forward * ver + right * hor;
             direction.Normalize();
 
+            if (debugMode)
+            {
+                movementSpeed = 35;
+            }
+            else
+            {
+                movementSpeed = 15;
+            }
+
+
             movement += direction * movementSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
 
         }
         else
         {
-          //  animatorController.SetFloat("PlayerHorizontalVelocity", 0);
+              animatorController.SetFloat("PlayerHorizontalVelocity", 0);
         }
 
         CheckJump();
@@ -152,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
             if (isGrounded)
             {
                 verticalSpeed = jumpForce;
-             //   animatorController.SetTrigger("Jumped");
+                animatorController.SetTrigger("Jumped");
             }
             else
             {
@@ -161,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
                     if (startDash == null)
                     {
                         StartCoroutine(StartDash());
-                     //   animatorController.SetTrigger("Dashed");
+                        animatorController.SetTrigger("Dashed");
                         verticalSpeed = 0;
                     }
 
@@ -172,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-    //    animatorController.SetBool("IsGrounded", isGrounded);
+            animatorController.SetBool("IsGrounded", isGrounded);
 
         if (debugMode)
         {
@@ -236,15 +245,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.Raycast(characterBase.position, -Vector3.up, out hit, 150.0f))
         {
-            Debug.DrawRay(characterBase.transform.position, -Vector3.up, Color.blue, 1500.0f);
-
             float distanceToFloor = 0;
-            distanceToFloor = Vector3.Distance(characterBase.position, hit.transform.position);
+            distanceToFloor = Vector3.Distance(characterBase.position, hit.point);
 
-         //   animatorController.SetFloat("PlayerDistanceToFloor", distanceToFloor);
-
-        }//Nose qe onda, no anda esta mierda
-
+            animatorController.SetFloat("DistanceToFloor", distanceToFloor);
+        }
     }
 
     bool IsGrounded()
