@@ -13,6 +13,7 @@ public class CameraOrbit : MonoBehaviour
     [Header("References")]
     [SerializeField] InputManagerReferences inputManagerReferences = null;
     [SerializeField] Transform follow;
+    [SerializeField] GameObject pausePanelObject = null;
 
     new Camera camera;
     Vector2 angle;
@@ -21,6 +22,8 @@ public class CameraOrbit : MonoBehaviour
     TransparentPlayer transparentPlayer;
     bool characterTransparent = true;
     bool characterOpaque = false;
+
+
 
 	void Awake()
 	{
@@ -143,14 +146,18 @@ public class CameraOrbit : MonoBehaviour
     {
         //Zoom de la camara segun la rueda del mouse
 
-        if (Input.GetAxis(inputManagerReferences.GetCameraZoom()) > 0 && currentDistance > minDistance) //4
-        {
-           currentDistance -= 1f;
-        }
-        else if (Input.GetAxis(inputManagerReferences.GetCameraZoom()) < 0 && currentDistance < maxDistance) 
-        {
-            currentDistance += 1f;
-        }
+        if (!pausePanelObject.activeSelf)
+		{
+            if (Input.GetAxis(inputManagerReferences.GetCameraZoom()) > 0 && currentDistance > minDistance) //4
+            {
+               currentDistance -= 1f;
+            }
+            else if (Input.GetAxis(inputManagerReferences.GetCameraZoom()) < 0 && currentDistance < maxDistance) 
+            {
+                currentDistance += 1f;
+            }
+		}
+
     }
 }
 

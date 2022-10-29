@@ -1705,6 +1705,7 @@ MonoBehaviour:
   sensitivity: {x: 200, y: 200}
   inputManagerReferences: {fileID: 79836489}
   follow: {fileID: 1770305812}
+  pausePanelObject: {fileID: 470634771}
 --- !u!114 &384699593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2127,7 +2128,7 @@ RectTransform:
   m_Children:
   - {fileID: 1705015121}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5820,7 +5821,6 @@ Transform:
   - {fileID: 684129996}
   - {fileID: 202652634}
   - {fileID: 144445174}
-  - {fileID: 1712117188}
   m_Father: {fileID: 1038295715}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5842,7 +5842,7 @@ MonoBehaviour:
   - {fileID: 684129996}
   - {fileID: 202652634}
   - {fileID: 144445174}
-  - {fileID: 1712117188}
+  - {fileID: 0}
 --- !u!4 &1089027577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1186714736914618370, guid: f3ee453ab555dcd43a17fed57ad3b8c3,
@@ -9848,7 +9848,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2005715037
 GameObject:
