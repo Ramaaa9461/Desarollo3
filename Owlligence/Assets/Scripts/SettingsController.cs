@@ -8,11 +8,6 @@ public class SettingsController : MonoBehaviour
 
 
 
-    public void SaveAndLoadMenuScene()
-	{
-        // Se guardan los valores de sonido.
-        LoadMenuScene();
-	}
     public void LoadMenuScene()
 	{
         SceneManager.LoadScene(menuSceneName);
