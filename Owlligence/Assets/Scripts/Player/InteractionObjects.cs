@@ -155,7 +155,7 @@ public class InteractionObjects : MonoBehaviour
 
     void GrabAndDropColumns(Collider hit, Transform parent, string tagName)
     {
-        int numberColumsInParent = parent.transform.GetComponent<ColumnLogicBase>().columnsCount;
+        int numberColumsInParent = parent.GetComponent<ColumnLogicBase>().columnsCount;
 
         if (Input.GetMouseButtonDown(0))
         {
