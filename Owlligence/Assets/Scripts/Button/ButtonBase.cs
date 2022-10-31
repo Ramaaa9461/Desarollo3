@@ -8,8 +8,13 @@ public class ButtonBase : MonoBehaviour
     [SerializeField] protected ColumnLogicBase columBase;
     [SerializeField] protected TreeGrowth treeGrowth;
     [SerializeField] GameObject Door;
-    protected bool doorIsOpen = false;
+
+    [SerializeField] AudioSource openDoorSound = null;
+
+
+    bool doorIsOpen = false;
     bool openDoor;
+
 
     public void pressButton()
     {
@@ -54,6 +59,7 @@ public class ButtonBase : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
+        openDoorSound.Play();
         Door.GetComponent<OpenDoor>().UpTheDoor();
     }
 

@@ -19,6 +19,21 @@ public class AudioController : MonoBehaviour
 		temporalMusicVolume = AudioLoader.LoadMusicVolumeValue();
 	}
 
+	void Start()
+	{
+		LoadAudioSources();
+
+		for (int i = 0; i < sfxSources.Count; i++)
+		{
+			sfxSources[i].volume = temporalSFXVolume;
+		}
+
+		for (int i = 0; i < musicSources.Count; i++)
+		{
+			musicSources[i].volume = temporalMusicVolume;
+		}
+	}
+
 
 
 	public static float GetActualSFXVolume()

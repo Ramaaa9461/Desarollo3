@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform[] children = null;
     [SerializeField] CameraViewManager cameraViewManager = null;
     [SerializeField] Transform characterBase;
+    [SerializeField] AudioSource jumpSound = null;
+    [SerializeField] AudioSource dashSound = null;
 
     CharacterController characterController;
     Camera cam;
@@ -162,6 +164,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 verticalSpeed = jumpForce;
                 animatorController.SetTrigger("Jumped");
+                jumpSound.Play();
             }
             else
             {
@@ -172,6 +175,7 @@ public class PlayerMovement : MonoBehaviour
                         StartCoroutine(StartDash());
                         animatorController.SetTrigger("Dashed");
                         verticalSpeed = 0;
+                        dashSound.Play();
                     }
 
                     gravity = flightGravity;
