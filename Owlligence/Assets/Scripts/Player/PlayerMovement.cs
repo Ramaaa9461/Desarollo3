@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
             debugMode = !debugMode;
             debugModeUI.isOn = debugMode;
         }
-
+        Debug.Log("");
     }
 
 
