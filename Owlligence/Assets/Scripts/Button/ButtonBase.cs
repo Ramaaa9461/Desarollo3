@@ -59,8 +59,15 @@ public class ButtonBase : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
-        openDoorSound.Play();
-        Door.GetComponent<OpenDoor>().UpTheDoor();
+        if (Door.activeSelf && Door.layer != 7)
+		{
+            openDoorSound.Play();
+            Door.GetComponent<OpenDoor>().UpTheDoor();
+        }
+        else if (Door.layer == 7) // Si el layer del objeto Door es "Particles"...
+		{
+            Door.SetActive(true);
+		}
     }
 
 }
