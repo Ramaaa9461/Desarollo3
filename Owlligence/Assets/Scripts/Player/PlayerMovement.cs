@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Animation Variables
     Animator animatorController;
-
+    [SerializeField]LayerMask mapLayer;
 
     //Variables para modo Debug
     [SerializeField] Toggle debugModeUI;
@@ -78,7 +78,6 @@ public class PlayerMovement : MonoBehaviour
             debugMode = !debugMode;
             debugModeUI.isOn = debugMode;
         }
-        Debug.Log("");
     }
 
 
@@ -259,7 +258,7 @@ public class PlayerMovement : MonoBehaviour
     bool IsGrounded()
     {
         Vector3 origin = transform.position - new Vector3(0, 0.45f, 0);
-        return (Physics.SphereCast(origin, 0.5f, -transform.up, out var hit, 0.1f));
+        return Physics.SphereCast(origin, 0.5f, -transform.up, out var hit, 0.1f, mapLayer);
     }
 }
 

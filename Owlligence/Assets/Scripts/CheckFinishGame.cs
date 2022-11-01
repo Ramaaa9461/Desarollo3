@@ -5,8 +5,6 @@ public class CheckFinishGame : MonoBehaviour
 {
     [SerializeField] GameObject particles = null;
 
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Player")

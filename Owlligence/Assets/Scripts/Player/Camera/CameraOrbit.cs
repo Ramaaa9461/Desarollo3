@@ -23,6 +23,7 @@ public class CameraOrbit : MonoBehaviour
     bool characterTransparent = true;
     bool characterOpaque = false;
 
+    [SerializeField] LayerMask cameraCollisionLayer;
 
 
 	void Awake()
@@ -96,7 +97,7 @@ public class CameraOrbit : MonoBehaviour
 
         foreach (Vector3 point in points)
         {
-            if (Physics.Raycast(point, direction, out hit, currentDistance, LayerMask.GetMask("Map")))
+            if (Physics.Raycast(point, direction, out hit, currentDistance, cameraCollisionLayer))
             {
                 distance = Mathf.Min((hit.point - follow.position).magnitude, distance);
                 //distance = Mathf.Clamp(distance, minDistance, maxDistance);
