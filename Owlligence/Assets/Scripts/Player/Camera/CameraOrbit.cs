@@ -31,7 +31,7 @@ public class CameraOrbit : MonoBehaviour
         angle = new Vector2(90 * Mathf.Deg2Rad, 0);
         camera = GetComponent<Camera>();
 
-        transparentPlayer = follow.GetComponentInParent<TransparentPlayer>();
+        transparentPlayer = follow.parent.GetComponent<TransparentPlayer>();
     }
 
 	void Start()

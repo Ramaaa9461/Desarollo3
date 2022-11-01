@@ -257,7 +257,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool IsGrounded()
     {
-        Vector3 origin = transform.position - new Vector3(0, 0.45f, 0);
+        Vector3 origin = transform.position - new Vector3(0, 0.54f, 0);
         return Physics.SphereCast(origin, 0.5f, -transform.up, out var hit, 0.1f, mapLayer);
     }
 }

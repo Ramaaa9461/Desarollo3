@@ -7,15 +7,16 @@ public class TransparentPlayer : MonoBehaviour
     Material[] materials;
     [SerializeField] GameObject[] objectsToHide;
     [SerializeField] Material transparent;
+    [SerializeField] GameObject geoPattern;
 
     void Start()
     {
-        materials = new Material[transform.childCount];
+        materials = new Material[geoPattern.transform.childCount];
 
-        for (int i = 0; i < transform.childCount; i++) // El -1 es porque el pivot de la camara no tiene Render, TODO: Hacer algo mas prolijo Xd
+        for (int i = 0; i < geoPattern.transform.childCount; i++) // El -1 es porque el pivot de la camara no tiene Render, TODO: Hacer algo mas prolijo Xd
         {
             Renderer renderer;
-            if (transform.GetChild(i).TryGetComponent<Renderer>(out renderer))
+            if (geoPattern.transform.GetChild(i).TryGetComponent<Renderer>(out renderer))
             {
                 materials[i] = renderer.material;
             }
@@ -25,10 +26,10 @@ public class TransparentPlayer : MonoBehaviour
 
     public void TransparentColorPlayer()
     {
-        for (int i = 0; i < transform.childCount ; i++)
+        for (int i = 0; i < geoPattern.transform.childCount ; i++)
         {
                 Renderer renderer;
-            if (transform.GetChild(i).TryGetComponent<Renderer>(out renderer))
+            if (geoPattern.transform.GetChild(i).TryGetComponent<Renderer>(out renderer))
             {
                  renderer.material = transparent;
             }
@@ -43,10 +44,10 @@ public class TransparentPlayer : MonoBehaviour
 
     public void ReturnToOriginalColor()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < geoPattern.transform.childCount; i++)
         {
             Renderer renderer;
-            if (transform.GetChild(i).TryGetComponent<Renderer>(out renderer))
+            if (geoPattern.transform.GetChild(i).TryGetComponent<Renderer>(out renderer))
             {
                 renderer.material = materials[i];
             }
