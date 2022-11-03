@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Animation Variables
     Animator animatorController;
-    [SerializeField]LayerMask mapLayer;
+    [SerializeField] LayerMask mapLayer;
 
     //Variables para modo Debug
     [SerializeField] Toggle debugModeUI;
@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         cam = Camera.main;
-         animatorController = GetComponent<Animator>();
+        animatorController = GetComponent<Animator>();
 
         debugModeUI.isOn = true;
     }
@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (hor != 0 || ver != 0)
         {
-            animatorController.SetFloat("PlayerHorizontalVelocity", movementSpeed);
+            animatorController.SetFloat("PlayerHorizontalVelocity", 1);
 
             Vector3 forward = cam.transform.forward;
             forward.y = 0;
@@ -120,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-              animatorController.SetFloat("PlayerHorizontalVelocity", 0);
+            animatorController.SetFloat("PlayerHorizontalVelocity", 0);
         }
 
         CheckJump();
@@ -184,7 +184,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-            animatorController.SetBool("IsGrounded", isGrounded);
+        animatorController.SetBool("IsGrounded", isGrounded);
 
         if (debugMode)
         {
