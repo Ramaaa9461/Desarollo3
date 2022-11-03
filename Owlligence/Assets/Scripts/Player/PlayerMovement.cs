@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         cam = Camera.main;
-        animatorController = GetComponent<Animator>();
+        animatorController = GetComponentInChildren<Animator>();
 
         debugModeUI.isOn = true;
     }
