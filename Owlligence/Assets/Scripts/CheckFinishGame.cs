@@ -1,9 +1,16 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class CheckFinishGame : MonoBehaviour
 {
+    [Header("Configuration")]
+    [SerializeField] string finalSceneName = "";
+
+    [Header("References")]
     [SerializeField] GameObject particles = null;
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -11,8 +18,8 @@ public class CheckFinishGame : MonoBehaviour
         {
             if (particles != null && particles.activeSelf)
 			{
-                //cambiar de escena
-                Debug.Log("LLEGO");
+                Cursor.lockState = CursorLockMode.Confined;
+                SceneManager.LoadScene(finalSceneName);
             }
             else
 			{
