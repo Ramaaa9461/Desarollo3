@@ -4,8 +4,22 @@ using UnityEngine;
 
 public class FireTotemBehaviour : MonoBehaviour
 {
-  //  [SerializeField] GameObject fire;
+    [SerializeField] GameObject fire;
 
+
+    private void Update()
+    {
+        if (transform.parent.tag == "Player")
+        {
+            fire.SetActive(false);
+        }
+        else
+        {
+            fire.SetActive(true);
+        }
+
+
+    }
 
 
 }
