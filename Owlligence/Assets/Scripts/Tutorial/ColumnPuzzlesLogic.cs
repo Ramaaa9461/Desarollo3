@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class ColumnPuzzlesLogic : ColumnLogicBase
 {
-    public UnityEvent<bool> theDoorIsOpen;
+    public UnityEvent theDoorIsOpen;
     int indexColum;
 
     private void Start()
@@ -31,10 +31,13 @@ public class ColumnPuzzlesLogic : ColumnLogicBase
                                                              // traspasarla.
 
             currentColum.transform.position = pivotsColumns[indexColum].position;
-             currentColum.gameObject.layer = 0;
+            currentColum.gameObject.layer = 0;
         }
 
-        theDoorIsOpen.Invoke(CheckWincondition());
+        if (CheckWincondition())
+        {
+            theDoorIsOpen.Invoke();
+        }
     }
 
     public override bool CheckWincondition()

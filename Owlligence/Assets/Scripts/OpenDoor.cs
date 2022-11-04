@@ -20,7 +20,6 @@ public class OpenDoor : MonoBehaviour
     public void UpTheDoor()
     {
         if (doorOpen == null)
-        if (doorOpen == null)
         {
             doorOpen = StartCoroutine(DoorOpen(distanceY));
         }

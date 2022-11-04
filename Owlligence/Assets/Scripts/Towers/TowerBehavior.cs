@@ -7,6 +7,8 @@ public class TowerBehavior : MonoBehaviour
     int currentRay = 0;
 
     List<GameObject> rayList;
+    Vector3[] rayInitPosition;
+
 
     private LineRenderer lr;
     BaseTower baseTower;
@@ -18,10 +20,13 @@ public class TowerBehavior : MonoBehaviour
         baseTower = transform.parent.GetComponent<BaseTower>();
 
         rayList = baseTower.GetRayList();
+
     }
 
     private void Start()
     {
+        rayInitPosition = baseTower.GetRaysInitPositions();
+
         for (int i = 0; i < rayList.Count; i++)
         {
             if (rayList[i] == gameObject)
@@ -42,8 +47,8 @@ public class TowerBehavior : MonoBehaviour
             currentRay = 0;
         }
 
-        lr.SetPosition(0, transform.position);
-        lr.SetPosition(1, rayList[currentRay].transform.position);
+        lr.SetPosition(0, rayInitPosition[indexRay]);
+        lr.SetPosition(1, rayInitPosition[currentRay]);
     }
 
 
@@ -68,8 +73,8 @@ public class TowerBehavior : MonoBehaviour
 
         nextPosition = rayList[currentRay].transform.position;
 
-        lr.SetPosition(0, transform.position);
-        lr.SetPosition(1, nextPosition);
+        lr.SetPosition(0, rayInitPosition[indexRay]);
+        lr.SetPosition(1, rayInitPosition[currentRay]);
     }
 
     public void CheckIndexRayUp()
@@ -95,7 +100,7 @@ public class TowerBehavior : MonoBehaviour
 
         nextPosition = rayList[currentRay].transform.position;
 
-        lr.SetPosition(0, transform.position);
-        lr.SetPosition(1, nextPosition);
+        lr.SetPosition(0, rayInitPosition[indexRay]);
+        lr.SetPosition(1, rayInitPosition[currentRay]);
     }
 }
