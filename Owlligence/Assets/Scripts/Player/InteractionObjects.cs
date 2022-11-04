@@ -40,7 +40,7 @@ public class InteractionObjects : MonoBehaviour
     private void Start()
     {
         offSetDefault = characterController.center;
-        offSetOnPick = new Vector3(characterController.center.x, characterController.center.y, 1f);
+        offSetOnPick = new Vector3(characterController.center.x, characterController.center.y, 0.75f);
     }
 
     void Update()

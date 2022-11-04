@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: badd96dc5c52fb0418d32297056ea9dd
+guid: 3e63a9f45d13da546b9e822de9c1f2b3
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Fly
+    second: Fligth
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,11 +36,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Fly
+      name: Fligth
       takeName: Take 001
       internalID: 0
-      firstFrame: 10
-      lastFrame: 29
+      firstFrame: 5
+      lastFrame: 45
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -63,7 +63,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 10
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
