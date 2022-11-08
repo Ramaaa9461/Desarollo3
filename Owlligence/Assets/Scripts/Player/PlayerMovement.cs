@@ -145,6 +145,7 @@ public class PlayerMovement : MonoBehaviour
     void CheckJump()
     {
         bool isGrounded = IsGrounded();
+        Debug.Log(isGrounded);
 
         if (!isGrounded)
         {
@@ -251,14 +252,16 @@ public class PlayerMovement : MonoBehaviour
             float distanceToFloor = 0;
             distanceToFloor = Vector3.Distance(characterBase.position, hit.point);
 
-            animatorController.SetFloat("DistanceToFloor", distanceToFloor);
+            animatorController.SetFloat("DistanceToFloor", distanceToFloor / 100);
         }
     }
 
     bool IsGrounded()
     {
-        Vector3 origin = transform.position - new Vector3(0, 0.54f, 0);
-        return Physics.SphereCast(origin, 0.5f, -transform.up, out var hit, 0.1f, mapLayer);
+        Vector3 origin = transform.position - new Vector3(0, 0.65f, 0);
+        return Physics.SphereCast(origin, 0.4f, Vector3.down, out var hit, 0.5f, mapLayer);
+        
+      //  return Physics.Raycast(characterBase.position, Vector3.down, out var hit, 0.5f, mapLayer);
     }
 }
 
