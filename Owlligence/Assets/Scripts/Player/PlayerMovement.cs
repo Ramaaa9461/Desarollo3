@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float duration = 0;
     [SerializeField] float _dashVelocity = 0;
     [SerializeField] float rotationSpeed = 0;
+    [SerializeField] float sphereCastOffSetY = 0;
 
     [Header("Speed Values")]
     [SerializeField] float movementSpeed = 20.0f;
@@ -124,10 +125,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         CheckJump();
-        calculateDistanceToFloor();
 
         movement.y = verticalSpeed * Time.deltaTime;
         characterController.Move(movement);
+
+        calculateDistanceToFloor();
     }
     void MovePlayerInFirstPerson()
     {
@@ -145,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
     void CheckJump()
     {
         bool isGrounded = IsGrounded();
+        //  bool isGrounded = characterController.isGrounded;
         Debug.Log(isGrounded);
 
         if (!isGrounded)
@@ -258,7 +261,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool IsGrounded()
     {
-        Vector3 origin = transform.position - new Vector3(0, 0.65f, 0);
+        Vector3 origin = transform.position - new Vector3(0, sphereCastOffSetY, 0);
         return Physics.SphereCast(origin, 0.4f, Vector3.down, out var hit, 0.5f, mapLayer);
         
       //  return Physics.Raycast(characterBase.position, Vector3.down, out var hit, 0.5f, mapLayer);
