@@ -34,7 +34,7 @@ public class ColumnPuzzlesLogic : ColumnLogicBase
             currentColum.gameObject.layer = 0;
         }
 
-        if (CheckWincondition())
+       if (CheckWincondition())
         {
             theDoorIsOpen.Invoke();
         }

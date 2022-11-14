@@ -6,28 +6,29 @@ public class pullOutPlatform : MonoBehaviour
 {
 
     [SerializeField] float duration;
-    float distanceY;
-    Coroutine doorOpen;
+    float distance;
+    Coroutine pullOut;
+    BoxCollider boxCollider;
 
     void Awake()
     {
-
-        distanceY = transform.lossyScale.y - 0.2f;
+        boxCollider = GetComponentInChildren<BoxCollider>();
+        distance = boxCollider.bounds.size.x - 0.2f;
     }
 
     public void PullPlatformaOutside()
     {
-        if (doorOpen == null)
+        if (pullOut == null)
         {
-            doorOpen = StartCoroutine(DoorOpen(distanceY));
+            pullOut = StartCoroutine(PullOutPlatform());
         }
     }
 
-    IEnumerator DoorOpen(float distanceUp)
+    IEnumerator PullOutPlatform()
     {
         float timer = 0;
 
-        Vector3 newPosition = transform.position + transform.up * distanceY; //new Vector3(transform.position.x, transform.position.y + distanceUp, transform.position.z);
+        Vector3 newPosition = transform.position - transform.right * distance; //new Vector3(transform.position.x, transform.position.y + distanceUp, transform.position.z);
 
 
         while (timer <= duration)

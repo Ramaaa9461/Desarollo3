@@ -269,9 +269,10 @@ public class PlayerMovement : MonoBehaviour
     bool IsGrounded()
     {
         Vector3 origin = transform.position - new Vector3(0, sphereCastOffSetY, 0);
-        return Physics.SphereCast(origin, 0.4f, Vector3.down, out var hit, 0.5f, mapLayer);
-        
-      //  return Physics.Raycast(characterBase.position, Vector3.down, out var hit, 0.5f, mapLayer);
+        //return Physics.SphereCast(origin, 0.4f, Vector3.down, out var hit, 0.5f, mapLayer);
+
+        Debug.DrawRay(characterBase.position, Vector3.down / 10, Color.red, 100);
+        return Physics.Raycast(characterBase.position +Vector3.up, Vector3.down, out var hit, 1.1f, mapLayer);
     }
 }
 
