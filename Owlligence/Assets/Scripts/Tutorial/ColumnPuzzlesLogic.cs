@@ -44,13 +44,13 @@ public class ColumnPuzzlesLogic : ColumnLogicBase
     {
         int count = 0;
 
-        for (int i = 0; i < columns.Length - 1; i++)
+        for (int i = 0; i < columns.Length ; i++)
         {
             if (columns[i].position == pivotsColumns[i].position)
             {
                 count++;
 
-                if (count >= columns.Length - 1)
+                if (count >= columns.Length)
                 {
                     return true;
                 }
