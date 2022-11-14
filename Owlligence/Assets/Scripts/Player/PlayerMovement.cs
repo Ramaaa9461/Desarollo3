@@ -39,20 +39,17 @@ public class PlayerMovement : MonoBehaviour
     Animator animatorController;
     [SerializeField] LayerMask mapLayer;
 
-#if UNITY_EDITOR
     //Variables para modo Debug
     [SerializeField] Toggle debugModeUI;
-    public bool debugMode = true;
-#endif
+    public bool debugMode = false;
+
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
         cam = Camera.main;
         animatorController = GetComponentInChildren<Animator>();
 
-#if UNITY_EDITOR
-        debugModeUI.isOn = true;
-#endif
+        debugModeUI.isOn = debugMode;
     }
 
     void Start()
@@ -76,13 +73,11 @@ public class PlayerMovement : MonoBehaviour
             MovePlayerInFirstPerson();
         }
 
-#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.T))
         {
             debugMode = !debugMode;
             debugModeUI.isOn = debugMode;
         }
-#endif
     }
 
 
@@ -109,7 +104,6 @@ public class PlayerMovement : MonoBehaviour
             Vector3 direction = forward * ver + right * hor;
             direction.Normalize();
 
-#if UNITY_EDITOR
 
             if (debugMode)
             {
@@ -119,7 +113,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 movementSpeed = 15;
             }
-#endif
 
             movement += direction * movementSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
@@ -196,7 +189,6 @@ public class PlayerMovement : MonoBehaviour
 
         animatorController.SetBool("IsGrounded", isGrounded);
 
-#if UNITY_EDITOR
         if (debugMode)
         {
             if (Input.GetKey(KeyCode.M))
@@ -204,7 +196,6 @@ public class PlayerMovement : MonoBehaviour
                 verticalSpeed += 80 * Time.deltaTime;
             }
         }
-#endif
     }
 
     IEnumerator StartDash()
