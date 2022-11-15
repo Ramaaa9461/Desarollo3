@@ -168,23 +168,21 @@ public class PlayerMovement : MonoBehaviour
                 animatorController.SetTrigger("Jumped");
                 jumpSound.Play();
             }
-            else
+            else if (useDash && startDash == null)
             {
-                if (useDash)
+                AnimatorStateInfo stateInfo = animatorController.GetCurrentAnimatorStateInfo(0);
+                if (stateInfo.IsName("Base Layer.Jumped") || stateInfo.IsName("Base Layer.Falled") &&
+                    animatorController.GetFloat("DistanceToFloor") > 0.04f)
                 {
-                    if (startDash == null)
-                    {
-                        StartCoroutine(StartDash());
-                        animatorController.SetTrigger("Dashed");
-                        verticalSpeed = 0;
-                        dashSound.Play();
-                    }
+                    animatorController.SetTrigger("Dashed");
+                    startDash = StartCoroutine(StartDash());
+                    verticalSpeed = 0;
+                    dashSound.Play();
 
                     gravity = flightGravity;
                     useDash = false;
                 }
             }
-
         }
 
         animatorController.SetBool("IsGrounded", isGrounded);
@@ -263,7 +261,7 @@ public class PlayerMovement : MonoBehaviour
         //return Physics.SphereCast(origin, 0.4f, Vector3.down, out var hit, 0.5f, mapLayer);
 
         Debug.DrawRay(characterBase.position, Vector3.down / 10, Color.red, 100);
-        return Physics.Raycast(characterBase.position +Vector3.up, Vector3.down, out var hit, 1.1f, mapLayer);
+        return Physics.Raycast(characterBase.position + Vector3.up, Vector3.down, out var hit, 1.1f, mapLayer);
     }
 }
 
