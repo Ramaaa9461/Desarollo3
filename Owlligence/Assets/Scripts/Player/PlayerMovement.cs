@@ -147,7 +147,6 @@ public class PlayerMovement : MonoBehaviour
     {
         bool isGrounded = IsGrounded();
         //  bool isGrounded = characterController.isGrounded;
-        Debug.Log(isGrounded);
 
         if (!isGrounded)
         {
@@ -258,12 +257,43 @@ public class PlayerMovement : MonoBehaviour
     bool IsGrounded()
     {
         Vector3 origin = transform.position - new Vector3(0, sphereCastOffSetY, 0);
-        //return Physics.SphereCast(origin, 0.4f, Vector3.down, out var hit, 0.5f, mapLayer);
+        RaycastHit hit;
+        int divisions = 10;
+        Vector3 offSet;
 
-        Debug.DrawRay(characterBase.position, Vector3.down / 10, Color.red, 100);
-        return Physics.Raycast(characterBase.position + Vector3.up, Vector3.down, out var hit, 1.1f, mapLayer);
+        if (Physics.Raycast(characterBase.position + Vector3.up, Vector3.down, out hit, 1.1f, mapLayer))
+        {
+            return true;
+        }
+        else
+        {
+            float angle = (2 * Mathf.PI) / divisions ;
+            float x, z;
+
+            for (int i = 0; i < divisions; i++)
+            {
+                x = Mathf.Cos(angle * i);
+                z = Mathf.Sin(angle * i);
+
+
+
+                offSet = new Vector3( x / 3f, 0.0f, z / 3f);
+                if (Physics.Raycast(characterBase.position + offSet + Vector3.up, Vector3.down, out hit,
+                    1.1f, mapLayer))
+                {
+                    Debug.DrawRay(characterBase.position + offSet, Vector3.down / 10, Color.red, 100);
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
 
 
+
+//        Debug.DrawRay(characterBase.position, Vector3.down / 10, Color.red, 100);
+//Coseno X
+//seno Y
 
