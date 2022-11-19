@@ -94,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (hor != 0 || ver != 0)
         {
-            animatorController.SetFloat("PlayerHorizontalVelocity", currentSpeed);
+            animatorController.SetFloat("PlayerHorizontalVelocity", currentSpeed * maxSpeed / 100.0f);
 
             Vector3 forward = cam.transform.forward;
             forward.y = 0;
