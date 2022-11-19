@@ -29,9 +29,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform characterBase;
     [SerializeField] AudioSource jumpSound = null;
     [SerializeField] AudioSource dashSound = null;
+    [SerializeField] StepsSounds stepsSounds = null;
 
     CharacterController characterController;
     Camera cam;
+    bool walkInWater;
+    bool isGrounded;
     bool thirdPersonCamera = true;
     bool useDash = true;
     Coroutine startDash;
@@ -106,18 +109,29 @@ public class PlayerMovement : MonoBehaviour
             Vector3 direction = forward * ver + right * hor;
             direction.Normalize();
 
-             currentSpeed = currentSpeed < maxSpeed ? currentSpeed += velocity : currentSpeed = maxSpeed;
+            currentSpeed = currentSpeed < maxSpeed ? currentSpeed += velocity : currentSpeed = maxSpeed;
 
             if (debugMode)
             {
                 currentSpeed = 25;
             }
-           
+
             animatorController.SetFloat("PlayerHorizontalVelocity", currentSpeed);
 
             movement += direction * currentSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
 
+            if (isGrounded)
+            {
+                if (walkInWater)
+                {
+                    stepsSounds.randomSoundStepInWater();
+                }
+                else
+                {
+                    stepsSounds.randomSoundStepOnLand();
+                }
+            }
         }
         else
         {
@@ -136,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
 
             animatorController.SetFloat("PlayerHorizontalVelocity", currentSpeed);
 
-            movement += direction * currentSpeed * Time.deltaTime; 
+            movement += direction * currentSpeed * Time.deltaTime;
         }
 
         CheckJump();
@@ -161,7 +175,7 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckJump()
     {
-        bool isGrounded = IsGrounded();
+        isGrounded = IsGrounded();
         //  bool isGrounded = characterController.isGrounded;
 
         if (!isGrounded)
@@ -263,6 +277,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.Raycast(characterBase.position + Vector3.up / 10, -Vector3.up, out hit, 150.0f))
         {
+
             float distanceToFloor = 0;
             distanceToFloor = Vector3.Distance(characterBase.position, hit.point);
 
@@ -303,6 +318,21 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            walkInWater = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            walkInWater = false;
+        }
     }
 }
 

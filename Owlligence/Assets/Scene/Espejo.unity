@@ -3150,6 +3150,91 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsOnLand.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsInWater.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsOnLand.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 491db5cb6545b1d4ba24716a27c1179e, type: 3}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsOnLand.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: b2214b9687266cc49823dcb0754ff472, type: 3}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsOnLand.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8e9f649a043a799468dc64513c25096a, type: 3}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsOnLand.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: cbc2121a5b192a141b6475be4ddd108b, type: 3}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsOnLand.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 012309e0cc4e8d147b62e561982faf67, type: 3}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsOnLand.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: f3ca728203ba98f44a4bdeab94ebb932, type: 3}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsOnLand.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: be93c8739789f8e48b85fb1d703917fb, type: 3}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsOnLand.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: ca5f4ebea019dce4f8ed3ca551ebc94d, type: 3}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsInWater.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0b73277127912c04e8c36bb6f95ce6f8, type: 3}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsInWater.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 6285176149d13f242a88319d5dac299e, type: 3}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsInWater.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: ff7b4c436b7403e40b0990bd6d4e0afa, type: 3}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsInWater.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 88e5e5e61195b364c985c9eeebd15d95, type: 3}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsInWater.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: d0cf0d1adc07e134cb8b11c11e3eae49, type: 3}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsInWater.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: fe0f0cacb205b1a42b3cd3c0725610d7, type: 3}
+    - target: {fileID: 9195935475797955840, guid: 177b2ad2b5049b54491bcf486e359068,
+        type: 3}
+      propertyPath: stepsInWater.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: 41b1dc49014be4047993bd7313371216, type: 3}
     m_RemovedComponents:
     - {fileID: 3783713081903279818, guid: 177b2ad2b5049b54491bcf486e359068, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 177b2ad2b5049b54491bcf486e359068, type: 3}
@@ -3400,19 +3485,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 394673023}
   m_Enabled: 1
---- !u!135 &394673036
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394673023}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.3
-  m_Center: {x: 0, y: -0.72, z: 0}
 --- !u!1 &398824229 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3276276412204651294, guid: e0ab3388499cf67438c595af08f531c2,
@@ -9961,6 +10033,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2195311901308947304, guid: dc9bedbb650f5f9409c2161ad5f872f1,
+        type: 3}
+      propertyPath: m_TagString
+      value: Water
       objectReference: {fileID: 0}
     - target: {fileID: 2533760440387989058, guid: dc9bedbb650f5f9409c2161ad5f872f1,
         type: 3}
