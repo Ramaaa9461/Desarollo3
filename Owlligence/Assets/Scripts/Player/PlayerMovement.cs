@@ -27,16 +27,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform[] children = null;
     [SerializeField] CameraViewManager cameraViewManager = null;
     [SerializeField] Transform characterBase;
-    [SerializeField] AudioSource jumpSound = null;
     [SerializeField] AudioSource dashSound = null;
     [SerializeField] StepsSounds stepsSounds = null;
+    [SerializeField] JumpSounds jumpSounds = null;
 
     CharacterController characterController;
     Camera cam;
-    bool walkInWater;
+    bool stayInWater;
     bool isGrounded;
     bool thirdPersonCamera = true;
     bool useDash = true;
+    bool toLandSound = true;
     Coroutine startDash;
     Vector3 movement = Vector3.zero;
     Vector3 dashMovement = Vector3.zero;
@@ -97,7 +98,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (hor != 0 || ver != 0)
         {
-
             Vector3 forward = cam.transform.forward;
             forward.y = 0;
             forward.Normalize();
@@ -123,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (isGrounded)
             {
-                if (walkInWater)
+                if (stayInWater)
                 {
                     stepsSounds.randomSoundStepInWater();
                 }
@@ -166,7 +166,6 @@ public class PlayerMovement : MonoBehaviour
         float ver = Input.GetAxis(inputManagerReferences.GetVerticalMovementName());
         Vector3 direction = Vector3.zero;
 
-
         CheckJump();
 
         direction = transform.right * hor * currentSpeed * Time.deltaTime + transform.forward * ver * currentSpeed * Time.deltaTime + transform.up * verticalSpeed * Time.deltaTime;
@@ -176,7 +175,6 @@ public class PlayerMovement : MonoBehaviour
     void CheckJump()
     {
         isGrounded = IsGrounded();
-        //  bool isGrounded = characterController.isGrounded;
 
         if (!isGrounded)
         {
@@ -187,6 +185,20 @@ public class PlayerMovement : MonoBehaviour
             gravity = fallGravity;
             verticalSpeed = 0;
             useDash = true;
+
+            if (toLandSound)
+            {
+                if (stayInWater)
+                {
+                    jumpSounds.randomSoundJumpInWater();
+                }
+                else
+                {
+                    jumpSounds.randomSoundJumpOnLand();
+                }
+
+                toLandSound = false;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -194,8 +206,18 @@ public class PlayerMovement : MonoBehaviour
             if (isGrounded)
             {
                 verticalSpeed = jumpForce;
+
+                if (stayInWater)
+                {
+                    jumpSounds.randomSoundJumpInWater();
+                }
+                else
+                {
+                    jumpSounds.randomSoundJumpOnLand();
+                }
+                toLandSound = true;
+
                 animatorController.SetTrigger("Jumped");
-                jumpSound.Play();
             }
             else if (useDash && startDash == null)
             {
@@ -324,14 +346,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("Water"))
         {
-            walkInWater = true;
+            stayInWater = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Water"))
         {
-            walkInWater = false;
+            stayInWater = false;
         }
     }
 }
