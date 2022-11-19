@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,9 @@ public class TowerBehavior : MonoBehaviour
     private LineRenderer lr;
     BaseTower baseTower;
     Vector3 nextPosition;
+
+    Coroutine rotateTower;
+    [SerializeField] private float duration = 1;
 
     void Awake()
     {
@@ -69,12 +73,8 @@ public class TowerBehavior : MonoBehaviour
             currentRay--;
         }
 
-        rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
-
-        nextPosition = rayList[currentRay].transform.position;
-
-        lr.SetPosition(0, rayInitPosition[indexRay]);
-        lr.SetPosition(1, rayInitPosition[currentRay]);
+        //rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
+        TowerRotate();
     }
 
     public void CheckIndexRayUp()
@@ -96,11 +96,42 @@ public class TowerBehavior : MonoBehaviour
             currentRay++;
         }
 
-        rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
+        //  rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
+        TowerRotate();
+    }
 
-        nextPosition = rayList[currentRay].transform.position;
 
-        lr.SetPosition(0, rayInitPosition[indexRay]);
-        lr.SetPosition(1, rayInitPosition[currentRay]);
+    void TowerRotate()
+    {
+        if (rotateTower == null)
+        {
+            Vector3 direction = rayList[currentRay].transform.position - rayList[indexRay].transform.position;
+            Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+            rotateTower = StartCoroutine(RotateTower(rotation));
+
+            lr.SetPosition(0, rayInitPosition[indexRay]);
+            lr.SetPosition(1, rayInitPosition[currentRay]);
+        }
+    }
+
+    IEnumerator RotateTower(Quaternion newRotation)
+    {
+        float timer = 0;
+
+
+        while (timer <= duration)
+        {
+            float interpolationValue = timer / duration;
+            Debug.Log(timer);
+
+            rayList[indexRay].transform.rotation = Quaternion.Lerp(rayList[indexRay].transform.rotation, newRotation, interpolationValue);
+
+            timer += Time.deltaTime;
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        rayList[indexRay].transform.rotation = newRotation;
+        rotateTower = null;
     }
 }
