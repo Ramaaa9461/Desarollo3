@@ -17,7 +17,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float sphereCastOffSetY = 0;
 
     [Header("Speed Values")]
-    [SerializeField] float movementSpeed = 20.0f;
+    float currentSpeed = 0.0f;
+    [SerializeField] float velocity = 3.0f;
+    [SerializeField] float maxSpeed = 15.0f;
+
 
     [Header("References")]
     [SerializeField] InputManagerReferences inputManagerReferences = null;
@@ -91,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (hor != 0 || ver != 0)
         {
-            animatorController.SetFloat("PlayerHorizontalVelocity", 1);
+            animatorController.SetFloat("PlayerHorizontalVelocity", currentSpeed);
 
             Vector3 forward = cam.transform.forward;
             forward.y = 0;
@@ -104,23 +107,25 @@ public class PlayerMovement : MonoBehaviour
             Vector3 direction = forward * ver + right * hor;
             direction.Normalize();
 
+             currentSpeed = currentSpeed < maxSpeed ? currentSpeed += velocity : currentSpeed = maxSpeed;
 
             if (debugMode)
             {
-                movementSpeed = 35;
+                currentSpeed = 25;
             }
             else
             {
-                movementSpeed = 15;
+                currentSpeed = maxSpeed;
             }
 
-            movement += direction * movementSpeed * Time.deltaTime;
+            movement += direction * currentSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
 
         }
         else
         {
             animatorController.SetFloat("PlayerHorizontalVelocity", 0);
+            currentSpeed = 0;
         }
 
         CheckJump();
@@ -139,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
 
         CheckJump();
 
-        direction = transform.right * hor * movementSpeed * Time.deltaTime + transform.forward * ver * movementSpeed * Time.deltaTime + transform.up * verticalSpeed * Time.deltaTime;
+        direction = transform.right * hor * currentSpeed * Time.deltaTime + transform.forward * ver * currentSpeed * Time.deltaTime + transform.up * verticalSpeed * Time.deltaTime;
         characterController.Move(direction);
     }
 
@@ -248,8 +253,8 @@ public class PlayerMovement : MonoBehaviour
         if (Physics.Raycast(characterBase.position + Vector3.up / 10, -Vector3.up, out hit, 150.0f))
         {
             float distanceToFloor = 0;
-            distanceToFloor = Vector3.Distance(characterBase.position , hit.point);
-            
+            distanceToFloor = Vector3.Distance(characterBase.position, hit.point);
+
             animatorController.SetFloat("DistanceToFloor", distanceToFloor / 100);
         }
     }
@@ -267,7 +272,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            float angle = (2 * Mathf.PI) / divisions ;
+            float angle = (2 * Mathf.PI) / divisions;
             float x, z;
 
             for (int i = 0; i < divisions; i++)
@@ -277,7 +282,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-                offSet = new Vector3( x / 3f, 0.0f, z / 3f); //Lo divido para achicar el cirulo
+                offSet = new Vector3(x / 3f, 0.0f, z / 3f); //Lo divido para achicar el cirulo
                 if (Physics.Raycast(characterBase.position + offSet + Vector3.up, Vector3.down, out hit,
                     1.1f, mapLayer))
                 {
