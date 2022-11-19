@@ -245,11 +245,11 @@ public class PlayerMovement : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(characterBase.position, -Vector3.up, out hit, 150.0f))
+        if (Physics.Raycast(characterBase.position + Vector3.up / 10, -Vector3.up, out hit, 150.0f))
         {
             float distanceToFloor = 0;
-            distanceToFloor = Vector3.Distance(characterBase.position, hit.point);
-
+            distanceToFloor = Vector3.Distance(characterBase.position , hit.point);
+            
             animatorController.SetFloat("DistanceToFloor", distanceToFloor / 100);
         }
     }
@@ -277,11 +277,10 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-                offSet = new Vector3( x / 3f, 0.0f, z / 3f);
+                offSet = new Vector3( x / 3f, 0.0f, z / 3f); //Lo divido para achicar el cirulo
                 if (Physics.Raycast(characterBase.position + offSet + Vector3.up, Vector3.down, out hit,
                     1.1f, mapLayer))
                 {
-                    Debug.DrawRay(characterBase.position + offSet, Vector3.down / 10, Color.red, 100);
                     return true;
                 }
             }
