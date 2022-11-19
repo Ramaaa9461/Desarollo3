@@ -113,7 +113,6 @@ public class TowerBehavior : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
         rotateTower = StartCoroutine(RotateTower(rotation));
 
-
         lr.SetPosition(0, rayInitPosition[indexRay]);
         lr.SetPosition(1, rayInitPosition[currentRay]);
     }

@@ -121,12 +121,22 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-          
-            currentSpeed = currentSpeed <= 0 ? currentSpeed = 0 : currentSpeed -= velocity;
+            Vector3 forward = cam.transform.forward;
+            forward.y = 0;
+            forward.Normalize();
+
+            Vector3 right = cam.transform.right;
+            right.y = 0;
+            right.Normalize();
+
+            Vector3 direction = forward * ver + right * hor;
+            direction.Normalize();
+
+            currentSpeed = currentSpeed <= 0 ? currentSpeed = 0 : currentSpeed -= velocity * 1.5f; //Lo multiplico para que coincida con la animacion
 
             animatorController.SetFloat("PlayerHorizontalVelocity", currentSpeed);
 
-        //    movement -=  currentSpeed * Time.deltaTime;  Quiero que empiece a frenar gradualmente para acompañar la animacion
+            movement += direction * currentSpeed * Time.deltaTime; 
         }
 
         CheckJump();
