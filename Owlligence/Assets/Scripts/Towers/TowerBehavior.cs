@@ -58,60 +58,63 @@ public class TowerBehavior : MonoBehaviour
 
     public void CheckIndexRayDown()
     {
-        currentRay--;
-
-        if (currentRay == indexRay)
+        if (rotateTower == null)
         {
             currentRay--;
-        }
-        if (currentRay < 0)
-        {
-            currentRay = rayList.Count - 1;
-        }
-        if (currentRay == indexRay)
-        {
-            currentRay--;
-        }
 
-        //rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
-        TowerRotate();
+            if (currentRay == indexRay)
+            {
+                currentRay--;
+            }
+            if (currentRay < 0)
+            {
+                currentRay = rayList.Count - 1;
+            }
+            if (currentRay == indexRay)
+            {
+                currentRay--;
+            }
+
+            //rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
+            TowerRotate();
+        }
     }
 
     public void CheckIndexRayUp()
     {
-        currentRay++;
-
-        if (currentRay == indexRay)
+        if (rotateTower == null)
         {
             currentRay++;
-        }
 
-        if (currentRay > rayList.Count - 1)
-        {
-            currentRay = 0;
-        }
+            if (currentRay == indexRay)
+            {
+                currentRay++;
+            }
 
-        if (currentRay == indexRay)
-        {
-            currentRay++;
-        }
+            if (currentRay > rayList.Count - 1)
+            {
+                currentRay = 0;
+            }
 
-        //  rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
-        TowerRotate();
+            if (currentRay == indexRay)
+            {
+                currentRay++;
+            }
+
+            //  rayList[indexRay].transform.LookAt(rayList[currentRay].transform);
+            TowerRotate();
+        }
     }
 
 
     void TowerRotate()
     {
-        if (rotateTower == null)
-        {
-            Vector3 direction = rayList[currentRay].transform.position - rayList[indexRay].transform.position;
-            Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
-            rotateTower = StartCoroutine(RotateTower(rotation));
+        Vector3 direction = rayList[currentRay].transform.position - rayList[indexRay].transform.position;
+        Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+        rotateTower = StartCoroutine(RotateTower(rotation));
 
-            lr.SetPosition(0, rayInitPosition[indexRay]);
-            lr.SetPosition(1, rayInitPosition[currentRay]);
-        }
+        lr.SetPosition(0, rayInitPosition[indexRay]);
+        lr.SetPosition(1, rayInitPosition[currentRay]);
     }
 
     IEnumerator RotateTower(Quaternion newRotation)
@@ -122,16 +125,19 @@ public class TowerBehavior : MonoBehaviour
         while (timer <= duration)
         {
             float interpolationValue = timer / duration;
-            Debug.Log(timer);
 
             rayList[indexRay].transform.rotation = Quaternion.Lerp(rayList[indexRay].transform.rotation, newRotation, interpolationValue);
 
             timer += Time.deltaTime;
 
             yield return new WaitForEndOfFrame();
+
+
         }
 
         rayList[indexRay].transform.rotation = newRotation;
+
+        
         rotateTower = null;
     }
 }

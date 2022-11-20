@@ -17,20 +17,27 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float sphereCastOffSetY = 0;
 
     [Header("Speed Values")]
-    [SerializeField] float movementSpeed = 20.0f;
+    float currentSpeed = 0.0f;
+    [SerializeField] float velocity = 3.0f;
+    [SerializeField] float maxSpeed = 15.0f;
+
 
     [Header("References")]
     [SerializeField] InputManagerReferences inputManagerReferences = null;
     [SerializeField] Transform[] children = null;
     [SerializeField] CameraViewManager cameraViewManager = null;
     [SerializeField] Transform characterBase;
-    [SerializeField] AudioSource jumpSound = null;
     [SerializeField] AudioSource dashSound = null;
+    [SerializeField] StepsSounds stepsSounds = null;
+    [SerializeField] JumpSounds jumpSounds = null;
 
     CharacterController characterController;
     Camera cam;
+    bool stayInWater;
+    bool isGrounded;
     bool thirdPersonCamera = true;
     bool useDash = true;
+    bool toLandSound = true;
     Coroutine startDash;
     Vector3 movement = Vector3.zero;
     Vector3 dashMovement = Vector3.zero;
@@ -91,8 +98,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (hor != 0 || ver != 0)
         {
-            animatorController.SetFloat("PlayerHorizontalVelocity", 1);
-
             Vector3 forward = cam.transform.forward;
             forward.y = 0;
             forward.Normalize();
@@ -104,23 +109,48 @@ public class PlayerMovement : MonoBehaviour
             Vector3 direction = forward * ver + right * hor;
             direction.Normalize();
 
+            currentSpeed = currentSpeed < maxSpeed ? currentSpeed += velocity : currentSpeed = maxSpeed;
 
             if (debugMode)
             {
-                movementSpeed = 35;
-            }
-            else
-            {
-                movementSpeed = 15;
+                currentSpeed = 25;
             }
 
-            movement += direction * movementSpeed * Time.deltaTime;
+            animatorController.SetFloat("PlayerHorizontalVelocity", currentSpeed);
+
+            movement += direction * currentSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
 
+            if (isGrounded)
+            {
+                if (stayInWater)
+                {
+                    stepsSounds.randomSoundStepInWater();
+                }
+                else
+                {
+                    stepsSounds.randomSoundStepOnLand();
+                }
+            }
         }
         else
         {
-            animatorController.SetFloat("PlayerHorizontalVelocity", 0);
+            Vector3 forward = cam.transform.forward;
+            forward.y = 0;
+            forward.Normalize();
+
+            Vector3 right = cam.transform.right;
+            right.y = 0;
+            right.Normalize();
+
+            Vector3 direction = forward * ver + right * hor;
+            direction.Normalize();
+
+            currentSpeed = currentSpeed <= 0 ? currentSpeed = 0 : currentSpeed -= velocity * 1.5f; //Lo multiplico para que coincida con la animacion
+
+            animatorController.SetFloat("PlayerHorizontalVelocity", currentSpeed);
+
+            movement += direction * currentSpeed * Time.deltaTime;
         }
 
         CheckJump();
@@ -136,17 +166,15 @@ public class PlayerMovement : MonoBehaviour
         float ver = Input.GetAxis(inputManagerReferences.GetVerticalMovementName());
         Vector3 direction = Vector3.zero;
 
-
         CheckJump();
 
-        direction = transform.right * hor * movementSpeed * Time.deltaTime + transform.forward * ver * movementSpeed * Time.deltaTime + transform.up * verticalSpeed * Time.deltaTime;
+        direction = transform.right * hor * currentSpeed * Time.deltaTime + transform.forward * ver * currentSpeed * Time.deltaTime + transform.up * verticalSpeed * Time.deltaTime;
         characterController.Move(direction);
     }
 
     void CheckJump()
     {
-        bool isGrounded = IsGrounded();
-        //  bool isGrounded = characterController.isGrounded;
+        isGrounded = IsGrounded();
 
         if (!isGrounded)
         {
@@ -157,6 +185,20 @@ public class PlayerMovement : MonoBehaviour
             gravity = fallGravity;
             verticalSpeed = 0;
             useDash = true;
+
+            if (toLandSound)
+            {
+                if (stayInWater)
+                {
+                    jumpSounds.randomSoundJumpInWater();
+                }
+                else
+                {
+                    jumpSounds.randomSoundJumpOnLand();
+                }
+
+                toLandSound = false;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -164,8 +206,18 @@ public class PlayerMovement : MonoBehaviour
             if (isGrounded)
             {
                 verticalSpeed = jumpForce;
+
+                if (stayInWater)
+                {
+                    jumpSounds.randomSoundJumpInWater();
+                }
+                else
+                {
+                    jumpSounds.randomSoundJumpOnLand();
+                }
+                toLandSound = true;
+
                 animatorController.SetTrigger("Jumped");
-                jumpSound.Play();
             }
             else if (useDash && startDash == null)
             {
@@ -247,9 +299,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.Raycast(characterBase.position + Vector3.up / 10, -Vector3.up, out hit, 150.0f))
         {
+
             float distanceToFloor = 0;
-            distanceToFloor = Vector3.Distance(characterBase.position , hit.point);
-            
+            distanceToFloor = Vector3.Distance(characterBase.position, hit.point);
+
             animatorController.SetFloat("DistanceToFloor", distanceToFloor / 100);
         }
     }
@@ -267,7 +320,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            float angle = (2 * Mathf.PI) / divisions ;
+            float angle = (2 * Mathf.PI) / divisions;
             float x, z;
 
             for (int i = 0; i < divisions; i++)
@@ -277,7 +330,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-                offSet = new Vector3( x / 3f, 0.0f, z / 3f); //Lo divido para achicar el cirulo
+                offSet = new Vector3(x / 3f, 0.0f, z / 3f); //Lo divido para achicar el cirulo
                 if (Physics.Raycast(characterBase.position + offSet + Vector3.up, Vector3.down, out hit,
                     1.1f, mapLayer))
                 {
@@ -287,6 +340,21 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            stayInWater = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            stayInWater = false;
+        }
     }
 }
 
