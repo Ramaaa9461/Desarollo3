@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+
+using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -25,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("References")]
     [SerializeField] InputManagerReferences inputManagerReferences = null;
     [SerializeField] Transform[] children = null;
-    [SerializeField] CameraViewManager cameraViewManager = null;
     [SerializeField] Transform characterBase;
     [SerializeField] AudioSource dashSound = null;
     [SerializeField] StepsSounds stepsSounds = null;
@@ -35,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
     Camera cam;
     bool stayInWater;
     bool isGrounded;
-    bool thirdPersonCamera = true;
     bool useDash = true;
     bool toLandSound = true;
     Coroutine startDash;
@@ -49,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
     //Variables para modo Debug
     [SerializeField] Toggle debugModeUI;
     public bool debugMode = false;
+
+
 
     void Awake()
     {
@@ -66,19 +67,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown(inputManagerReferences.GetChangeCameraName()))
-        {
-            SwitchCameraConfiguration();
-        }
-
-        if (thirdPersonCamera)
-        {
-            MovePlayerInThirdPerson();
-        }
-        else
-        {
-            MovePlayerInFirstPerson();
-        }
+        MovePlayer();
 
         if (Input.GetKeyDown(KeyCode.T))
         {
@@ -89,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    void MovePlayerInThirdPerson()
+    void MovePlayer()
     {
         float hor = Input.GetAxis(inputManagerReferences.GetHorizontalMovementName());
         float ver = Input.GetAxis(inputManagerReferences.GetVerticalMovementName());
@@ -160,18 +149,6 @@ public class PlayerMovement : MonoBehaviour
 
         calculateDistanceToFloor();
     }
-    void MovePlayerInFirstPerson()
-    {
-        float hor = Input.GetAxis(inputManagerReferences.GetHorizontalMovementName());
-        float ver = Input.GetAxis(inputManagerReferences.GetVerticalMovementName());
-        Vector3 direction = Vector3.zero;
-
-        CheckJump();
-
-        direction = transform.right * hor * currentSpeed * Time.deltaTime + transform.forward * ver * currentSpeed * Time.deltaTime + transform.up * verticalSpeed * Time.deltaTime;
-        characterController.Move(direction);
-    }
-
     void CheckJump()
     {
         isGrounded = IsGrounded();
@@ -268,30 +245,6 @@ public class PlayerMovement : MonoBehaviour
         startDash = null;
     }
 
-    void SwitchCameraConfiguration()
-    {
-        thirdPersonCamera = !thirdPersonCamera;
-        cameraViewManager.SwitchCameraType();
-
-        if (thirdPersonCamera)
-        {
-            gameObject.layer = 0;
-
-            for (int i = 0; i < children.Length; i++)
-            {
-                children[i].gameObject.layer = 0;
-            }
-        }
-        else
-        {
-            gameObject.layer = 7;
-
-            for (int i = 0; i < children.Length; i++)
-            {
-                children[i].gameObject.layer = 7;
-            }
-        }
-    }
 
     void calculateDistanceToFloor()
     {
@@ -299,7 +252,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.Raycast(characterBase.position + Vector3.up / 10, -Vector3.up, out hit, 150.0f))
         {
-
             float distanceToFloor = 0;
             distanceToFloor = Vector3.Distance(characterBase.position, hit.point);
 
@@ -341,6 +293,7 @@ public class PlayerMovement : MonoBehaviour
 
         return false;
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
