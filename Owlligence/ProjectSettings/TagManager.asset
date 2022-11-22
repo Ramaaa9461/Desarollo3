@@ -10,6 +10,7 @@ TagManager:
   - Tower
   - FinalPuzzle
   - Fire
+  - Water
   layers:
   - Default
   - TransparentFX
