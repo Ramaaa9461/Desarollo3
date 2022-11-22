@@ -9643,6 +9643,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tower1
       objectReference: {fileID: 0}
+    - target: {fileID: 4534848471146162543, guid: e0ab3388499cf67438c595af08f531c2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6043629304831979597, guid: e0ab3388499cf67438c595af08f531c2,
         type: 3}
       propertyPath: m_RootOrder
@@ -20973,6 +20978,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 413076468389999846, guid: c736d3ec2e2475b468c96b998dd9d72b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c736d3ec2e2475b468c96b998dd9d72b, type: 3}
 --- !u!1001 &1141422198
@@ -29777,7 +29787,6 @@ GameObject:
   - component: {fileID: 2088177606}
   - component: {fileID: 2088177609}
   - component: {fileID: 2088177608}
-  - component: {fileID: 2088177607}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -29792,8 +29801,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2088177605}
-  m_LocalRotation: {x: -0, y: -0.6409199, z: -0, w: 0.7676078}
-  m_LocalPosition: {x: -3.6025171, y: 9.189, z: -115.2255}
+  m_LocalRotation: {x: 0, y: -0.62728363, z: 0, w: 0.77879095}
+  m_LocalPosition: {x: -3.43, y: 9.189, z: -115.27}
   m_LocalScale: {x: 5, y: 5, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -29801,20 +29810,7 @@ Transform:
   - {fileID: 551927203}
   m_Father: {fileID: 1030378533}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: -79.721, z: 0}
---- !u!65 &2088177607
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2088177605}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -77.7, z: 0}
 --- !u!23 &2088177608
 MeshRenderer:
   m_ObjectHideFlags: 0
