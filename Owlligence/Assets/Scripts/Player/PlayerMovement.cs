@@ -24,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("References")]
     [SerializeField] InputManagerReferences inputManagerReferences = null;
-    [SerializeField] Transform[] children = null;
     [SerializeField] Transform characterBase;
     [SerializeField] AudioSource dashSound = null;
     [SerializeField] StepsSounds stepsSounds = null;
@@ -63,11 +62,6 @@ public class PlayerMovement : MonoBehaviour
         animatorController = GetComponentInChildren<Animator>();
 
         debugModeUI.isOn = debugMode;
-    }
-
-    void Start()
-    {
-        children = gameObject.GetComponentsInChildren<Transform>(true);
     }
 
     void Update()
