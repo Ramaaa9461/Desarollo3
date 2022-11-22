@@ -17,6 +17,7 @@ public class TowerBehavior : MonoBehaviour
 
     Coroutine rotateTower;
     [SerializeField] private float duration = 1;
+    [SerializeField] LayerMask layerMask;
 
     void Awake()
     {
@@ -111,23 +112,32 @@ public class TowerBehavior : MonoBehaviour
     {
         Vector3 direction = rayList[currentRay].transform.position - rayList[indexRay].transform.position;
         Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+
         rotateTower = StartCoroutine(RotateTower(rotation));
 
-        lr.SetPosition(0, rayInitPosition[indexRay]);
-        lr.SetPosition(1, rayInitPosition[currentRay]);
+
     }
 
     IEnumerator RotateTower(Quaternion newRotation)
     {
         float timer = 0;
+        Quaternion initialRotation = rayList[indexRay].transform.rotation;
+
+        lr.SetPosition(0, rayInitPosition[indexRay]);
 
 
         while (timer <= duration)
         {
             float interpolationValue = timer / duration;
 
-            rayList[indexRay].transform.rotation = Quaternion.Lerp(rayList[indexRay].transform.rotation, newRotation, interpolationValue);
+            rayList[indexRay].transform.rotation =
+                Quaternion.Lerp(initialRotation, newRotation, interpolationValue);
 
+            RaycastHit hit;
+            if (Physics.Raycast(rayInitPosition[indexRay], transform.forward, out hit, 150.0f, layerMask))
+            {
+                lr.SetPosition(1, hit.point);
+            }
             timer += Time.deltaTime;
 
             yield return new WaitForEndOfFrame();
@@ -136,8 +146,9 @@ public class TowerBehavior : MonoBehaviour
         }
 
         rayList[indexRay].transform.rotation = newRotation;
+        lr.SetPosition(1, rayInitPosition[currentRay]);
 
-        
+
         rotateTower = null;
     }
 }
