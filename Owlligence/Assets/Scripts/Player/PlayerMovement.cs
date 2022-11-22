@@ -38,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
     bool thirdPersonCamera = true;
     bool useDash = true;
     bool toLandSound = true;
+    bool hasJustJumped = false;
+
     Coroutine startDash;
     Vector3 movement = Vector3.zero;
     Vector3 dashMovement = Vector3.zero;
@@ -176,7 +178,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = IsGrounded();
 
-        if (!isGrounded)
+        if (!isGrounded || hasJustJumped)
         {
             verticalSpeed += gravity * Time.deltaTime;
         }
@@ -205,6 +207,9 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isGrounded)
             {
+                hasJustJumped = true;
+                StartCoroutine(waitHasJustJumped());
+
                 verticalSpeed = jumpForce;
 
                 if (stayInWater)
@@ -215,6 +220,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     jumpSounds.randomSoundJumpOnLand();
                 }
+
                 toLandSound = true;
 
                 animatorController.SetTrigger("Jumped");
@@ -247,6 +253,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
+    IEnumerator waitHasJustJumped()
+    {
+        yield return new WaitForSeconds(1);
+        hasJustJumped = false;
+    }
     IEnumerator StartDash()
     {
         float timer = 0;
