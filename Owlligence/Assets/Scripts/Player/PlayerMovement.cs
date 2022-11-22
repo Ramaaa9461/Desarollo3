@@ -43,6 +43,9 @@ public class PlayerMovement : MonoBehaviour
     Coroutine startDash;
     Vector3 movement = Vector3.zero;
     Vector3 dashMovement = Vector3.zero;
+    Vector3 direction;
+
+    Coroutine breaking;
 
     //Animation Variables
     Animator animatorController;
@@ -100,6 +103,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (hor != 0 || ver != 0)
         {
+            if (breaking != null)
+            {
+                StopCoroutine(breaking);
+                breaking = null;
+            }
+
             Vector3 forward = cam.transform.forward;
             forward.y = 0;
             forward.Normalize();
@@ -108,17 +117,25 @@ public class PlayerMovement : MonoBehaviour
             right.y = 0;
             right.Normalize();
 
-            Vector3 direction = forward * ver + right * hor;
+            direction = forward * ver + right * hor;
             direction.Normalize();
 
-            currentSpeed = currentSpeed < maxSpeed ? currentSpeed += velocity : currentSpeed = maxSpeed;
+            //currentSpeed = currentSpeed < maxSpeed ? currentSpeed += velocity : currentSpeed = maxSpeed;
+
+
+            currentSpeed += velocity;
+
+            if (currentSpeed >= maxSpeed)
+            {
+                currentSpeed = maxSpeed;
+            }
 
             if (debugMode)
             {
                 currentSpeed = 25;
             }
 
-            animatorController.SetFloat("PlayerHorizontalVelocity", currentSpeed);
+            animatorController.SetFloat("PlayerHorizontalVelocity", currentSpeed / maxSpeed);
 
             movement += direction * currentSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
@@ -137,22 +154,22 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Vector3 forward = cam.transform.forward;
-            forward.y = 0;
-            forward.Normalize();
-
-            Vector3 right = cam.transform.right;
-            right.y = 0;
-            right.Normalize();
-
-            Vector3 direction = forward * ver + right * hor;
-            direction.Normalize();
-
-            currentSpeed = currentSpeed <= 0 ? currentSpeed = 0 : currentSpeed -= velocity * 1.5f; //Lo multiplico para que coincida con la animacion
-
-            animatorController.SetFloat("PlayerHorizontalVelocity", currentSpeed);
-
-            movement += direction * currentSpeed * Time.deltaTime;
+            if (currentSpeed / maxSpeed > 0.2f)
+            {
+                if (breaking == null)
+                {
+                    breaking = StartCoroutine(Breaking());
+                }
+            }
+            else if (breaking == null)
+            {
+                currentSpeed = 0;
+                animatorController.SetFloat("PlayerHorizontalVelocity", currentSpeed);
+            }
+            else
+            {
+                Debug.Log("Llego aca");
+            }
         }
 
         CheckJump();
@@ -253,6 +270,29 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    IEnumerator Breaking()
+    {
+        while (currentSpeed != 0)
+        {
+            //currentSpeed = currentSpeed <= 0 ? 0 : currentSpeed - velocity * 1.5f; //Lo multiplico para que coincida con la animacion
+            if (currentSpeed < 0)
+            {
+                currentSpeed = 0;
+            }
+            else
+            {
+                currentSpeed -= velocity * 1.5f;
+            }
+
+            animatorController.SetFloat("PlayerHorizontalVelocity", currentSpeed);
+            movement += direction * currentSpeed * Time.deltaTime;
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        breaking = null;
+
+    }
 
     IEnumerator waitHasJustJumped()
     {

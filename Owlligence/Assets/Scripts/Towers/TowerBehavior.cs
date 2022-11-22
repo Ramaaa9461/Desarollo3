@@ -133,7 +133,7 @@ public class TowerBehavior : MonoBehaviour
             rayList[indexRay].transform.rotation =
                 Quaternion.Lerp(initialRotation, newRotation, interpolationValue);
 
-            RaycastHit hit;
+            RaycastHit hit; 
             if (Physics.Raycast(rayInitPosition[indexRay], transform.forward, out hit, 150.0f, layerMask))
             {
                 lr.SetPosition(1, hit.point);
