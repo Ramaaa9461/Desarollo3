@@ -7,6 +7,7 @@ public class StepsSounds : MonoBehaviour
 
     [SerializeField] List<AudioClip> stepsInWater;
     [SerializeField] List<AudioClip> stepsOnLand;
+    [SerializeField] float secondsBetweenSteps = 0.4f;
     AudioSource audioSource;
     Coroutine playStepSound;
 
@@ -27,7 +28,6 @@ public class StepsSounds : MonoBehaviour
         if (playStepSound == null)
         {
             playStepSound = StartCoroutine(PlayStepSound(false));
-
         }
     }
 
@@ -35,14 +35,15 @@ public class StepsSounds : MonoBehaviour
     {
         if (onLand)
         {
-            audioSource.PlayOneShot(stepsOnLand[Random.Range(0, stepsOnLand.Count)]); //Suenan demasiados pasos a la vez, no se entiende
+            audioSource.PlayOneShot(stepsOnLand[Random.Range(0, stepsOnLand.Count)]);   
         }
         else
         {
-            audioSource.PlayOneShot(stepsInWater[Random.Range(0, stepsInWater.Count)]); //Suenan demasiados pasos a la vez, no se entiende
+            audioSource.PlayOneShot(stepsInWater[Random.Range(0, stepsInWater.Count)]); 
         }
 
-        yield return new WaitForSeconds(0.4f);
+
+        yield return new WaitForSeconds(secondsBetweenSteps);
         playStepSound = null;
     }
 }
