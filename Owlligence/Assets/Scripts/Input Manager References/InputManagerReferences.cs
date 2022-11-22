@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class InputManagerReferences : MonoBehaviour
 {
-	[Header("Button names")]
-	[SerializeField] string changeCamera = "";
-
 	[Header("Axis names")]
 	[SerializeField] string horizontalMouse = "";
 	[SerializeField] string verticalMouse = "";
@@ -16,11 +13,6 @@ public class InputManagerReferences : MonoBehaviour
 	[Space(10)]
 	[SerializeField] string cameraZoom = "";
 
-
-	public string GetChangeCameraName()
-	{
-		return changeCamera;
-	}
 
 	public string GetHorizontalMouseName()
 	{
