@@ -39,9 +39,9 @@ public class Tower3erPuzzleLogic : TowersLogicBase
     public override void SetWinCondition()
     {
         rayList[0].transform.LookAt(rayList[1].transform);
-        rayList[1].transform.LookAt(rayList[2].transform);
-        rayList[2].transform.LookAt(rayList[3].transform);
-        rayList[3].transform.LookAt(rayList[0].transform);
+        rayList[1].transform.LookAt(rayList[3].transform);
+        rayList[2].transform.LookAt(rayList[1].transform);
+        rayList[3].transform.LookAt(rayList[2].transform);
 
         Winrotations.Add(rayList[0].transform.rotation);
         Winrotations.Add(rayList[1].transform.rotation);
