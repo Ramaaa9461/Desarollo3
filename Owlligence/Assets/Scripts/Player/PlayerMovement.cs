@@ -257,10 +257,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.Raycast(characterBase.position + Vector3.up * 0.1f, Vector3.down, out hit, 0.2f, mapLayer))
         {
-            return true;
+           // return true;
+            return !hit.collider.isTrigger;
         }
         else
         {
+
             float angle = (2 * Mathf.PI) / divisions;
             float x, z;
 
@@ -275,7 +277,8 @@ public class PlayerMovement : MonoBehaviour
                 if (Physics.Raycast(characterBase.position + offSet + Vector3.up * 0.1f, Vector3.down, out hit,
                     0.2f, mapLayer))
                 {
-                    return true;
+                    //return true;
+                    return !hit.collider.isTrigger;
                 }
             }
         }
