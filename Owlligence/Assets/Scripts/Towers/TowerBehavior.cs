@@ -10,10 +10,8 @@ public class TowerBehavior : MonoBehaviour
     List<GameObject> rayList;
     Vector3[] rayInitPosition;
 
-
     private LineRenderer lr;
     BaseTower baseTower;
-    Vector3 nextPosition;
 
     Coroutine rotateTower;
     [SerializeField] private float duration = 1;
@@ -55,7 +53,6 @@ public class TowerBehavior : MonoBehaviour
         lr.SetPosition(0, rayInitPosition[indexRay]);
         lr.SetPosition(1, rayInitPosition[currentRay]);
     }
-
 
     public void CheckIndexRayDown()
     {
@@ -107,15 +104,12 @@ public class TowerBehavior : MonoBehaviour
         }
     }
 
-
     void TowerRotate()
     {
         Vector3 direction = rayList[currentRay].transform.position - rayList[indexRay].transform.position;
         Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
 
         rotateTower = StartCoroutine(RotateTower(rotation));
-
-
     }
 
     IEnumerator RotateTower(Quaternion newRotation)
@@ -124,7 +118,6 @@ public class TowerBehavior : MonoBehaviour
         Quaternion initialRotation = rayList[indexRay].transform.rotation;
 
         lr.SetPosition(0, rayInitPosition[indexRay]);
-
 
         while (timer <= duration)
         {
@@ -141,8 +134,6 @@ public class TowerBehavior : MonoBehaviour
             timer += Time.deltaTime;
 
             yield return new WaitForEndOfFrame();
-
-
         }
 
         rayList[indexRay].transform.rotation = newRotation;
@@ -150,5 +141,16 @@ public class TowerBehavior : MonoBehaviour
 
 
         rotateTower = null;
+    }
+
+    private void Update()
+    {
+      //  lr.SetPosition(0, rayInitPosition[indexRay]);
+
+        RaycastHit hit;
+        if (Physics.Raycast(rayInitPosition[indexRay], transform.forward, out hit, 150.0f, layerMask))
+        {
+            lr.SetPosition(1, hit.point);
+        }
     }
 }
