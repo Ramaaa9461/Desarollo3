@@ -126,7 +126,7 @@ public class TowerBehavior : MonoBehaviour
             rayList[indexRay].transform.rotation =
                 Quaternion.Lerp(initialRotation, newRotation, interpolationValue);
 
-            RaycastHit hit; 
+            RaycastHit hit;
             if (Physics.Raycast(rayInitPosition[indexRay], transform.forward, out hit, 150.0f, layerMask))
             {
                 lr.SetPosition(1, hit.point);
@@ -145,10 +145,9 @@ public class TowerBehavior : MonoBehaviour
 
     private void Update()
     {
-      //  lr.SetPosition(0, rayInitPosition[indexRay]);
 
         RaycastHit hit;
-        if (Physics.Raycast(rayInitPosition[indexRay], transform.forward, out hit, 150.0f, layerMask))
+        if (Physics.Raycast(rayInitPosition[indexRay], transform.forward, out hit, 50.0f, layerMask, QueryTriggerInteraction.Ignore))
         {
             lr.SetPosition(1, hit.point);
         }

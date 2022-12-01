@@ -255,12 +255,14 @@ public class PlayerMovement : MonoBehaviour
         int divisions = 10;
         Vector3 offSet;
 
-        if (Physics.Raycast(characterBase.position + Vector3.up * 0.1f, Vector3.down, out hit, 0.2f, mapLayer))
+        if (Physics.Raycast(characterBase.position + Vector3.up * 0.1f, Vector3.down, out hit, 0.2f, mapLayer, QueryTriggerInteraction.Ignore))
         {
             return true;
+            //return !hit.collider.isTrigger;
         }
         else
         {
+
             float angle = (2 * Mathf.PI) / divisions;
             float x, z;
 
@@ -273,9 +275,10 @@ public class PlayerMovement : MonoBehaviour
 
                 offSet = new Vector3(x / 3f, 0.0f, z / 3f); //Lo divido para achicar el cirulo
                 if (Physics.Raycast(characterBase.position + offSet + Vector3.up * 0.1f, Vector3.down, out hit,
-                    0.2f, mapLayer))
-                {
+                    0.2f, mapLayer, QueryTriggerInteraction.Ignore))
+                {   
                     return true;
+                    //return !hit.collider.isTrigger;
                 }
             }
         }
