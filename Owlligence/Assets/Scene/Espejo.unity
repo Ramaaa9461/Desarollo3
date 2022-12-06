@@ -7221,6 +7221,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1156886355}
     m_Modifications:
+    - target: {fileID: 2556638096854799749, guid: 86b49ce6fd5fe914aa3a01db34849550,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f24dc12d7f831094e9fffd05cf29df92, type: 3}
     - target: {fileID: 7225594167967337566, guid: 86b49ce6fd5fe914aa3a01db34849550,
         type: 3}
       propertyPath: Door
@@ -8699,6 +8704,7 @@ GameObject:
   m_Component:
   - component: {fileID: 782695705}
   - component: {fileID: 782695704}
+  - component: {fileID: 782695706}
   m_Layer: 0
   m_Name: Music Object
   m_TagString: Untagged
@@ -8716,11 +8722,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f2809ef98a970e04c8b2281193d72b5a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: cdb36ed5f9a4e7c499cda798169ad007, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -8817,6 +8823,19 @@ Transform:
   m_Father: {fileID: 1826106438}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &782695706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782695703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367d7c7118f4b3c459ef00b6fccce8c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Loop: {fileID: 8300000, guid: 96c3893a8d3630b44855b67e5ec68683, type: 3}
 --- !u!1 &782926654 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -184278063587505773, guid: f64ce7b8f5168ce49886d8b97a65aa0b,
@@ -16852,6 +16871,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1156886355}
     m_Modifications:
+    - target: {fileID: 2556638096854799749, guid: 86b49ce6fd5fe914aa3a01db34849550,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8763cc65531a2804ead5feea163bd6f9, type: 3}
     - target: {fileID: 7225594167967337566, guid: 86b49ce6fd5fe914aa3a01db34849550,
         type: 3}
       propertyPath: Door
@@ -21338,6 +21362,11 @@ PrefabInstance:
       propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].outWeight
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2556638096854799749, guid: 86b49ce6fd5fe914aa3a01db34849550,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ebc77260e894b7c4782f81a4f34c8318, type: 3}
     - target: {fileID: 7225594167967337566, guid: 86b49ce6fd5fe914aa3a01db34849550,
         type: 3}
       propertyPath: Door
