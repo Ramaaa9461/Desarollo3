@@ -29,6 +29,7 @@ public class OpenDoor : MonoBehaviour
     {
         float timer = 0;
 
+        Vector3 initialPosition = transform.position;
         Vector3 newPosition = transform.position + transform.up * distanceY; //new Vector3(transform.position.x, transform.position.y + distanceUp, transform.position.z);
 
 
@@ -36,7 +37,7 @@ public class OpenDoor : MonoBehaviour
         {
             float interpolationValue = timer / duration;
 
-            transform.position = Vector3.Lerp(transform.position, newPosition, interpolationValue);
+            transform.position = Vector3.Lerp(initialPosition, newPosition, interpolationValue);
 
             timer += Time.deltaTime;
 
