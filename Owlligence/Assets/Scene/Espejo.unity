@@ -16451,6 +16451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1702685683775339946, guid: 5c6b357ac119f5f4791b0f3bce6bf40f, type: 3}
+    - {fileID: 1702685683775339945, guid: 5c6b357ac119f5f4791b0f3bce6bf40f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5c6b357ac119f5f4791b0f3bce6bf40f, type: 3}
 --- !u!1 &1572295465 stripped
 GameObject:
@@ -22645,6 +22646,11 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 2f34d2b6537f91b4ab676a8902acce17, type: 3}
+    - target: {fileID: 1702685683775339946, guid: 5c6b357ac119f5f4791b0f3bce6bf40f,
+        type: 3}
+      propertyPath: duration
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1972662717348935105, guid: 5c6b357ac119f5f4791b0f3bce6bf40f,
         type: 3}
       propertyPath: m_Name

@@ -4,10 +4,18 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerScript : MonoBehaviour
 {
+	AudioSource AS;
+    private void Awake()
+    {
+		AS = transform.GetComponent<AudioSource>();
+    }
 
+	public void PlayClickSound()
+    {
+		AS.PlayOneShot(AS.clip);
+    }
 
-
-	public void LoadScene(string sceneToLoad)
+    public void LoadScene(string sceneToLoad)
 	{
 		SceneManager.LoadScene(sceneToLoad);
 	}
