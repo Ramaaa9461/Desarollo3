@@ -12,6 +12,7 @@ public class TowerBehavior : MonoBehaviour
 
     private LineRenderer lr;
     BaseTower baseTower;
+    AudioSource AS;
 
     Coroutine rotateTower;
     [SerializeField] private float duration = 1;
@@ -21,6 +22,7 @@ public class TowerBehavior : MonoBehaviour
     {
         lr = GetComponent<LineRenderer>();
         baseTower = transform.parent.GetComponent<BaseTower>();
+        AS = transform.GetComponent<AudioSource>();
 
         rayList = baseTower.GetRayList();
 
@@ -118,6 +120,7 @@ public class TowerBehavior : MonoBehaviour
         Quaternion initialRotation = rayList[indexRay].transform.rotation;
 
         lr.SetPosition(0, rayInitPosition[indexRay]);
+        AS.Play();
 
         while (timer <= duration)
         {
